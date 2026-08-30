@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">MineGuard</string>
+    <string name="title_activity_main">MineGuard</string>
+    <string name="package_name">com.mineguard.app</string>
+    <string name="custom_url_scheme">com.mineguard.app</string>
+</resources>
