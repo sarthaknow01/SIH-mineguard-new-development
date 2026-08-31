@@ -69,7 +69,7 @@ export default function LoginPage() {
             <img 
               src={officialLogoPath} 
               alt="MINEGUARD" 
-              className="h-12 sm:h-14 lg:h-16 w-auto object-contain"
+              className="h-20 sm:h-24 lg:h-[104px] w-auto object-contain max-w-full"
             />
           </div>
 
