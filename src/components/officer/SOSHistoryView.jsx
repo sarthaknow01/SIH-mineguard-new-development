@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useData } from '../../context/DataContext';
 import { ShieldAlert, AlertTriangle, CheckCircle, Clock, Search, Filter, User, MapPin, Radio } from 'lucide-react';
-import Badge from '../common/Badge';
 
 export default function SOSHistoryView() {
   const { currentUser } = useAuth();
@@ -28,38 +27,38 @@ export default function SOSHistoryView() {
   const acknowledgedCount = (sosAlerts || []).filter(a => a.status === 'ACKNOWLEDGED').length;
 
   return (
-    <div className="space-y-7 selection:bg-[#0265dc] selection:text-white">
-      
-      {/* HEADER BANNER */}
-      <div className="bg-rose-50 border border-rose-200/80 p-6 rounded-2xl shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-4">
-          <div className="p-3 bg-rose-100 text-rose-600 rounded-2xl shrink-0">
+    <div className="space-y-6">
+      {/* Header Banner */}
+      <div className="bg-gradient-to-r from-red-950/80 via-coal-900 to-coal-900 border border-red-900/50 p-5 sm:p-6 rounded-2xl shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3.5">
+          <div className="p-3 bg-red-600/20 rounded-2xl border border-red-500/40 text-red-500 shrink-0">
             <ShieldAlert className="w-7 h-7" />
           </div>
           <div>
-            <h1 className="text-xl sm:text-2xl font-black text-[#0f172a] tracking-tight">SOS Alerts Log</h1>
-            <p className="text-xs sm:text-sm text-slate-600 font-medium mt-0.5">
-              Real-time emergency alert log and officer response audit trail.
+            <h2 className="text-xl font-extrabold text-white flex items-center gap-2">
+              SOS Emergency Alerts History
+            </h2>
+            <p className="text-xs text-slate-400 mt-0.5">
+              Immutable real-time emergency dispatch log & officer response audit record
             </p>
           </div>
         </div>
 
         {/* Counter Stats */}
         <div className="flex items-center gap-3 w-full sm:w-auto">
-          <div className="flex-1 sm:flex-initial px-4 py-2 bg-white border border-rose-200 rounded-xl text-center shadow-xs">
-            <p className="text-[10px] font-bold text-rose-600 uppercase tracking-wider">Active SOS</p>
-            <p className="text-lg font-black text-rose-600 font-mono">{activeCount}</p>
+          <div className="flex-1 sm:flex-initial px-4 py-2 bg-red-500/10 border border-red-500/30 rounded-xl text-center">
+            <p className="text-[10px] font-bold text-red-400 uppercase tracking-wider">Active SOS</p>
+            <p className="text-lg font-black text-red-400 font-mono">{activeCount}</p>
           </div>
-          <div className="flex-1 sm:flex-initial px-4 py-2 bg-white border border-emerald-200 rounded-xl text-center shadow-xs">
-            <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider">Acknowledged</p>
-            <p className="text-lg font-black text-emerald-600 font-mono">{acknowledgedCount}</p>
+          <div className="flex-1 sm:flex-initial px-4 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-center">
+            <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">Acknowledged</p>
+            <p className="text-lg font-black text-emerald-400 font-mono">{acknowledgedCount}</p>
           </div>
         </div>
       </div>
 
-      {/* SEARCH & STATUS FILTER BAR */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
-        
+      {/* Filter and Search Bar */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-coal-900 p-4 rounded-xl border border-slate-800">
         <div className="relative w-full sm:w-80">
           <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
           <input
@@ -67,25 +66,25 @@ export default function SOSHistoryView() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search by Inspector, Mine, or ID..."
-            className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200/70 rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:bg-white focus:border-[#0265dc]"
+            className="w-full pl-10 pr-4 py-2 bg-coal-950 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-red-500 transition-colors font-mono"
           />
         </div>
 
         <div className="flex items-center gap-2 w-full sm:w-auto">
           <Filter className="w-4 h-4 text-slate-400 hidden sm:inline-block" />
-          <div className="grid grid-cols-3 gap-2 w-full sm:w-auto text-xs font-bold">
+          <div className="grid grid-cols-3 gap-1.5 w-full sm:w-auto">
             {['ALL', 'ACTIVE', 'ACKNOWLEDGED'].map((st) => (
               <button
                 key={st}
                 onClick={() => setStatusFilter(st)}
-                className={`px-3 py-1.5 rounded-xl transition-all ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                   statusFilter === st
                     ? st === 'ACTIVE'
-                      ? 'bg-rose-600 text-white shadow-sm'
+                      ? 'bg-red-600 text-white shadow-lg'
                       : st === 'ACKNOWLEDGED'
-                      ? 'bg-emerald-600 text-white shadow-sm'
-                      : 'bg-[#0265dc] text-white shadow-sm'
-                    : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/70'
+                      ? 'bg-emerald-600 text-white shadow-lg'
+                      : 'bg-blue-600 text-white shadow-lg'
+                    : 'bg-coal-950 text-slate-400 hover:text-white border border-slate-800'
                 }`}
               >
                 {st}
@@ -93,100 +92,107 @@ export default function SOSHistoryView() {
             ))}
           </div>
         </div>
-
       </div>
 
-      {/* ALERTS TABLE */}
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+      {/* Alerts Table */}
+      <div className="bg-coal-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse text-xs font-semibold text-slate-700">
-            <thead>
-              <tr className="bg-slate-50/70 text-[11px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100">
-                <th className="py-4 px-5">Alert ID</th>
-                <th className="py-4 px-5">Inspector Details</th>
-                <th className="py-4 px-5">Mine Location</th>
-                <th className="py-4 px-5">Timestamp</th>
-                <th className="py-4 px-5">Status</th>
-                <th className="py-4 px-5">Response Details</th>
-                <th className="py-4 px-5 text-right">Action</th>
+          <table className="w-full text-left text-xs text-slate-300">
+            <thead className="bg-coal-950 text-slate-400 uppercase font-mono text-[10px] tracking-wider border-b border-slate-800">
+              <tr>
+                <th className="py-3.5 px-4">Alert ID</th>
+                <th className="py-3.5 px-4">Inspector Details</th>
+                <th className="py-3.5 px-4">Mine Location</th>
+                <th className="py-3.5 px-4">Timestamp</th>
+                <th className="py-3.5 px-4">Status</th>
+                <th className="py-3.5 px-4">Response Details</th>
+                <th className="py-3.5 px-4 text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-800/60 font-sans">
               {filteredAlerts.length === 0 ? (
                 <tr>
-                  <td colSpan="7" className="py-10 text-center text-slate-400 font-medium">
+                  <td colSpan="7" className="py-8 text-center text-slate-500">
                     No SOS emergency alerts match the search criteria.
                   </td>
                 </tr>
               ) : (
                 filteredAlerts.map((item) => (
-                  <tr key={item.alertId} className="hover:bg-slate-50/50 transition-colors">
+                  <tr key={item.alertId} className="hover:bg-slate-800/40 transition-colors">
                     
                     {/* Alert ID */}
-                    <td className="py-4 px-5 font-mono font-bold text-[#0f172a]">
-                      <div className="flex items-center gap-2">
-                        <Radio className={`w-4 h-4 ${item.status === 'ACTIVE' ? 'text-rose-600 animate-pulse' : 'text-slate-400'}`} />
+                    <td className="py-4 px-4 font-mono font-bold text-white">
+                      <div className="flex items-center gap-1.5">
+                        <Radio className={`w-3.5 h-3.5 ${item.status === 'ACTIVE' ? 'text-red-500 animate-pulse' : 'text-slate-500'}`} />
                         <span>{item.alertId}</span>
                       </div>
                     </td>
 
                     {/* Inspector Details */}
-                    <td className="py-4 px-5">
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-full bg-[#ebf3fe] text-[#0265dc] font-bold text-xs flex items-center justify-center shrink-0">
-                          {item.inspectorName?.[0] || 'I'}
+                    <td className="py-4 px-4">
+                      <div className="flex items-center gap-2">
+                        <div className="w-7 h-7 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300">
+                          <User className="w-3.5 h-3.5 text-amber-400" />
                         </div>
                         <div>
-                          <p className="font-bold text-[#0f172a]">{item.inspectorName}</p>
-                          <p className="text-[10px] text-slate-400 font-mono">ID: {item.inspectorId}</p>
+                          <p className="font-bold text-white">{item.inspectorName}</p>
+                          <p className="text-[10px] text-amber-400 font-mono">ID: {item.inspectorId}</p>
                         </div>
                       </div>
                     </td>
 
                     {/* Mine Name */}
-                    <td className="py-4 px-5">
-                      <div className="flex items-center gap-1.5 text-slate-600">
-                        <MapPin className="w-4 h-4 text-slate-400 shrink-0" />
-                        <span className="font-bold text-[#0f172a]">{item.mineName}</span>
+                    <td className="py-4 px-4">
+                      <div className="flex items-center gap-1.5">
+                        <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                        <span className="font-semibold text-slate-200">{item.mineName}</span>
                       </div>
                     </td>
 
                     {/* Timestamp */}
-                    <td className="py-4 px-5 font-mono text-slate-500">
-                      <div className="flex items-center gap-1.5">
+                    <td className="py-4 px-4 font-mono text-slate-300">
+                      <div className="flex items-center gap-1">
                         <Clock className="w-3.5 h-3.5 text-slate-400" />
                         <span>{item.timestamp}</span>
                       </div>
                     </td>
 
                     {/* Status Badge */}
-                    <td className="py-4 px-5">
-                      <Badge size="sm">{item.status}</Badge>
+                    <td className="py-4 px-4">
+                      {item.status === 'ACTIVE' ? (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-red-500/20 text-red-400 border border-red-500/40 font-mono font-bold text-[10px] animate-pulse">
+                          <AlertTriangle className="w-3 h-3" /> ACTIVE
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 font-mono font-bold text-[10px]">
+                          <CheckCircle className="w-3 h-3" /> ACKNOWLEDGED
+                        </span>
+                      )}
                     </td>
 
                     {/* Response Details */}
-                    <td className="py-4 px-5 text-xs">
+                    <td className="py-4 px-4 text-xs">
                       {item.status === 'ACKNOWLEDGED' ? (
                         <div className="space-y-0.5">
-                          <p className="text-emerald-700 font-bold">{item.acknowledgedBy || 'Mine Officer'}</p>
+                          <p className="text-emerald-300 font-semibold">{item.acknowledgedBy || 'Mine Officer'}</p>
                           <p className="text-[10px] text-slate-400 font-mono">{item.acknowledgedAt || item.acknowledgedTime}</p>
                         </div>
                       ) : (
-                        <span className="text-slate-400 italic">Pending Response...</span>
+                        <span className="text-slate-500 italic">Pending Response...</span>
                       )}
                     </td>
 
                     {/* Action Button */}
-                    <td className="py-4 px-5 text-right">
+                    <td className="py-4 px-4 text-right">
                       {item.status === 'ACTIVE' && isOfficerOrAdmin ? (
                         <button
                           onClick={() => acknowledgeSOSAlert(item.alertId, `${currentUser.name} (${currentUser.role})`)}
-                          className="px-3.5 py-1.5 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all"
+                          className="px-3 py-1.5 bg-red-600 hover:bg-red-500 text-white font-bold text-xs rounded-lg shadow transition-all border border-red-400"
                         >
                           Acknowledge
                         </button>
                       ) : (
-                        <span className="text-slate-400 text-xs">—</span>
+                        <span className="text-slate-500 text-[11px]">—</span>
                       )}
                     </td>
 
