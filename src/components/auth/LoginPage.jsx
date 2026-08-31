@@ -65,12 +65,11 @@ export default function LoginPage() {
         <div className="w-full lg:w-7/12 space-y-10">
           
           {/* Top Brand Official Logo */}
-          <div className="flex items-center -mb-8">
+          <div className="flex items-center mb-8">
             <img 
               src={officialLogoPath} 
               alt="MINEGUARD" 
-              style={{ width: '400px', height: 'auto' }}
-              className="object-contain shrink-0 max-w-full"
+              className="h-10 sm:h-12 lg:h-14 w-auto object-contain"
             />
           </div>
 
