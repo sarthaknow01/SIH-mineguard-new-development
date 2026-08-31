@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useData } from '../../context/DataContext';
 import { useAuth } from '../../context/AuthContext';
-import { ClipboardCheck, CheckCircle2, XCircle, MinusCircle, AlertTriangle, Send, Sparkles, UserCheck } from 'lucide-react';
+import { ClipboardCheck, CheckCircle2, XCircle, MinusCircle, AlertTriangle, Send, Sparkles, UserCheck, MapPin, RefreshCw } from 'lucide-react';
 import ReportViolationModal from './ReportViolationModal';
 
 export default function InspectionRunner({ onComplete }) {
@@ -16,6 +16,49 @@ export default function InspectionRunner({ onComplete }) {
   const [showViolationModal, setShowViolationModal] = useState(false);
   const [submittedInspection, setSubmittedInspection] = useState(null);
   const [inspectionSuccessMsg, setInspectionSuccessMsg] = useState('');
+
+  // GPS Geolocation State
+  const [gpsLocation, setGpsLocation] = useState(null);
+  const [gpsStatus, setGpsStatus] = useState('IDLE'); // IDLE, CAPTURING, CAPTURED, UNAVAILABLE, DENIED
+  const [gpsMessage, setGpsMessage] = useState('');
+
+  const requestGpsLocation = () => {
+    if (!navigator.geolocation) {
+      setGpsStatus('UNAVAILABLE');
+      setGpsMessage('Geolocation is not supported by your browser.');
+      return;
+    }
+
+    setGpsStatus('CAPTURING');
+    setGpsMessage('Requesting device location...');
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const coords = {
+          latitude: pos.coords.latitude,
+          longitude: pos.coords.longitude,
+          locationTimestamp: new Date(pos.timestamp || Date.now()).toISOString()
+        };
+        setGpsLocation(coords);
+        setGpsStatus('CAPTURED');
+        setGpsMessage(`GPS Captured: ${pos.coords.latitude.toFixed(4)}° N, ${pos.coords.longitude.toFixed(4)}° E`);
+      },
+      (err) => {
+        if (err.code === err.PERMISSION_DENIED) {
+          setGpsStatus('DENIED');
+          setGpsMessage('Location permission denied. Saved coordinates as NULL.');
+        } else {
+          setGpsStatus('UNAVAILABLE');
+          setGpsMessage('Location service unavailable. Saved coordinates as NULL.');
+        }
+      },
+      { enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }
+    );
+  };
+
+  useEffect(() => {
+    requestGpsLocation();
+  }, []);
 
   // Update area when mineId changes
   const handleMineChange = (newMineId) => {
@@ -69,6 +112,9 @@ export default function InspectionRunner({ onComplete }) {
       evidence: 'evidence_field_inspection_01.jpg',
       inspectorId: currentUser?.userId || 'inspector01',
       inspectorName: currentUser?.name || 'Rajesh Kumar',
+      latitude: gpsLocation?.latitude ?? null,
+      longitude: gpsLocation?.longitude ?? null,
+      locationTimestamp: gpsLocation?.locationTimestamp ?? null,
     }, currentUser?.name);
 
     setSubmittedInspection(newInsp);
@@ -92,6 +138,28 @@ export default function InspectionRunner({ onComplete }) {
           <p className="text-xs text-slate-400 mt-1">
             Standard Operating Procedure (SOP) safety & compliance evaluation checklist
           </p>
+        </div>
+
+        {/* GPS Location Status Badge */}
+        <div className="flex items-center gap-2 text-xs">
+          <div className={`px-3 py-1.5 rounded-lg border flex items-center gap-2 font-mono ${
+            gpsStatus === 'CAPTURED' 
+              ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' 
+              : gpsStatus === 'CAPTURING' 
+              ? 'bg-blue-500/10 border-blue-500/30 text-blue-400 animate-pulse' 
+              : 'bg-amber-500/10 border-amber-500/30 text-amber-400'
+          }`}>
+            <MapPin className="w-4 h-4 shrink-0" />
+            <span>{gpsMessage || 'GPS Idle'}</span>
+            <button
+              type="button"
+              onClick={requestGpsLocation}
+              title="Refresh GPS Location"
+              className="ml-1 text-slate-400 hover:text-white"
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${gpsStatus === 'CAPTURING' ? 'animate-spin' : ''}`} />
+            </button>
+          </div>
         </div>
       </div>
 

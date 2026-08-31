@@ -96,6 +96,9 @@ CREATE TABLE IF NOT EXISTS public.inspections (
     inspector_name TEXT,
     checklist_results JSONB DEFAULT '[]'::jsonb,
     notes TEXT,
+    latitude NUMERIC,
+    longitude NUMERIC,
+    location_timestamp TIMESTAMPTZ,
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -122,6 +125,9 @@ CREATE TABLE IF NOT EXISTS public.violations (
     inspection_id TEXT REFERENCES public.inspections(inspection_id),
     resolved_date TEXT,
     verification_notes TEXT,
+    latitude NUMERIC,
+    longitude NUMERIC,
+    location_timestamp TIMESTAMPTZ,
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 

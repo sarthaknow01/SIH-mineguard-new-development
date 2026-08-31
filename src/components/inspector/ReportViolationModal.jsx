@@ -3,7 +3,7 @@ import Modal from '../common/Modal';
 import { useData } from '../../context/DataContext';
 import { useAuth } from '../../context/AuthContext';
 import { evaluateRisk } from '../../utils/aiRiskEngine';
-import { AlertTriangle, Sparkles, UploadCloud, Camera, FileText, CheckCircle2, X } from 'lucide-react';
+import { AlertTriangle, Sparkles, UploadCloud, Camera, FileText, CheckCircle2, X, MapPin, RefreshCw } from 'lucide-react';
 
 export default function ReportViolationModal({ isOpen, onClose, initialData = {} }) {
   const { mines, workers, certificates, reportViolation, uploadFileReference } = useData();
@@ -26,6 +26,45 @@ export default function ReportViolationModal({ isOpen, onClose, initialData = {}
   const [isImageFile, setIsImageFile] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // GPS Geolocation State
+  const [gpsLocation, setGpsLocation] = useState(null);
+  const [gpsStatus, setGpsStatus] = useState('IDLE'); // IDLE, CAPTURING, CAPTURED, UNAVAILABLE, DENIED
+  const [gpsMessage, setGpsMessage] = useState('');
+
+  const requestGpsLocation = () => {
+    if (!navigator.geolocation) {
+      setGpsStatus('UNAVAILABLE');
+      setGpsMessage('Geolocation not supported by browser.');
+      return;
+    }
+
+    setGpsStatus('CAPTURING');
+    setGpsMessage('Requesting GPS location...');
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const coords = {
+          latitude: pos.coords.latitude,
+          longitude: pos.coords.longitude,
+          locationTimestamp: new Date(pos.timestamp || Date.now()).toISOString()
+        };
+        setGpsLocation(coords);
+        setGpsStatus('CAPTURED');
+        setGpsMessage(`GPS Captured: ${pos.coords.latitude.toFixed(4)}° N, ${pos.coords.longitude.toFixed(4)}° E`);
+      },
+      (err) => {
+        if (err.code === err.PERMISSION_DENIED) {
+          setGpsStatus('DENIED');
+          setGpsMessage('Location permission denied. Saved as NULL.');
+        } else {
+          setGpsStatus('UNAVAILABLE');
+          setGpsMessage('Location service unavailable. Saved as NULL.');
+        }
+      },
+      { enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }
+    );
+  };
+
   // Sync state ONLY when modal transitions to open (isOpen === true)
   useEffect(() => {
     if (isOpen) {
@@ -41,6 +80,7 @@ export default function ReportViolationModal({ isOpen, onClose, initialData = {}
       setSelectedFileObj(null);
       setIsCameraCapture(false);
       setIsImageFile(false);
+      requestGpsLocation();
     }
   }, [isOpen]);
 
@@ -128,6 +168,9 @@ export default function ReportViolationModal({ isOpen, onClose, initialData = {}
       evidence: evidenceName,
       evidencePreview: isImageFile ? evidencePreviewUrl : null,
       inspectionId: initialData?.inspectionId || null,
+      latitude: gpsLocation?.latitude ?? null,
+      longitude: gpsLocation?.longitude ?? null,
+      locationTimestamp: gpsLocation?.locationTimestamp ?? null,
     }, currentUser?.name);
 
     setIsSubmitting(false);
@@ -146,6 +189,25 @@ export default function ReportViolationModal({ isOpen, onClose, initialData = {}
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="⚠️ Report Mine Compliance Violation" subtitle="File a mine compliance violation with automated AI risk prioritization" maxWidth="max-w-2xl">
       <form onSubmit={handleSubmit} className="space-y-4" onClick={(e) => e.stopPropagation()}>
+        {/* GPS Location Status Indicator */}
+        <div className="p-2.5 bg-coal-950 border border-slate-800 rounded-lg flex items-center justify-between gap-2 text-xs">
+          <div className="flex items-center gap-2 font-mono text-[11px]">
+            <MapPin className={`w-4 h-4 shrink-0 ${gpsStatus === 'CAPTURED' ? 'text-emerald-400' : 'text-amber-400'}`} />
+            <span className={gpsStatus === 'CAPTURED' ? 'text-emerald-300 font-bold' : 'text-amber-300'}>
+              {gpsMessage || 'Capturing GPS Location...'}
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={requestGpsLocation}
+            title="Refresh GPS Coordinates"
+            className="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-[10px] font-bold flex items-center gap-1"
+          >
+            <RefreshCw className={`w-3 h-3 ${gpsStatus === 'CAPTURING' ? 'animate-spin' : ''}`} />
+            <span>Re-scan</span>
+          </button>
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label className="block text-xs font-semibold text-slate-300 mb-1">Target Mine</label>

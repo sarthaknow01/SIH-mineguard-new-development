@@ -216,6 +216,9 @@ function mapSupabaseToInspection(row) {
     inspectorName: row.inspector_name || row.inspectorName || '',
     checklistResults: row.checklist_results || row.checklistResults || [],
     notes: row.notes || '',
+    latitude: row.latitude ?? row.lat ?? null,
+    longitude: row.longitude ?? row.lng ?? null,
+    locationTimestamp: row.location_timestamp || row.locationTimestamp || null,
   };
 }
 
@@ -233,6 +236,10 @@ function mapInspectionToSupabaseRow(i) {
     inspector_id: i.inspectorId || null,
     inspector_name: i.inspectorName || null,
     checklist_results: i.checklistResults || [],
+    notes: i.notes || null,
+    latitude: i.latitude ?? null,
+    longitude: i.longitude ?? null,
+    location_timestamp: i.locationTimestamp || i.location_timestamp || null,
   };
 }
 
@@ -260,7 +267,7 @@ async function saveInspectionToSupabase(i) {
     const row = mapInspectionToSupabaseRow(i);
     const { data, error } = await supabase
       .from('inspections')
-      .insert(row)
+      .upsert(row, { onConflict: 'inspection_id' })
       .select();
 
     if (error) {
@@ -297,6 +304,9 @@ function mapSupabaseToViolation(row) {
     inspectionId: row.inspection_id || row.inspectionId || null,
     resolvedDate: row.resolved_date || row.resolvedDate || null,
     verificationNotes: row.verification_notes || row.verificationNotes || null,
+    latitude: row.latitude ?? row.lat ?? null,
+    longitude: row.longitude ?? row.lng ?? null,
+    locationTimestamp: row.location_timestamp || row.locationTimestamp || null,
   };
 }
 
@@ -342,6 +352,9 @@ function mapViolationToSupabaseRow(v) {
     inspection_id: v.inspectionId || null,
     resolved_date: v.resolvedDate || null,
     verification_notes: v.verificationNotes || null,
+    latitude: v.latitude ?? null,
+    longitude: v.longitude ?? null,
+    location_timestamp: v.locationTimestamp || v.location_timestamp || null,
   };
 }
 
