@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useData } from '../../context/DataContext';
 import { useTheme } from '../../context/ThemeContext';
-import { Bell, LogOut, Shield, User, Clock, AlertTriangle, CheckCircle, Flame, Menu, X, Sun, Moon, Wifi, WifiOff, RefreshCw } from 'lucide-react';
+import { Bell, LogOut, Shield, User, Clock, AlertTriangle, CheckCircle, Menu, X, Sun, Moon, Wifi, WifiOff, RefreshCw } from 'lucide-react';
 import { formatDateTime } from '../../utils/dateHelpers';
 import { subscribeSyncStatus, triggerAutoSync } from '../../utils/offlineSyncManager';
 import PendingSyncModal from '../inspector/PendingSyncModal';
@@ -42,22 +42,11 @@ export default function Navbar({ onNavigate, onToggleMobileMenu, isMobileMenuOpe
         )}
 
         <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => onNavigate('dashboard')}>
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg shadow-orange-500/20 text-white font-extrabold text-base sm:text-lg shrink-0">
-            <Flame className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-          </div>
-          <div>
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <h1 className="text-base sm:text-lg font-black tracking-tight text-white flex items-center gap-1">
-                MineGuard <span className="text-amber-400">AI</span>
-              </h1>
-              <span className="text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 font-mono border border-slate-700 hidden sm:inline-block">
-                v1.0
-              </span>
-            </div>
-            <p className="text-[10px] sm:text-[11px] text-slate-400 tracking-wide hidden md:block">
-              Smart Governance & Compliance Monitoring System for Coal Mines
-            </p>
-          </div>
+          <img 
+            src="/mineguard_name_logo.png" 
+            alt="MineGuard Official Logo" 
+            className="h-9 sm:h-11 w-auto object-contain shrink-0"
+          />
         </div>
       </div>
 
