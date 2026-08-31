@@ -6,29 +6,36 @@ const DB_VERSION = 1;
 
 let dbPromise = null;
 
-// Initialize native IndexedDB
+// Initialize native IndexedDB with safe mobile fallback
 function getDB() {
   if (dbPromise) return dbPromise;
 
   dbPromise = new Promise((resolve, reject) => {
-    const request = indexedDB.open(DB_NAME, DB_VERSION);
+    try {
+      if (typeof window === 'undefined' || !window.indexedDB) {
+        return reject(new Error('IndexedDB unavailable'));
+      }
+      const request = indexedDB.open(DB_NAME, DB_VERSION);
 
-    request.onupgradeneeded = (event) => {
-      const db = event.target.result;
-      
-      if (!db.objectStoreNames.contains('pending_inspections')) {
-        db.createObjectStore('pending_inspections', { keyPath: 'inspectionId' });
-      }
-      if (!db.objectStoreNames.contains('pending_violations')) {
-        db.createObjectStore('pending_violations', { keyPath: 'violationId' });
-      }
-      if (!db.objectStoreNames.contains('pending_evidence')) {
-        db.createObjectStore('pending_evidence', { keyPath: 'fileId' });
-      }
-    };
+      request.onupgradeneeded = (event) => {
+        const db = event.target.result;
+        
+        if (!db.objectStoreNames.contains('pending_inspections')) {
+          db.createObjectStore('pending_inspections', { keyPath: 'inspectionId' });
+        }
+        if (!db.objectStoreNames.contains('pending_violations')) {
+          db.createObjectStore('pending_violations', { keyPath: 'violationId' });
+        }
+        if (!db.objectStoreNames.contains('pending_evidence')) {
+          db.createObjectStore('pending_evidence', { keyPath: 'fileId' });
+        }
+      };
 
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error || new Error('IndexedDB open error'));
+    } catch (e) {
+      reject(e);
+    }
   });
 
   return dbPromise;

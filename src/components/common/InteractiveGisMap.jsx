@@ -31,32 +31,45 @@ export default function InteractiveGisMap({ initialMineFilter = 'ALL' }) {
   const mapInstanceRef = useRef(null);
   const layerGroupRef = useRef(null);
 
-  // Initialize Leaflet Map Instance
+  // Initialize Leaflet Map Instance (Mobile & Touch Event Compatible)
   useEffect(() => {
     if (!mapContainerRef.current) return;
     if (mapInstanceRef.current) return;
 
-    // Centered on Central India
-    const map = L.map(mapContainerRef.current, {
-      center: [22.5000, 83.5000],
-      zoom: 6,
-      zoomControl: true,
-    });
+    if (mapContainerRef.current._leaflet_id) {
+      delete mapContainerRef.current._leaflet_id;
+    }
 
-    // Dark-themed tile layer matching MineGuard aesthetic
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
-      subdomains: 'abcd',
-      maxZoom: 19
-    }).addTo(map);
+    try {
+      // Centered on Central India
+      const map = L.map(mapContainerRef.current, {
+        center: [22.5000, 83.5000],
+        zoom: 5,
+        zoomControl: true,
+        tap: false, // Prevents Leaflet 1.9 touch event conflicts on mobile browsers
+      });
 
-    const layerGroup = L.layerGroup().addTo(map);
-    mapInstanceRef.current = map;
-    layerGroupRef.current = layerGroup;
+      // Dark-themed tile layer matching MineGuard aesthetic
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 19
+      }).addTo(map);
+
+      const layerGroup = L.layerGroup().addTo(map);
+      mapInstanceRef.current = map;
+      layerGroupRef.current = layerGroup;
+    } catch (e) {
+      console.warn('Leaflet map mobile initialization warning:', e);
+    }
 
     return () => {
       if (mapInstanceRef.current) {
-        mapInstanceRef.current.remove();
+        try {
+          mapInstanceRef.current.remove();
+        } catch (e) {
+          // Ignore cleanup warning
+        }
         mapInstanceRef.current = null;
       }
     };
