@@ -27,6 +27,8 @@ export default function Navbar({ onNavigate, onToggleMobileMenu, isMobileMenuOpe
   const userAlerts = alerts.filter(a => !a.targetRoles || a.targetRoles.includes(roleKey));
   const unreadCount = userAlerts.filter(a => a.status === 'UNREAD').length;
 
+  const officialLogoPath = `${import.meta.env.BASE_URL || './'}mineguard_name_logo.png`;
+
   return (
     <header className="bg-coal-900 border-b border-slate-800 px-3 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between z-30 sticky top-0">
       {/* Brand & Logo + Mobile Menu Toggle */}
@@ -43,7 +45,7 @@ export default function Navbar({ onNavigate, onToggleMobileMenu, isMobileMenuOpe
 
         <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => onNavigate('dashboard')}>
           <img 
-            src="/mineguard_name_logo.png" 
+            src={officialLogoPath} 
             alt="MineGuard Official Logo" 
             className="h-9 sm:h-11 w-auto object-contain shrink-0"
           />
