@@ -231,7 +231,7 @@ function MainApp() {
   };
 
   return (
-    <div className="min-h-screen bg-coal-950 flex flex-col font-sans text-slate-100 selection:bg-amber-500 selection:text-black overflow-x-hidden">
+    <div className="min-h-screen bg-[#f4f7fb] flex flex-col font-sans text-slate-800 selection:bg-[#0265dc] selection:text-white overflow-x-hidden">
       {/* 1. Quick Role Switcher Bar */}
       <DemoQuickBar />
 

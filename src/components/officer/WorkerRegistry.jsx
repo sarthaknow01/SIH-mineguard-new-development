@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { useData } from '../../context/DataContext';
 import { calculateCertificateStatus, formatDate } from '../../utils/dateHelpers';
 import Badge from '../common/Badge';
-import { Users, Search, Filter, Plus, FileCheck, AlertTriangle } from 'lucide-react';
+import { Users, Search, Filter, Plus, FileCheck, AlertTriangle, Building2, UserCheck, ShieldCheck } from 'lucide-react';
 import AddCertificateModal from './AddCertificateModal';
-
 import { useAuth } from '../../context/AuthContext';
 
 export default function WorkerRegistry() {
@@ -39,31 +38,31 @@ export default function WorkerRegistry() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+    <div className="space-y-7 selection:bg-[#0265dc] selection:text-white">
+      
+      {/* PAGE HEADER */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <Users className="w-5 h-5 text-blue-400" />
-            <span>Worker Compliance & Certification Registry</span>
-          </h2>
-          <p className="text-xs text-slate-400 mt-1">
-            Personnel records, technical designations, safety certification status, and renewal actions
+          <h1 className="text-2xl sm:text-3xl font-black text-[#0f172a] tracking-tight">Worker Registry</h1>
+          <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
+            Personnel records, technical designations, safety certification status, and renewal actions.
           </p>
         </div>
 
         <button
           onClick={() => handleOpenAddCert(workers[0])}
-          className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-lg shadow-lg shadow-blue-600/20 flex items-center gap-1.5 self-start sm:self-auto"
+          className="px-4 py-2.5 bg-[#0265dc] hover:bg-[#0052b4] text-white font-bold text-xs sm:text-sm rounded-xl shadow-md shadow-[#0265dc]/20 flex items-center gap-2 transition-all self-start sm:self-auto"
         >
           <Plus className="w-4 h-4" />
           <span>Register New Certificate</span>
         </button>
       </div>
 
-      {/* Filter / Search bar */}
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 bg-coal-900 border border-slate-800 p-3.5 rounded-xl text-xs">
+      {/* FILTER & SEARCH BAR */}
+      <div className="bg-white rounded-2xl border border-slate-100 p-4 shadow-sm grid grid-cols-1 sm:grid-cols-4 gap-4 text-xs">
+        
         <div>
-          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Filter by Mine</label>
+          <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Filter by Mine</label>
           <select
             value={isSingleMineRole ? currentUser.mineId : selectedMine}
             disabled={isSingleMineRole}
@@ -73,7 +72,7 @@ export default function WorkerRegistry() {
                 setSelectedZone('ALL');
               }
             }}
-            className={`w-full px-2.5 py-1.5 bg-coal-950 border border-slate-700 rounded-lg text-white text-xs focus:outline-none ${isSingleMineRole ? 'opacity-90 cursor-not-allowed border-amber-500/40 text-amber-300 font-semibold' : ''}`}
+            className={`w-full px-3 py-2 bg-slate-50 border border-slate-200/70 rounded-xl text-slate-800 text-xs font-semibold focus:outline-none ${isSingleMineRole ? 'cursor-not-allowed opacity-80' : ''}`}
           >
             {isSingleMineRole ? (
               <option value={currentUser.mineId}>{assignedMine.mineName || 'Assigned Unit'} (Assigned Unit)</option>
@@ -87,11 +86,11 @@ export default function WorkerRegistry() {
         </div>
 
         <div>
-          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Filter by Zone</label>
+          <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Filter by Zone</label>
           <select
             value={selectedZone}
             onChange={(e) => setSelectedZone(e.target.value)}
-            className="w-full px-2.5 py-1.5 bg-coal-950 border border-slate-700 rounded-lg text-white text-xs focus:outline-none"
+            className="w-full px-3 py-2 bg-slate-50 border border-slate-200/70 rounded-xl text-slate-800 text-xs font-semibold focus:outline-none"
           >
             <option value="ALL">All Zones</option>
             <option value="North Shaft">North Shaft</option>
@@ -103,22 +102,23 @@ export default function WorkerRegistry() {
         </div>
 
         <div className="sm:col-span-2">
-          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Search Personnel</label>
+          <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Search Personnel</label>
           <div className="relative">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2" />
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-2.5" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by worker name, ID, or technical role..."
-              className="w-full pl-9 pr-3 py-1.5 bg-coal-950 border border-slate-700 rounded-lg text-white text-xs focus:outline-none font-mono"
+              className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200/70 rounded-xl text-slate-800 text-xs font-medium focus:outline-none focus:bg-white focus:border-[#0265dc]"
             />
           </div>
         </div>
+
       </div>
 
-      {/* Workers Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* WORKERS GRID */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {filteredWorkers.map((worker) => {
           const workerCerts = certificates.filter(c => c.workerId === worker.workerId);
           const hasExpired = workerCerts.some(c => calculateCertificateStatus(c.expiryDate).status === 'EXPIRED');
@@ -131,35 +131,36 @@ export default function WorkerRegistry() {
           const linkedMine = mines.find(m => m.mineId === worker.mineId);
 
           return (
-            <div key={worker.workerId} className="bg-coal-900 border border-slate-800 hover:border-slate-700 rounded-xl p-4.5 shadow-md flex flex-col justify-between space-y-4">
+            <div key={worker.workerId} className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-4">
+              
               <div>
                 <div className="flex items-start justify-between">
                   <div>
-                    <h4 className="text-sm font-bold text-white flex items-center gap-1.5">
-                      {worker.name}
-                      <span className="text-[10px] font-mono text-slate-400">({worker.workerId})</span>
+                    <h4 className="text-base font-bold text-[#0f172a] flex items-center gap-2">
+                      <span>{worker.name}</span>
+                      <span className="text-xs font-mono font-bold text-slate-400">({worker.workerId})</span>
                     </h4>
-                    <p className="text-xs font-semibold text-amber-400 mt-0.5">{worker.role}</p>
-                    <p className="text-[11px] text-slate-400 mt-0.5">{linkedMine?.mineName} • {worker.area}</p>
+                    <p className="text-xs font-bold text-[#0265dc] mt-0.5">{worker.role}</p>
+                    <p className="text-xs text-slate-500 font-medium mt-0.5">{linkedMine?.mineName} • {worker.area}</p>
                   </div>
                   <Badge size="sm">{overallStatus}</Badge>
                 </div>
 
                 {/* Certificates List */}
-                <div className="mt-3 pt-3 border-t border-slate-800 space-y-2">
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                <div className="mt-4 pt-3.5 border-t border-slate-100 space-y-2.5">
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
                     Compliance Certificates ({workerCerts.length})
                   </p>
                   {workerCerts.length === 0 ? (
-                    <p className="text-[11px] text-slate-400 italic">No certificates recorded.</p>
+                    <p className="text-xs text-slate-400 italic">No certificates recorded.</p>
                   ) : (
                     workerCerts.map((cert) => {
                       const st = calculateCertificateStatus(cert.expiryDate);
                       return (
-                        <div key={cert.certificateId} className="p-2 rounded-lg bg-coal-950 border border-slate-800/80 text-[11px] flex items-center justify-between">
+                        <div key={cert.certificateId} className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 text-xs flex items-center justify-between">
                           <div className="truncate pr-2">
-                            <p className="font-semibold text-slate-200 truncate">{cert.certificateType}</p>
-                            <p className="text-[10px] text-slate-400 font-mono">Exp: {formatDate(cert.expiryDate)}</p>
+                            <p className="font-bold text-[#0f172a] truncate">{cert.certificateType}</p>
+                            <p className="text-[10px] text-slate-400 font-mono mt-0.5">Exp: {formatDate(cert.expiryDate)}</p>
                           </div>
                           <Badge size="sm">{st.status}</Badge>
                         </div>
@@ -169,14 +170,15 @@ export default function WorkerRegistry() {
                 </div>
               </div>
 
-              {/* Bottom Action */}
+              {/* Bottom Action Button */}
               <button
                 onClick={() => handleOpenAddCert(worker)}
-                className="w-full py-2 bg-slate-800 hover:bg-blue-600 text-slate-200 hover:text-white font-bold text-xs rounded-lg transition-colors border border-slate-700 flex items-center justify-center gap-1.5"
+                className="w-full py-2.5 bg-slate-50 hover:bg-blue-50 text-[#0265dc] font-bold text-xs rounded-xl border border-slate-200/70 transition-colors flex items-center justify-center gap-1.5"
               >
-                <FileCheck className="w-3.5 h-3.5" />
+                <FileCheck className="w-4 h-4" />
                 <span>+ Add / Renew Certificate</span>
               </button>
+
             </div>
           );
         })}
