@@ -21,7 +21,8 @@ import {
   FileText, 
   UserPlus, 
   ShieldCheck, 
-  TrendingUp 
+  TrendingUp,
+  ClipboardCheck
 } from 'lucide-react';
 import AddCertificateModal from './AddCertificateModal';
 import CreateActionModal from './CreateActionModal';
