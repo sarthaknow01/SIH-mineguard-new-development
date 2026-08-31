@@ -82,12 +82,14 @@ export default function ManagementDashboard({ onNavigate }) {
 
       {/* Recurring Failure & Overdue CAPA Banner */}
       {(overdueActions.length > 0 || recurringList.length > 0) && (
-        <div className="p-4 bg-amber-500/10 border border-amber-500/30 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
-          <div className="flex items-center gap-2.5">
-            <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0" />
+        <div className="p-4 bg-amber-50 border border-amber-200/80 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs shadow-sm">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-amber-100 text-amber-600 rounded-xl shrink-0">
+              <AlertTriangle className="w-5 h-5" />
+            </div>
             <div>
-              <p className="font-bold text-amber-300">Statutory Remediation & Recurrence Alert</p>
-              <p className="text-slate-300 text-[11px] mt-0.5">
+              <p className="font-bold text-[#0f172a] text-sm">Statutory Remediation & Recurrence Alert</p>
+              <p className="text-slate-600 text-xs font-medium mt-0.5">
                 {overdueActions.length} Overdue CAPA item(s) pending verification • {recurringList.length} Recurring safety hazard area(s) detected across operational sectors.
               </p>
             </div>
@@ -98,17 +100,21 @@ export default function ManagementDashboard({ onNavigate }) {
 
       {/* Visual Analytics Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-coal-900 border border-slate-800 rounded-xl p-5 shadow-lg">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300 mb-4 flex items-center gap-2">
-            <Activity className="w-4 h-4 text-blue-400" />
+        <div className="lg:col-span-2 bg-white border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+          <h3 className="text-sm font-bold text-[#0f172a] mb-4 flex items-center gap-2">
+            <div className="w-8 h-8 rounded-xl bg-[#ebf3fe] text-[#0265dc] flex items-center justify-center shrink-0">
+              <Activity className="w-4 h-4" />
+            </div>
             <span>4-Week Compliance Score Trajectory by Mine</span>
           </h3>
           <ComplianceTrendChart mines={mines} violations={violations} />
         </div>
 
-        <div className="bg-coal-900 border border-slate-800 rounded-xl p-5 shadow-lg flex flex-col justify-between">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300 mb-2 flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 text-amber-400" />
+        <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+          <h3 className="text-sm font-bold text-[#0f172a] mb-2 flex items-center gap-2">
+            <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+              <AlertTriangle className="w-4 h-4" />
+            </div>
             <span>Violation Severity Breakdown</span>
           </h3>
           <RiskDistributionChart violations={violations} />
