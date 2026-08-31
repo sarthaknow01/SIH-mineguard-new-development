@@ -3,7 +3,6 @@ import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { DataProvider, useData } from './context/DataContext';
 import LoginPage from './components/auth/LoginPage';
-import DemoQuickBar from './components/common/DemoQuickBar';
 import Navbar from './components/common/Navbar';
 import Sidebar from './components/common/Sidebar';
 
@@ -232,10 +231,7 @@ function MainApp() {
 
   return (
     <div className="min-h-screen bg-coal-950 flex flex-col font-sans text-slate-100 selection:bg-amber-500 selection:text-black overflow-x-hidden">
-      {/* 1. Quick Role Switcher Bar */}
-      <DemoQuickBar />
-
-      {/* 2. Top Header / Navbar */}
+      {/* Top Header / Navbar */}
       <Navbar 
         onNavigate={(tab) => setCurrentTab(tab)}
         onToggleMobileMenu={() => setMobileMenuOpen(!mobileMenuOpen)}
