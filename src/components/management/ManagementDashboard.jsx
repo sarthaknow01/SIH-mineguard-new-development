@@ -7,6 +7,7 @@ import { Building2, Layers, AlertTriangle, ShieldCheck, Activity, FileText, Arro
 import { ComplianceTrendChart, RiskDistributionChart } from './RiskTrendCharts';
 import MineComparisonTable from './MineComparisonTable';
 import MineDetailModal from './MineDetailModal';
+import InteractiveGisMap from '../common/InteractiveGisMap';
 
 export default function ManagementDashboard({ onNavigate }) {
   const { mines, violations, correctiveActions, certificates, workers, getOverdueActions, getMTTR, getRecurringViolations } = useData();
@@ -113,6 +114,9 @@ export default function ManagementDashboard({ onNavigate }) {
           <RiskDistributionChart violations={violations} />
         </div>
       </div>
+
+      {/* Interactive GIS Spatial Hazard Map */}
+      <InteractiveGisMap initialMineFilter="ALL" />
 
       {/* Comparison Benchmark Table */}
       <MineComparisonTable

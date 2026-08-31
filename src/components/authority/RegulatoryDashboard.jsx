@@ -7,6 +7,7 @@ import { Landmark, Scale, AlertTriangle, ShieldCheck, FileText, ArrowRight } fro
 import MineComparisonTable from '../management/MineComparisonTable';
 import MineDetailModal from '../management/MineDetailModal';
 import IssueDirectiveModal from './IssueDirectiveModal';
+import InteractiveGisMap from '../common/InteractiveGisMap';
 
 export default function RegulatoryDashboard({ onNavigate }) {
   const { mines, violations, correctiveActions } = useData();
@@ -102,6 +103,9 @@ export default function RegulatoryDashboard({ onNavigate }) {
           </div>
         );
       })()}
+
+      {/* Interactive GIS Spatial Hazard Map */}
+      <InteractiveGisMap initialMineFilter="ALL" />
 
       {/* Mine Comparison Table */}
       <MineComparisonTable
