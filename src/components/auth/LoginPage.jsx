@@ -65,7 +65,7 @@ export default function LoginPage() {
         <div className="w-full lg:w-7/12 space-y-10">
           
           {/* Top Brand Official Logo */}
-          <div className="flex items-center">
+          <div className="flex items-center -mb-8">
             <img 
               src={officialLogoPath} 
               alt="MINEGUARD" 
