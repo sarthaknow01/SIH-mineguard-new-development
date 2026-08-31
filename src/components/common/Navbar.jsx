@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useData } from '../../context/DataContext';
 import { useTheme } from '../../context/ThemeContext';
-import { Bell, LogOut, Shield, User, Clock, AlertTriangle, CheckCircle, Flame, Menu, X, Sun, Moon } from 'lucide-react';
+import { Bell, LogOut, Shield, User, Clock, AlertTriangle, CheckCircle, Flame, Menu, X, Sun, Moon, Wifi, WifiOff, RefreshCw } from 'lucide-react';
 import { formatDateTime } from '../../utils/dateHelpers';
+import { subscribeSyncStatus, triggerAutoSync } from '../../utils/offlineSyncManager';
+import PendingSyncModal from '../inspector/PendingSyncModal';
 
 export default function Navbar({ onNavigate, onToggleMobileMenu, isMobileMenuOpen }) {
   const { currentUser, logout } = useAuth();
   const { alerts, markAlertRead } = useData();
   const { theme, toggleTheme } = useTheme();
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showSyncModal, setShowSyncModal] = useState(false);
+  const [syncState, setSyncState] = useState({ isOnline: navigator.onLine, isSyncing: false, pendingCount: 0 });
+
+  useEffect(() => {
+    const unsubscribe = subscribeSyncStatus((state) => {
+      setSyncState(state);
+    });
+    return unsubscribe;
+  }, []);
 
   // Filter alerts relevant to current role
   const roleKey = currentUser?.role?.toLowerCase();
@@ -50,8 +61,37 @@ export default function Navbar({ onNavigate, onToggleMobileMenu, isMobileMenuOpe
         </div>
       </div>
 
-      {/* Right User & Notification Controls */}
-      <div className="flex items-center gap-2.5 sm:gap-4">
+      {/* Right Controls: Online/Offline Pill, Theme, Notifications, User */}
+      <div className="flex items-center gap-2 sm:gap-3.5">
+        {/* Network & Offline Sync Status Pill */}
+        <button
+          onClick={() => setShowSyncModal(true)}
+          className={`px-2.5 py-1.5 rounded-lg text-xs font-mono font-bold flex items-center gap-1.5 border transition-all ${
+            !syncState.isOnline
+              ? 'bg-amber-500/15 border-amber-500/40 text-amber-300 animate-pulse'
+              : syncState.pendingCount > 0
+              ? 'bg-blue-500/15 border-blue-500/40 text-blue-300'
+              : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
+          }`}
+          title="Click to view offline queue & sync status"
+        >
+          {!syncState.isOnline ? (
+            <>
+              <WifiOff className="w-3.5 h-3.5 text-amber-400" />
+              <span>OFFLINE {syncState.pendingCount > 0 ? `(${syncState.pendingCount} Pending)` : ''}</span>
+            </>
+          ) : syncState.pendingCount > 0 ? (
+            <>
+              <RefreshCw className={`w-3.5 h-3.5 text-blue-400 ${syncState.isSyncing ? 'animate-spin' : ''}`} />
+              <span>ONLINE ({syncState.pendingCount} Pending Sync)</span>
+            </>
+          ) : (
+            <>
+              <Wifi className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="hidden sm:inline">ONLINE</span>
+            </>
+          )}
+        </button>
         {/* Theme Switcher Button */}
         <button
           onClick={toggleTheme}
@@ -149,6 +189,11 @@ export default function Navbar({ onNavigate, onToggleMobileMenu, isMobileMenuOpe
           </div>
         )}
       </div>
+
+      <PendingSyncModal
+        isOpen={showSyncModal}
+        onClose={() => setShowSyncModal(false)}
+      />
     </header>
   );
 }

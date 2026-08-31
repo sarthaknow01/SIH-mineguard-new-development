@@ -14,6 +14,7 @@ import {
 import { calculateCertificateStatus, getTodayDateString } from '../utils/dateHelpers';
 import { evaluateRisk } from '../utils/aiRiskEngine';
 import { uploadFileToR2, mapSupabaseToFileReference } from '../utils/r2StorageService';
+import { savePendingInspection, savePendingViolation, savePendingEvidence } from '../utils/offlineSyncManager';
 
 const DataContext = createContext();
 
@@ -703,19 +704,46 @@ export function DataProvider({ children }) {
     localStorage.setItem(STORAGE_KEY_PREFIX + 'fileReferences', JSON.stringify(fileReferences));
   }, [mines, workers, certificates, inspections, violations, alerts, correctiveActions, auditTrail, sosAlerts, fileReferences]);
 
-  // Upload file to Cloudflare R2 and store metadata in Supabase file_references
+  // Upload file to Backblaze B2 and store metadata in Supabase file_references (Online or Offline IndexedDB Queue)
   const uploadFileReference = async ({ file, relatedRecordType, relatedRecordId, uploadedBy }) => {
     if (!file) return null;
-    const fileRef = await uploadFileToR2({
-      file,
-      relatedRecordType,
-      relatedRecordId,
-      uploadedBy
-    });
-    if (fileRef) {
-      setFileReferences(prev => [fileRef, ...prev.filter(f => f.fileId !== fileRef.fileId)]);
+
+    if (!navigator.onLine) {
+      console.log('Offline: Queuing evidence Blob in IndexedDB for later B2 upload.');
+      const pendingEv = await savePendingEvidence({ file, relatedRecordType, relatedRecordId, uploadedBy });
+      const tempRef = {
+        fileId: pendingEv.fileId,
+        fileName: pendingEv.fileName,
+        fileType: pendingEv.fileType,
+        fileSize: pendingEv.fileSize,
+        r2ObjectKey: '',
+        fileUrl: '',
+        uploadedBy: pendingEv.uploadedBy,
+        uploadedAt: pendingEv.createdAt,
+        relatedRecordType: pendingEv.relatedRecordType,
+        relatedRecordId: pendingEv.relatedRecordId,
+        syncStatus: 'PENDING',
+      };
+      setFileReferences(prev => [tempRef, ...prev]);
+      return tempRef;
     }
-    return fileRef;
+
+    try {
+      const fileRef = await uploadFileToR2({
+        file,
+        relatedRecordType,
+        relatedRecordId,
+        uploadedBy
+      });
+      if (fileRef) {
+        setFileReferences(prev => [fileRef, ...prev.filter(f => f.fileId !== fileRef.fileId)]);
+      }
+      return fileRef;
+    } catch (err) {
+      console.warn('Network error during evidence upload, queuing in IndexedDB:', err);
+      const pendingEv = await savePendingEvidence({ file, relatedRecordType, relatedRecordId, uploadedBy });
+      return pendingEv;
+    }
   };
 
   // BroadcastChannel for 0ms instant real-time sync across tabs/windows
@@ -1465,18 +1493,24 @@ export function DataProvider({ children }) {
     });
   };
 
-  // 1. Submit a New Inspection
+  // 1. Submit a New Inspection (Online or Offline IndexedDB Queue)
   const createInspection = (inspectionData, actorName) => {
-    const newId = `INSP-2026-${String(inspections.length + 1).padStart(3, '0')}`;
+    const newId = inspectionData.inspectionId || `INSP-2026-${String(inspections.length + 1).padStart(3, '0')}`;
     const newInspection = {
       ...inspectionData,
       inspectionId: newId,
       date: getTodayDateString(),
       status: 'COMPLETED',
+      syncStatus: navigator.onLine ? 'SYNCED' : 'PENDING',
     };
 
     setInspections(prev => [newInspection, ...prev]);
-    saveInspectionToSupabase(newInspection);
+
+    if (navigator.onLine) {
+      saveInspectionToSupabase(newInspection);
+    } else {
+      savePendingInspection(newInspection);
+    }
 
     // Add audit log
     addAuditLog(actorName, 'INSPECTOR', 'INSPECTION_SUBMITTED', 
@@ -1488,9 +1522,9 @@ export function DataProvider({ children }) {
     return newInspection;
   };
 
-  // 2. Report a Violation (with AI Risk calculation)
+  // 2. Report a Violation (Online or Offline IndexedDB Queue)
   const reportViolation = (violationData, actorName) => {
-    const newId = `VIO-2026-${String(violations.length + 1).padStart(3, '0')}`;
+    const newId = violationData.violationId || `VIO-2026-${String(violations.length + 1).padStart(3, '0')}`;
     
     // Find worker if linked
     const worker = workers.find(w => w.workerId === violationData.workerId);
@@ -1539,11 +1573,17 @@ export function DataProvider({ children }) {
       riskLevel: aiRisk.level,
       aiExplanation: aiRisk.summary + ' — ' + aiRisk.reasons.join(' '),
       reportedBy: actorName || 'Inspector INS-001',
+      syncStatus: navigator.onLine ? 'SYNCED' : 'PENDING',
     };
 
     const updatedViolations = [newViolation, ...violations];
     setViolations(updatedViolations);
-    saveViolationToSupabase(newViolation);
+
+    if (navigator.onLine) {
+      saveViolationToSupabase(newViolation);
+    } else {
+      savePendingViolation(newViolation);
+    }
 
     // Automatically generate system Alert for Mine Officer and Management
     const newAlert = {

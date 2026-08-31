@@ -118,10 +118,11 @@ export default function InspectionRunner({ onComplete }) {
     }, currentUser?.name);
 
     setSubmittedInspection(newInsp);
+    const offlineNotice = !navigator.onLine ? ' (Saved Offline — Pending Sync)' : '';
     if (hasFailures) {
       setShowViolationModal(true);
     } else {
-      setInspectionSuccessMsg(`Inspection ${newInsp.inspectionId} submitted successfully with 100% PASS score.`);
+      setInspectionSuccessMsg(`Inspection ${newInsp.inspectionId} submitted successfully${offlineNotice}.`);
     }
   };
 
