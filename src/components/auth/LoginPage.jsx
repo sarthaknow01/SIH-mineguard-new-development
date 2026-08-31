@@ -69,8 +69,8 @@ export default function LoginPage() {
             <img 
               src={officialLogoPath} 
               alt="MINEGUARD" 
-              style={{ height: '80px', width: 'auto' }}
-              className="object-contain shrink-0"
+              style={{ width: '400px', height: 'auto' }}
+              className="object-contain shrink-0 max-w-full"
             />
           </div>
 
