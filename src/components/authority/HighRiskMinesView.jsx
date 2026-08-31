@@ -5,7 +5,9 @@ import { AlertTriangle, ShieldAlert, ArrowRight } from 'lucide-react';
 
 export default function HighRiskMinesView({ onSelectMine }) {
   const { mines, violations } = useData();
-  const highRiskList = mines.filter(m => m.riskLevel === 'HIGH' || m.complianceScore < 75);
+  const highRiskList = [...mines]
+    .filter(m => m.riskLevel === 'HIGH' || m.complianceScore < 75)
+    .sort((a, b) => a.complianceScore - b.complianceScore);
 
   return (
     <div className="space-y-6">

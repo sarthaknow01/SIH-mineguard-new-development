@@ -10,14 +10,17 @@ import { useAuth } from '../../context/AuthContext';
 export default function WorkerRegistry() {
   const { workers, certificates, mines, violations } = useData();
   const { currentUser } = useAuth();
-  const [selectedMine, setSelectedMine] = useState(currentUser?.role === 'OFFICER' ? (currentUser.mineId || 'MINE-01') : 'ALL');
+  const isSingleMineRole = currentUser?.role === 'OFFICER' || currentUser?.role === 'INSPECTOR';
+  const assignedMine = mines.find(m => m.mineId === currentUser?.mineId) || mines[0];
+  const [selectedMine, setSelectedMine] = useState(isSingleMineRole ? (currentUser?.mineId || 'MINE-01') : 'ALL');
   const [selectedZone, setSelectedZone] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
   const [showAddCertModal, setShowAddCertModal] = useState(false);
   const [targetWorker, setTargetWorker] = useState(null);
 
   const filteredWorkers = workers.filter(w => {
-    if (selectedMine !== 'ALL' && w.mineId !== selectedMine) return false;
+    const activeMineFilter = isSingleMineRole ? currentUser.mineId : selectedMine;
+    if (activeMineFilter !== 'ALL' && w.mineId !== activeMineFilter) return false;
     if (selectedZone !== 'ALL' && w.zoneId !== selectedZone && w.zoneName !== selectedZone && w.area !== selectedZone) return false;
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
@@ -62,16 +65,18 @@ export default function WorkerRegistry() {
         <div>
           <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Filter by Mine</label>
           <select
-            value={selectedMine}
-            disabled={currentUser?.role === 'OFFICER'}
+            value={isSingleMineRole ? currentUser.mineId : selectedMine}
+            disabled={isSingleMineRole}
             onChange={(e) => {
-              setSelectedMine(e.target.value);
-              setSelectedZone('ALL');
+              if (!isSingleMineRole) {
+                setSelectedMine(e.target.value);
+                setSelectedZone('ALL');
+              }
             }}
-            className={`w-full px-2.5 py-1.5 bg-coal-950 border border-slate-700 rounded-lg text-white text-xs focus:outline-none ${currentUser?.role === 'OFFICER' ? 'opacity-80 cursor-not-allowed border-amber-500/40 text-amber-300 font-semibold' : ''}`}
+            className={`w-full px-2.5 py-1.5 bg-coal-950 border border-slate-700 rounded-lg text-white text-xs focus:outline-none ${isSingleMineRole ? 'opacity-90 cursor-not-allowed border-amber-500/40 text-amber-300 font-semibold' : ''}`}
           >
-            {currentUser?.role === 'OFFICER' ? (
-              <option value={currentUser.mineId || 'MINE-01'}>Demo Mine Alpha (Assigned Unit)</option>
+            {isSingleMineRole ? (
+              <option value={currentUser.mineId}>{assignedMine.mineName || 'Assigned Unit'} (Assigned Unit)</option>
             ) : (
               <>
                 <option value="ALL">All Mines ({workers.length} Personnel)</option>

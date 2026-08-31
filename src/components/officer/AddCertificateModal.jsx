@@ -7,7 +7,7 @@ import { getTodayDateString } from '../../utils/dateHelpers';
 import { UploadCloud, FileCheck, CheckCircle2 } from 'lucide-react';
 
 export default function AddCertificateModal({ isOpen, onClose, initialData = {} }) {
-  const { workers, mines, addOrUpdateCertificate, violations } = useData();
+  const { workers, mines, addOrUpdateCertificate, violations, uploadFileReference } = useData();
   const { currentUser } = useAuth();
   const fileInputRef = useRef(null);
 
@@ -19,6 +19,7 @@ export default function AddCertificateModal({ isOpen, onClose, initialData = {} 
   const [expiryDate, setExpiryDate] = useState('2028-08-27'); // 2 years in future (VALID)
   const [issuingAuthority, setIssuingAuthority] = useState('State Directorate of Electrical & Mining Safety (Demo)');
   const [docName, setDocName] = useState('renewed_competency_certificate_2026.pdf');
+  const [selectedFileObj, setSelectedFileObj] = useState(null);
   const [linkedViolationId, setLinkedViolationId] = useState(initialData.linkedViolationId || '');
 
   useEffect(() => {
@@ -31,6 +32,7 @@ export default function AddCertificateModal({ isOpen, onClose, initialData = {} 
       setExpiryDate('2028-08-27');
       setIssuingAuthority('State Directorate of Electrical & Mining Safety (Demo)');
       setDocName('renewed_competency_certificate_2026.pdf');
+      setSelectedFileObj(null);
       setLinkedViolationId(initialData.linkedViolationId || '');
     }
   }, [isOpen, initialData, workers]);
@@ -42,12 +44,27 @@ export default function AddCertificateModal({ isOpen, onClose, initialData = {} 
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
     if (file) {
+      setSelectedFileObj(file);
       setDocName(file.name);
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (selectedFileObj && uploadFileReference) {
+      try {
+        await uploadFileReference({
+          file: selectedFileObj,
+          relatedRecordType: 'WORKER_CERTIFICATE',
+          relatedRecordId: certificateId,
+          uploadedBy: currentUser?.name || 'Mine Officer'
+        });
+      } catch (err) {
+        console.warn('R2 upload notice:', err);
+      }
+    }
+
     addOrUpdateCertificate({
       certificateId,
       workerId,

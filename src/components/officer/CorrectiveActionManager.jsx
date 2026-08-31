@@ -9,7 +9,7 @@ import AddCertificateModal from './AddCertificateModal';
 import Modal from '../common/Modal';
 
 export default function CorrectiveActionManager() {
-  const { correctiveActions, violations, mines, updateCorrectiveAction } = useData();
+  const { correctiveActions, violations, mines, updateCorrectiveAction, uploadFileReference } = useData();
   const { currentUser } = useAuth();
   const [selectedViolationForAction, setSelectedViolationForAction] = useState(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -20,6 +20,7 @@ export default function CorrectiveActionManager() {
   const [actionForRemediation, setActionForRemediation] = useState(null);
   const [remediationNotes, setRemediationNotes] = useState('');
   const [remediationDoc, setRemediationDoc] = useState('remediation_evidence_report.pdf');
+  const [remediationFileObj, setRemediationFileObj] = useState(null);
 
   // Filters
   const [selectedMine, setSelectedMine] = useState(currentUser?.role === 'OFFICER' ? (currentUser.mineId || 'MINE-01') : 'ALL');
@@ -51,9 +52,22 @@ export default function CorrectiveActionManager() {
     setShowAddCertModal(true);
   };
 
-  const handleSubmitRemediation = (e) => {
+  const handleSubmitRemediation = async (e) => {
     e.preventDefault();
     if (!actionForRemediation) return;
+
+    if (remediationFileObj && uploadFileReference) {
+      try {
+        await uploadFileReference({
+          file: remediationFileObj,
+          relatedRecordType: 'CORRECTIVE_ACTION',
+          relatedRecordId: actionForRemediation.actionId,
+          uploadedBy: currentUser?.name || 'Mine Officer'
+        });
+      } catch (err) {
+        console.warn('R2 remediation upload notice:', err);
+      }
+    }
 
     updateCorrectiveAction(actionForRemediation.actionId, {
       status: 'VERIFICATION REQUIRED',
@@ -309,14 +323,31 @@ export default function CorrectiveActionManager() {
             </div>
 
             <div>
-              <label className="block font-semibold text-slate-300 mb-1">Evidence Document Reference</label>
-              <input
-                type="text"
-                value={remediationDoc}
-                onChange={(e) => setRemediationDoc(e.target.value)}
-                className="w-full px-3 py-2 bg-coal-950 border border-slate-700 rounded-lg text-white font-mono focus:outline-none focus:border-blue-500"
-                required
-              />
+              <label className="block font-semibold text-slate-300 mb-1">Evidence Document Attachment (Cloudflare R2 Storage)</label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  value={remediationDoc}
+                  onChange={(e) => setRemediationDoc(e.target.value)}
+                  className="flex-1 px-3 py-2 bg-coal-950 border border-slate-700 rounded-lg text-white font-mono focus:outline-none focus:border-blue-500"
+                  required
+                />
+                <label className="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-semibold border border-slate-700 cursor-pointer flex items-center gap-1.5 shrink-0">
+                  <FileText className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Attach File</span>
+                  <input
+                    type="file"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        setRemediationFileObj(file);
+                        setRemediationDoc(file.name);
+                      }
+                    }}
+                  />
+                </label>
+              </div>
             </div>
 
             <div className="flex justify-end gap-2 pt-2 border-t border-slate-800">

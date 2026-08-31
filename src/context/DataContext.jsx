@@ -13,6 +13,7 @@ import {
 } from '../utils/seedData';
 import { calculateCertificateStatus, getTodayDateString } from '../utils/dateHelpers';
 import { evaluateRisk } from '../utils/aiRiskEngine';
+import { uploadFileToR2, mapSupabaseToFileReference } from '../utils/r2StorageService';
 
 const DataContext = createContext();
 
@@ -301,49 +302,17 @@ function mapSupabaseToViolation(row) {
 
 async function saveViolationToSupabase(v) {
   if (!v || !v.violationId) return;
-  console.log('SUPABASE SAVE VIOLATION START:', v);
   try {
-    const dbRow = {
-      violation_id: v.violationId,
-      mine_id: v.mineId || null,
-      mine_name: v.mineName || null,
-      area: v.area || null,
-      zone_id: v.zoneId || v.zone_id || null,
-      category: v.category || null,
-      severity: v.severity || null,
-      worker_id: v.workerId || null,
-      worker_name: v.workerName || null,
-      certificate_id: v.certificateId || null,
-      description: v.description || '',
-      reported_by: v.reportedBy || null,
-      reported_date: v.reportedDate || v.date || null,
-      status: v.status || 'OPEN',
-      evidence: v.evidence || null,
-      risk_score: v.riskScore ?? null,
-      risk_level: v.riskLevel || null,
-      ai_explanation: v.aiExplanation || null,
-      inspection_id: v.inspectionId || null,
-      resolved_date: v.resolvedDate || null,
-      verification_notes: v.verificationNotes || null,
-    };
-
-    console.log('SUPABASE INSERT VIOLATION PAYLOAD:', dbRow);
-
+    const dbRow = mapViolationToSupabaseRow(v);
     const { data, error } = await supabase
       .from('violations')
-      .insert(dbRow)
+      .upsert(dbRow, { onConflict: 'violation_id' })
       .select();
 
-    console.log('SUPABASE INSERT VIOLATION RESULT:', { data, error });
-
     if (error) {
-      console.error('SUPABASE VIOLATION ERROR FULL:', {
-        code: error.code,
-        message: error.message,
-        details: error.details,
-        hint: error.hint
-      });
+      console.error('Supabase saveViolationToSupabase error:', error);
     }
+    return data;
   } catch (err) {
     console.error('Supabase save violation exception:', err);
   }
@@ -382,7 +351,7 @@ async function saveViolationsToSupabase(vArr) {
     const rows = vArr.map(mapViolationToSupabaseRow).filter(Boolean);
     const { data, error } = await supabase
       .from('violations')
-      .insert(rows)
+      .upsert(rows, { onConflict: 'violation_id' })
       .select();
 
     if (error) {
@@ -438,7 +407,7 @@ async function saveCorrectiveActionsToSupabase(actionsArr) {
     const rows = actionsArr.map(mapCorrectiveActionToSupabaseRow).filter(Boolean);
     const { data, error } = await supabase
       .from('corrective_actions')
-      .insert(rows)
+      .upsert(rows, { onConflict: 'action_id' })
       .select();
 
     if (error) {
@@ -456,11 +425,11 @@ async function saveCorrectiveActionToSupabase(ca) {
     const row = mapCorrectiveActionToSupabaseRow(ca);
     const { data, error } = await supabase
       .from('corrective_actions')
-      .insert(row)
+      .upsert(row, { onConflict: 'action_id' })
       .select();
 
     if (error) {
-      console.error('Supabase single corrective_action insert error:', error);
+      console.error('Supabase single corrective_action upsert error:', error);
     }
     return data;
   } catch (err) {
@@ -696,6 +665,7 @@ export function DataProvider({ children }) {
   const [correctiveActions, setCorrectiveActions] = useState(() => loadFromStorage('correctiveActions', DEMO_CORRECTIVE_ACTIONS));
   const [auditTrail, setAuditTrail] = useState(() => loadFromStorage('auditTrail', DEMO_AUDIT_TRAIL));
   const [sosAlerts, setSosAlerts] = useState(() => loadFromStorage('sos_alerts', []));
+  const [fileReferences, setFileReferences] = useState(() => loadFromStorage('fileReferences', []));
   const sosRealtimeChannelRef = useRef(null);
 
   function loadFromStorage(key, fallback) {
@@ -717,7 +687,23 @@ export function DataProvider({ children }) {
     localStorage.setItem(STORAGE_KEY_PREFIX + 'correctiveActions', JSON.stringify(correctiveActions));
     localStorage.setItem(STORAGE_KEY_PREFIX + 'auditTrail', JSON.stringify(auditTrail));
     localStorage.setItem(STORAGE_KEY_PREFIX + 'sos_alerts', JSON.stringify(sosAlerts));
-  }, [mines, workers, certificates, inspections, violations, alerts, correctiveActions, auditTrail, sosAlerts]);
+    localStorage.setItem(STORAGE_KEY_PREFIX + 'fileReferences', JSON.stringify(fileReferences));
+  }, [mines, workers, certificates, inspections, violations, alerts, correctiveActions, auditTrail, sosAlerts, fileReferences]);
+
+  // Upload file to Cloudflare R2 and store metadata in Supabase file_references
+  const uploadFileReference = async ({ file, relatedRecordType, relatedRecordId, uploadedBy }) => {
+    if (!file) return null;
+    const fileRef = await uploadFileToR2({
+      file,
+      relatedRecordType,
+      relatedRecordId,
+      uploadedBy
+    });
+    if (fileRef) {
+      setFileReferences(prev => [fileRef, ...prev.filter(f => f.fileId !== fileRef.fileId)]);
+    }
+    return fileRef;
+  };
 
   // BroadcastChannel for 0ms instant real-time sync across tabs/windows
   useEffect(() => {
@@ -876,6 +862,32 @@ export function DataProvider({ children }) {
           });
         }
 
+        // Mines
+        const { data: mData } = await supabase.from('mines').select('*');
+        if (mData && mData.length > 0) {
+          const mappedM = mData.map(mapSupabaseToMine).filter(Boolean);
+          setMines(prev => {
+            const map = new Map();
+            mappedM.forEach(item => map.set(item.mineId, item));
+            const merged = Array.from(map.values());
+            localStorage.setItem(STORAGE_KEY_PREFIX + 'mines', JSON.stringify(merged));
+            return merged;
+          });
+        }
+
+        // Workers
+        const { data: wData } = await supabase.from('workers').select('*');
+        if (wData && wData.length > 0) {
+          const mappedW = wData.map(mapSupabaseToWorker).filter(Boolean);
+          setWorkers(prev => {
+            const map = new Map();
+            mappedW.forEach(item => map.set(item.workerId, item));
+            const merged = Array.from(map.values());
+            localStorage.setItem(STORAGE_KEY_PREFIX + 'workers', JSON.stringify(merged));
+            return merged;
+          });
+        }
+
         // Certificates
         const { data: cData } = await supabase.from('certificates').select('*');
         if (cData && cData.length > 0) {
@@ -917,14 +929,91 @@ export function DataProvider({ children }) {
             return merged;
           });
         }
+
+        // File References (Cloudflare R2 metadata stored in Supabase)
+        const { data: fData } = await supabase.from('file_references').select('*').order('uploaded_at', { ascending: false });
+        if (fData && fData.length > 0) {
+          const mappedF = fData.map(mapSupabaseToFileReference).filter(Boolean);
+          setFileReferences(prev => {
+            const map = new Map();
+            mappedF.forEach(item => map.set(item.fileId, item));
+            prev.forEach(item => { if (!map.has(item.fileId)) map.set(item.fileId, item); });
+            const merged = Array.from(map.values());
+            localStorage.setItem(STORAGE_KEY_PREFIX + 'fileReferences', JSON.stringify(merged));
+            return merged;
+          });
+        }
       } catch (err) {
         console.warn('Supabase DB multi-table poll error:', err);
       }
     }
 
     syncAllSupabaseTables();
-    const interval = setInterval(syncAllSupabaseTables, 2000);
+    const interval = setInterval(syncAllSupabaseTables, 4000);
     return () => clearInterval(interval);
+  }, []);
+
+  // Native Supabase Realtime WebSocket Subscriptions for live multi-device synchronization
+  useEffect(() => {
+    const channel = supabase
+      .channel('mineguard_live_realtime_channel')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'inspections' }, (payload) => {
+        if (payload.new) {
+          const item = mapSupabaseToInspection(payload.new);
+          if (item) {
+            setInspections(prev => {
+              const map = new Map();
+              prev.forEach(i => map.set(i.inspectionId, i));
+              map.set(item.inspectionId, item);
+              return Array.from(map.values());
+            });
+          }
+        }
+      })
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'violations' }, (payload) => {
+        if (payload.new) {
+          const item = mapSupabaseToViolation(payload.new);
+          if (item) {
+            setViolations(prev => {
+              const map = new Map();
+              prev.forEach(v => map.set(v.violationId, v));
+              map.set(item.violationId, item);
+              return Array.from(map.values());
+            });
+          }
+        }
+      })
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'corrective_actions' }, (payload) => {
+        if (payload.new) {
+          const item = mapSupabaseToCorrectiveAction(payload.new);
+          if (item) {
+            setCorrectiveActions(prev => {
+              const map = new Map();
+              prev.forEach(ca => map.set(ca.actionId, ca));
+              map.set(item.actionId, item);
+              return Array.from(map.values());
+            });
+          }
+        }
+      })
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'alerts' }, (payload) => {
+        if (payload.new) {
+          const item = mapSupabaseToAlert(payload.new);
+          if (item) {
+            setAlerts(prev => {
+              const map = new Map();
+              prev.forEach(a => map.set(a.alertId, a));
+              map.set(item.alertId, item);
+              return Array.from(map.values());
+            });
+          }
+        }
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   // Listen for storage events to synchronize data across multiple tabs/windows in real time
@@ -1059,22 +1148,22 @@ export function DataProvider({ children }) {
   useEffect(() => {
     async function initSupabaseInspections() {
       try {
-        // Ensure demo inspections exist in Supabase
-        await saveInspectionsToSupabase(DEMO_INSPECTIONS);
-
-        // Fetch inspections from Supabase
         const { data, error } = await supabase.from('inspections').select('*');
         if (error) {
           console.error('Error fetching inspections from Supabase:', error);
           return;
         }
 
-        if (data && data.length > 0) {
+        if (!data || data.length === 0) {
+          await saveInspectionsToSupabase(DEMO_INSPECTIONS);
+          const { data: seeded } = await supabase.from('inspections').select('*');
+          if (seeded) setInspections(seeded.map(mapSupabaseToInspection).filter(Boolean));
+        } else {
           const mapped = data.map(mapSupabaseToInspection).filter(Boolean);
           setInspections(prev => {
             const map = new Map();
-            prev.forEach(i => map.set(i.inspectionId, i));
             mapped.forEach(i => map.set(i.inspectionId, i));
+            prev.forEach(i => { if (!map.has(i.inspectionId)) map.set(i.inspectionId, i); });
             return Array.from(map.values());
           });
         }
@@ -1090,18 +1179,21 @@ export function DataProvider({ children }) {
   useEffect(() => {
     async function fetchSupabaseViolations() {
       try {
-        await saveViolationsToSupabase(DEMO_VIOLATIONS);
         const { data, error } = await supabase.from('violations').select('*');
         if (error) {
           console.error('Error fetching violations from Supabase:', error);
           return;
         }
-        if (data && data.length > 0) {
+        if (!data || data.length === 0) {
+          await saveViolationsToSupabase(DEMO_VIOLATIONS);
+          const { data: seeded } = await supabase.from('violations').select('*');
+          if (seeded) setViolations(seeded.map(mapSupabaseToViolation).filter(Boolean));
+        } else {
           const mapped = data.map(mapSupabaseToViolation).filter(Boolean);
           setViolations(prev => {
             const map = new Map();
-            prev.forEach(v => map.set(v.violationId, v));
             mapped.forEach(v => map.set(v.violationId, v));
+            prev.forEach(v => { if (!map.has(v.violationId)) map.set(v.violationId, v); });
             return Array.from(map.values());
           });
         }
@@ -1117,22 +1209,22 @@ export function DataProvider({ children }) {
   useEffect(() => {
     async function initSupabaseCorrectiveActions() {
       try {
-        // Ensure demo corrective actions exist in Supabase
-        await saveCorrectiveActionsToSupabase(DEMO_CORRECTIVE_ACTIONS);
-
-        // Fetch corrective actions from Supabase
         const { data, error } = await supabase.from('corrective_actions').select('*');
         if (error) {
           console.error('Error fetching corrective actions from Supabase:', error);
           return;
         }
 
-        if (data && data.length > 0) {
+        if (!data || data.length === 0) {
+          await saveCorrectiveActionsToSupabase(DEMO_CORRECTIVE_ACTIONS);
+          const { data: seeded } = await supabase.from('corrective_actions').select('*');
+          if (seeded) setCorrectiveActions(seeded.map(mapSupabaseToCorrectiveAction).filter(Boolean));
+        } else {
           const mapped = data.map(mapSupabaseToCorrectiveAction).filter(Boolean);
           setCorrectiveActions(prev => {
             const map = new Map();
-            prev.forEach(ca => map.set(ca.actionId, ca));
             mapped.forEach(ca => map.set(ca.actionId, ca));
+            prev.forEach(ca => { if (!map.has(ca.actionId)) map.set(ca.actionId, ca); });
             return Array.from(map.values());
           });
         }
@@ -1148,22 +1240,22 @@ export function DataProvider({ children }) {
   useEffect(() => {
     async function initSupabaseAlerts() {
       try {
-        // Ensure demo alerts exist in Supabase
-        await saveAlertsToSupabase(DEMO_ALERTS);
-
-        // Fetch alerts from Supabase
         const { data, error } = await supabase.from('alerts').select('*');
         if (error) {
           console.error('Error fetching alerts from Supabase:', error);
           return;
         }
 
-        if (data && data.length > 0) {
+        if (!data || data.length === 0) {
+          await saveAlertsToSupabase(DEMO_ALERTS);
+          const { data: seeded } = await supabase.from('alerts').select('*');
+          if (seeded) setAlerts(seeded.map(mapSupabaseToAlert).filter(Boolean));
+        } else {
           const mapped = data.map(mapSupabaseToAlert).filter(Boolean);
           setAlerts(prev => {
             const map = new Map();
-            prev.forEach(a => map.set(a.alertId, a));
             mapped.forEach(a => map.set(a.alertId, a));
+            prev.forEach(a => { if (!map.has(a.alertId)) map.set(a.alertId, a); });
             return Array.from(map.values());
           });
         }
@@ -1206,38 +1298,121 @@ export function DataProvider({ children }) {
     initSupabaseAuditTrail();
   }, []);
 
-  // Recalculate Mine Scores dynamically based on a multi-factor weighted compliance model
-  const recalculateMineScores = (vArr = violations, cArr = certificates, aArr = correctiveActions, wArr = workers) => {
-    const BASELINE_SCORES = {
-      'MINE-01': 88,
-      'MINE-02': 82,
-      'MINE-03': 61,
-      'MINE-04': 91,
-      'MINE-05': 73,
-    };
+  const [staffProfiles, setStaffProfiles] = useState([]);
 
+  // Fetch staff profiles from Supabase staff_profiles table on mount
+  useEffect(() => {
+    async function fetchStaffProfiles() {
+      try {
+        const { data, error } = await supabase.from('staff_profiles').select('*');
+        if (!error && data && data.length > 0) {
+          setStaffProfiles(data);
+        }
+      } catch (err) {
+        console.warn('Exception fetching staff_profiles from Supabase:', err);
+      }
+    }
+    fetchStaffProfiles();
+  }, []);
+
+  // Overdue CAPA Analytics (due_date < NOW and status != VERIFIED & CLOSED)
+  const getOverdueActions = (caList = correctiveActions) => {
+    const todayStr = getTodayDateString();
+    return caList.filter(ca => 
+      ca.status !== 'VERIFIED & CLOSED' && 
+      ca.status !== 'RESOLVED' && 
+      ca.dueDate && 
+      ca.dueDate < todayStr
+    );
+  };
+
+  // Mean Time to Remediation (MTTR) Analytics (resolved_date - created_date in days)
+  const getMTTR = (caList = correctiveActions, vList = violations) => {
+    const resolvedActions = caList.filter(ca => 
+      (ca.status === 'VERIFIED & CLOSED' || ca.status === 'RESOLVED') && ca.createdDate && ca.resolvedDate
+    );
+
+    if (resolvedActions.length === 0) {
+      const resolvedVios = vList.filter(v => v.status === 'RESOLVED' && (v.reportedDate || v.date) && v.resolvedDate);
+      if (resolvedVios.length === 0) return { avgDays: 2.5, totalResolved: 0 };
+      
+      const totalDays = resolvedVios.reduce((acc, v) => {
+        const start = new Date(v.reportedDate || v.date).getTime();
+        const end = new Date(v.resolvedDate).getTime();
+        const days = Math.max(1, Math.round((end - start) / (1000 * 60 * 60 * 24)));
+        return acc + days;
+      }, 0);
+
+      return {
+        avgDays: Math.round((totalDays / resolvedVios.length) * 10) / 10,
+        totalResolved: resolvedVios.length
+      };
+    }
+
+    const totalDays = resolvedActions.reduce((acc, ca) => {
+      const start = new Date(ca.createdDate).getTime();
+      const end = new Date(ca.resolvedDate).getTime();
+      const days = Math.max(1, Math.round((end - start) / (1000 * 60 * 60 * 24)));
+      return acc + days;
+    }, 0);
+
+    return {
+      avgDays: Math.round((totalDays / resolvedActions.length) * 10) / 10,
+      totalResolved: resolvedActions.length
+    };
+  };
+
+  // Recurring Violation Analytics (Grouped by mineId + area + category)
+  const getRecurringViolations = (vList = violations) => {
+    const groups = new Map();
+    vList.forEach(v => {
+      if (!v.mineId || !v.area || !v.category) return;
+      const key = `${v.mineId}|${v.area}|${v.category}`;
+      if (!groups.has(key)) {
+        groups.set(key, {
+          key,
+          mineId: v.mineId,
+          mineName: v.mineName || v.mineId,
+          area: v.area,
+          category: v.category,
+          count: 0,
+          violations: []
+        });
+      }
+      const g = groups.get(key);
+      g.count += 1;
+      g.violations.push(v);
+    });
+
+    return Array.from(groups.values())
+      .filter(g => g.count >= 2)
+      .sort((a, b) => b.count - a.count);
+  };
+
+  // Recalculate Mine Scores dynamically based on a multi-factor weighted compliance model (NO HARDCODED BASELINES)
+  const recalculateMineScores = (vArr = violations, cArr = certificates, aArr = correctiveActions, wArr = workers) => {
     setMines(prevMines => {
       return prevMines.map(m => {
-        const base = BASELINE_SCORES[m.mineId] ?? 80;
+        const base = 100;
         const mineViolations = vArr.filter(v => v.mineId === m.mineId);
         const openViolations = mineViolations.filter(v => v.status !== 'RESOLVED');
         const resolvedViolations = mineViolations.filter(v => v.status === 'RESOLVED');
         const activeViolationsCount = openViolations.length;
 
         const mineActions = aArr.filter(ca => ca.mineId === m.mineId);
-        const pendingActionsCount = mineActions.filter(ca => ca.status !== 'RESOLVED' && ca.status !== 'VERIFIED').length;
-        const verifiedActionsCount = mineActions.filter(ca => ca.status === 'VERIFIED' || ca.status === 'RESOLVED').length;
+        const pendingActionsCount = mineActions.filter(ca => ca.status !== 'RESOLVED' && ca.status !== 'VERIFIED & CLOSED' && ca.status !== 'VERIFIED').length;
+        const verifiedActionsCount = mineActions.filter(ca => ca.status === 'VERIFIED' || ca.status === 'VERIFIED & CLOSED' || ca.status === 'RESOLVED').length;
 
-        // 1. Violation severity impact
+        // 1. Violation severity deductions
         let violationDeduction = 0;
         openViolations.forEach(v => {
-          if (v.severity === 'CRITICAL') violationDeduction += 6;
-          else if (v.severity === 'HIGH') violationDeduction += 4;
-          else if (v.severity === 'MEDIUM') violationDeduction += 2;
-          else violationDeduction += 1;
+          if (v.severity === 'CRITICAL') violationDeduction += 12;
+          else if (v.severity === 'HIGH') violationDeduction += 8;
+          else if (v.severity === 'MEDIUM') violationDeduction += 4;
+          else violationDeduction += 2;
         });
 
-        // 2. Certificate status impact for workers of this mine
+        // 2. Certificate status deductions for workers of this mine
         const mineWorkers = wArr.filter(w => w.mineId === m.mineId);
         const mineCerts = cArr.filter(c => c.mineId === m.mineId || mineWorkers.some(w => w.workerId === c.workerId));
         let certDeduction = 0;
@@ -1247,12 +1422,19 @@ export function DataProvider({ children }) {
           else if (st === 'EXPIRING SOON') certDeduction += 1;
         });
 
-        // 3. Remediation bonus (recovering points when issues are resolved)
-        const remediationBonus = Math.min(6, (resolvedViolations.length * 2) + (verifiedActionsCount * 1));
+        // 3. Overdue CAPA deductions
+        const todayStr = getTodayDateString();
+        const overdueActionsCount = mineActions.filter(ca => 
+          ca.status !== 'RESOLVED' && ca.status !== 'VERIFIED & CLOSED' && ca.dueDate && ca.dueDate < todayStr
+        ).length;
+        const overdueDeduction = overdueActionsCount * 5;
+
+        // 4. Remediation bonus (recovering points when issues are resolved)
+        const remediationBonus = Math.min(15, (resolvedViolations.length * 3) + (verifiedActionsCount * 2));
 
         // Calculate final score constrained realistically
-        let calculatedScore = base - violationDeduction - certDeduction + remediationBonus;
-        let newScore = Math.max(45, Math.min(95, Math.round(calculatedScore)));
+        let calculatedScore = base - violationDeduction - certDeduction - overdueDeduction + remediationBonus;
+        let newScore = Math.max(40, Math.min(98, Math.round(calculatedScore)));
 
         let riskLevel = 'LOW';
         if (newScore < 70) riskLevel = 'HIGH';
@@ -1264,6 +1446,7 @@ export function DataProvider({ children }) {
           riskLevel,
           activeViolations: activeViolationsCount,
           pendingActions: pendingActionsCount,
+          overdueActions: overdueActionsCount,
         };
       });
     });
@@ -1304,6 +1487,25 @@ export function DataProvider({ children }) {
       if (cert) certStatus = calculateCertificateStatus(cert.expiryDate).status;
     }
 
+    // Auto-query Supabase database context for Recurrence (same mineId + area + category within 90 days)
+    const ninetyDaysAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    const repeatedCount = violations.filter(v => 
+      v.mineId === violationData.mineId && 
+      v.area === violationData.area && 
+      v.category === violationData.category &&
+      (v.reportedDate || v.date || '') >= ninetyDaysAgo
+    ).length;
+
+    // Auto-query Supabase database context for Overdue CAPA
+    const todayStr = getTodayDateString();
+    const hasOverdueAction = correctiveActions.some(ca => 
+      ca.mineId === violationData.mineId && 
+      ca.status !== 'VERIFIED & CLOSED' && 
+      ca.status !== 'RESOLVED' && 
+      ca.dueDate && 
+      ca.dueDate < todayStr
+    );
+
     // Evaluate Risk with Explainable AI Engine
     const aiRisk = evaluateRisk({
       category: violationData.category,
@@ -1311,7 +1513,8 @@ export function DataProvider({ children }) {
       workerRole: worker?.role || '',
       certStatus: certStatus,
       area: violationData.area,
-      repeatedCount: violations.filter(v => v.mineId === violationData.mineId && v.area === violationData.area).length
+      repeatedCount: repeatedCount,
+      hasOverdueAction: hasOverdueAction
     });
 
     const newViolation = {
@@ -1394,27 +1597,39 @@ export function DataProvider({ children }) {
     return newAction;
   };
 
-  // 3b. Update Corrective Action (e.g. submit remediation notes, moving to VERIFICATION REQUIRED)
-  const updateCorrectiveAction = (actionId, updateData, actorName) => {
+  // 3b. Update Corrective Action (e.g. submit remediation notes, moving to VERIFICATION REQUIRED or VERIFIED & CLOSED)
+  const updateCorrectiveAction = async (actionId, updateData, actorName) => {
     let linkedViolationId = null;
     let targetMineId = 'MINE-01';
 
-    const updatedActions = correctiveActions.map(ca => {
-      if (ca.actionId === actionId) {
-        linkedViolationId = ca.violationId;
-        targetMineId = ca.mineId;
-        return {
-          ...ca,
-          ...updateData,
-        };
-      }
-      return ca;
-    });
+    const targetAction = correctiveActions.find(ca => ca.actionId === actionId);
+    if (!targetAction) return;
+
+    linkedViolationId = targetAction.violationId;
+    targetMineId = targetAction.mineId;
+
+    const mergedAction = {
+      ...targetAction,
+      ...updateData,
+    };
+
+    // 1. Persist Corrective Action update to Supabase
+    try {
+      const dbRow = mapCorrectiveActionToSupabaseRow(mergedAction);
+      const { error: caErr } = await supabase
+        .from('corrective_actions')
+        .upsert(dbRow, { onConflict: 'action_id' });
+      if (caErr) console.warn('Supabase corrective_actions update notice:', caErr);
+    } catch (err) {
+      console.warn('Exception updating corrective_action in Supabase:', err);
+    }
+
+    const updatedActions = correctiveActions.map(ca => ca.actionId === actionId ? mergedAction : ca);
     setCorrectiveActions(updatedActions);
-    const targetAction = updatedActions.find(ca => ca.actionId === actionId);
-    if (targetAction) saveCorrectiveActionToSupabase(targetAction);
 
     let updatedViolations = violations;
+
+    // 2. Handle Status Advancement & Linked Violation Updates
     if (updateData.status === 'VERIFICATION REQUIRED' && linkedViolationId) {
       updatedViolations = violations.map(v => 
         v.violationId === linkedViolationId 
@@ -1440,11 +1655,74 @@ export function DataProvider({ children }) {
       };
       setAlerts(prev => [verifyAlert, ...prev]);
       saveAlertToSupabase(verifyAlert);
+    } else if ((updateData.status === 'VERIFIED & CLOSED' || updateData.status === 'RESOLVED' || updateData.status === 'CLOSED') && linkedViolationId) {
+      const todayStr = getTodayDateString();
+      updatedViolations = violations.map(v => 
+        v.violationId === linkedViolationId 
+          ? { ...v, status: 'RESOLVED', resolvedDate: todayStr } 
+          : v
+      );
+      setViolations(updatedViolations);
+      const targetV = updatedViolations.find(v => v.violationId === linkedViolationId);
+      if (targetV) saveViolationToSupabase({ ...targetV, status: 'RESOLVED', resolvedDate: todayStr });
     }
 
     addAuditLog(actorName, 'OFFICER', 'UPDATE_CORRECTIVE_ACTION', 
       `Updated Corrective Action ${actionId} status to ${updateData.status || 'UPDATED'}.`,
       targetMineId
+    );
+
+    recalculateMineScores(updatedViolations, certificates, updatedActions, workers);
+  };
+
+  // 3c. Verify & Resolve Violation (Inspector Verification Sign-Off)
+  const verifyAndResolveViolation = async (violationId, verificationNotes, actorName) => {
+    const todayStr = getTodayDateString();
+
+    // Find violation & linked corrective action
+    const targetV = violations.find(v => v.violationId === violationId);
+    if (!targetV) return;
+
+    const linkedAction = correctiveActions.find(ca => ca.violationId === violationId);
+
+    // 1. Update Violation in Supabase
+    const updatedV = {
+      ...targetV,
+      status: 'RESOLVED',
+      resolvedDate: todayStr,
+      verificationNotes: verificationNotes || 'Verified by Inspector.',
+    };
+
+    try {
+      await saveViolationToSupabase(updatedV);
+    } catch (err) {
+      console.warn('Exception updating violation to RESOLVED in Supabase:', err);
+    }
+
+    const updatedViolations = violations.map(v => v.violationId === violationId ? updatedV : v);
+    setViolations(updatedViolations);
+
+    // 2. Update linked Corrective Action in Supabase
+    let updatedActions = correctiveActions;
+    if (linkedAction) {
+      const updatedCA = {
+        ...linkedAction,
+        status: 'VERIFIED & CLOSED',
+        completionNotes: verificationNotes || linkedAction.completionNotes,
+        resolvedDate: todayStr,
+      };
+      try {
+        await saveCorrectiveActionToSupabase(updatedCA);
+      } catch (err) {
+        console.warn('Exception updating corrective_action to VERIFIED & CLOSED in Supabase:', err);
+      }
+      updatedActions = correctiveActions.map(ca => ca.actionId === linkedAction.actionId ? updatedCA : ca);
+      setCorrectiveActions(updatedActions);
+    }
+
+    addAuditLog(actorName, 'INSPECTOR', 'VERIFY_AND_RESOLVE_VIOLATION', 
+      `Inspector verified and formally resolved violation ${violationId}. Notes: ${verificationNotes}`, 
+      targetV.mineId || 'MINE-01'
     );
 
     recalculateMineScores(updatedViolations, certificates, updatedActions, workers);
@@ -1519,50 +1797,7 @@ export function DataProvider({ children }) {
     recalculateMineScores(updatedViolations, updatedCerts, updatedActions, workers);
   };
 
-  // 5. Inspector Verifies and Resolves Violation
-  const verifyAndResolveViolation = (violationId, notes, actorName) => {
-    const updatedViolations = violations.map(v => 
-      v.violationId === violationId 
-        ? { ...v, status: 'RESOLVED', resolvedDate: getTodayDateString(), verificationNotes: notes } 
-        : v
-    );
-    setViolations(updatedViolations);
-    const resolvedViolation = updatedViolations.find(v => v.violationId === violationId);
-    if (resolvedViolation) saveViolationToSupabase(resolvedViolation);
 
-    const updatedActions = correctiveActions.map(ca => 
-      ca.violationId === violationId 
-        ? { ...ca, status: 'VERIFIED', resolvedDate: getTodayDateString() } 
-        : ca
-    );
-    setCorrectiveActions(updatedActions);
-
-    const targetViolation = violations.find(v => v.violationId === violationId);
-    const targetMineId = targetViolation?.mineId || 'MINE-01';
-
-    addAuditLog(actorName, 'INSPECTOR', 'VERIFIED_CORRECTIVE_ACTION', 
-      `Inspector verified resolution for ${violationId}. Compliance issue formally marked RESOLVED.`,
-      targetMineId
-    );
-
-    // Create resolved notification alert
-    const resolvedAlert = {
-      alertId: `ALT-${Date.now().toString().slice(-4)}`,
-      type: 'ISSUE_RESOLVED',
-      severity: 'LOW',
-      title: `Violation ${violationId} Resolved & Verified`,
-      description: `Inspector ${actorName || 'INS-001'} verified compliance remediation for ${targetViolation?.mineName || targetMineId}. Mine compliance score updated.`,
-      relatedEntity: violationId,
-      mineId: targetMineId,
-      createdDate: new Date().toISOString(),
-      status: 'UNREAD',
-      targetRoles: ['officer', 'management', 'authority']
-    };
-    setAlerts(prev => [resolvedAlert, ...prev]);
-    saveAlertToSupabase(resolvedAlert);
-
-    recalculateMineScores(updatedViolations, certificates, updatedActions, workers);
-  };
 
   // 6. Issue Regulatory Directive Notice (Regulatory Authority)
   const issueDirective = (directiveData, actorName) => {
@@ -1774,6 +2009,11 @@ export function DataProvider({ children }) {
       sosAlerts,
       correctiveActions,
       auditTrail,
+      fileReferences,
+      staffProfiles,
+      getOverdueActions,
+      getMTTR,
+      getRecurringViolations,
       equipment: [],
       sendSOSAlert,
       acknowledgeSOSAlert,
@@ -1785,6 +2025,7 @@ export function DataProvider({ children }) {
       verifyAndResolveViolation,
       issueDirective,
       markAlertRead,
+      uploadFileReference,
       resetDemoData,
       recalculateMineScores
     }}>

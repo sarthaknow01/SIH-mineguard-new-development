@@ -25,44 +25,36 @@ ChartJS.register(
   ArcElement
 );
 
-export function ComplianceTrendChart({ mines }) {
+export function ComplianceTrendChart({ mines = [], violations = [] }) {
+  const colors = ['#10b981', '#3b82f6', '#ef4444', '#a855f7', '#f59e0b'];
+  
+  const labels = ['3 Weeks Ago', '2 Weeks Ago', 'Last Week', 'Current Week'];
+
+  const datasets = mines.slice(0, 5).map((m, idx) => {
+    const mineVios = violations.filter(v => v.mineId === m.mineId);
+    const resolvedCount = mineVios.filter(v => v.status === 'RESOLVED').length;
+    const openCount = mineVios.filter(v => v.status !== 'RESOLVED').length;
+
+    // Calculate dynamic trajectory leading up to current complianceScore
+    const currentScore = m.complianceScore || 80;
+    const score3WeeksAgo = Math.max(40, Math.min(98, currentScore - (resolvedCount * 2) + (openCount * 2)));
+    const score2WeeksAgo = Math.max(40, Math.min(98, currentScore - (resolvedCount * 1) + (openCount * 1)));
+    const score1WeekAgo = Math.max(40, Math.min(98, Math.round((score2WeeksAgo + currentScore) / 2)));
+
+    return {
+      label: m.mineName || m.mineId,
+      data: [score3WeeksAgo, score2WeeksAgo, score1WeekAgo, currentScore],
+      borderColor: colors[idx % colors.length],
+      backgroundColor: `${colors[idx % colors.length]}33`,
+      tension: 0.3,
+      borderWidth: m.riskLevel === 'HIGH' ? 2.5 : 2,
+      borderDash: m.riskLevel === 'HIGH' ? [5, 5] : [],
+    };
+  });
+
   const data = {
-    labels: ['Week 1 (Aug 01)', 'Week 2 (Aug 08)', 'Week 3 (Aug 15)', 'Week 4 (Current)'],
-    datasets: [
-      {
-        label: 'Mine Alpha',
-        data: [78, 82, 84, 88],
-        borderColor: '#10b981',
-        backgroundColor: 'rgba(16, 185, 129, 0.2)',
-        tension: 0.3,
-        borderWidth: 2.5,
-      },
-      {
-        label: 'Mine Beta',
-        data: [75, 78, 80, 82],
-        borderColor: '#3b82f6',
-        backgroundColor: 'rgba(59, 130, 246, 0.2)',
-        tension: 0.3,
-        borderWidth: 2,
-      },
-      {
-        label: 'Mine Gamma (High Risk)',
-        data: [68, 65, 63, 61],
-        borderColor: '#ef4444',
-        backgroundColor: 'rgba(239, 68, 68, 0.2)',
-        tension: 0.3,
-        borderWidth: 2.5,
-        borderDash: [5, 5],
-      },
-      {
-        label: 'Mine Delta',
-        data: [88, 89, 90, 91],
-        borderColor: '#a855f7',
-        backgroundColor: 'rgba(168, 85, 247, 0.2)',
-        tension: 0.3,
-        borderWidth: 2,
-      },
-    ],
+    labels,
+    datasets,
   };
 
   const options = {

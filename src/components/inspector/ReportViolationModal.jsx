@@ -6,7 +6,7 @@ import { evaluateRisk } from '../../utils/aiRiskEngine';
 import { AlertTriangle, Sparkles, UploadCloud, Camera, FileText, CheckCircle2, X } from 'lucide-react';
 
 export default function ReportViolationModal({ isOpen, onClose, initialData = {} }) {
-  const { mines, workers, certificates, reportViolation } = useData();
+  const { mines, workers, certificates, reportViolation, uploadFileReference } = useData();
   const { currentUser } = useAuth();
   
   const deviceFileInputRef = useRef(null);
@@ -21,6 +21,7 @@ export default function ReportViolationModal({ isOpen, onClose, initialData = {}
   const [description, setDescription] = useState('');
   const [evidenceName, setEvidenceName] = useState('evidence_field_capture.jpg');
   const [evidencePreviewUrl, setEvidencePreviewUrl] = useState(null);
+  const [selectedFileObj, setSelectedFileObj] = useState(null);
   const [isCameraCapture, setIsCameraCapture] = useState(false);
   const [isImageFile, setIsImageFile] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -37,6 +38,7 @@ export default function ReportViolationModal({ isOpen, onClose, initialData = {}
       setDescription(initialData?.description || '');
       setEvidenceName(initialData?.evidence || 'evidence_field_capture.jpg');
       setEvidencePreviewUrl(null);
+      setSelectedFileObj(null);
       setIsCameraCapture(false);
       setIsImageFile(false);
     }
@@ -46,6 +48,7 @@ export default function ReportViolationModal({ isOpen, onClose, initialData = {}
   const handleDeviceFileSelect = (e) => {
     const file = e.target.files?.[0];
     if (file) {
+      setSelectedFileObj(file);
       setEvidenceName(file.name);
       setIsCameraCapture(false);
       if (file.type.startsWith('image/')) {
@@ -63,6 +66,7 @@ export default function ReportViolationModal({ isOpen, onClose, initialData = {}
     const file = e.target.files?.[0];
     if (file) {
       const name = file.name || `site_camera_photo_${Date.now().toString().slice(-4)}.jpg`;
+      setSelectedFileObj(file);
       setEvidenceName(name);
       setIsCameraCapture(true);
       setIsImageFile(true);
@@ -72,6 +76,7 @@ export default function ReportViolationModal({ isOpen, onClose, initialData = {}
 
   // Remove / reset evidence file
   const handleRemoveEvidence = () => {
+    setSelectedFileObj(null);
     setEvidenceName('evidence_field_capture.jpg');
     setEvidencePreviewUrl(null);
     setIsCameraCapture(false);
@@ -90,12 +95,27 @@ export default function ReportViolationModal({ isOpen, onClose, initialData = {}
     area,
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     const selectedMine = mines.find(m => m.mineId === mineId);
+    const tempId = `VIO-2026-${Date.now().toString().slice(-4)}`;
+
+    if (selectedFileObj && uploadFileReference) {
+      try {
+        await uploadFileReference({
+          file: selectedFileObj,
+          relatedRecordType: 'VIOLATION',
+          relatedRecordId: tempId,
+          uploadedBy: currentUser?.name || 'Inspector'
+        });
+      } catch (err) {
+        console.warn('R2 upload notice:', err);
+      }
+    }
 
     reportViolation({
+      violationId: tempId,
       mineId,
       mineName: selectedMine?.mineName || 'Demo Mine',
       area,

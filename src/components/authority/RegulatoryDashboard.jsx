@@ -77,28 +77,31 @@ export default function RegulatoryDashboard({ onNavigate }) {
         />
       </div>
 
-      {/* High-Risk Spotlight Banner (e.g. Mine Gamma at 61%) */}
-      {highRiskMines.length > 0 && (
-        <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="flex items-start gap-3">
-            <AlertTriangle className="w-6 h-6 text-red-400 shrink-0 mt-0.5" />
-            <div>
-              <h4 className="text-sm font-bold text-red-300">
-                Statutory Warning: {highRiskMines[0].mineName} Compliance Index at {highRiskMines[0].complianceScore}%
-              </h4>
-              <p className="text-xs text-slate-300 mt-1 leading-relaxed">
-                Demo Mine Gamma has repeatedly flagged ventilation and blasting safety concerns. AI-assisted analysis recommends a focused audit inspection.
-              </p>
+      {/* High-Risk Spotlight Banner (Dynamically derived from lowest compliance score mine) */}
+      {highRiskMines.length > 0 && (() => {
+        const targetMine = [...highRiskMines].sort((a,b) => a.complianceScore - b.complianceScore)[0];
+        return (
+          <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="w-6 h-6 text-red-400 shrink-0 mt-0.5" />
+              <div>
+                <h4 className="text-sm font-bold text-red-300">
+                  Statutory Warning: {targetMine.mineName} ({targetMine.mineId}) Index at {targetMine.complianceScore}%
+                </h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  {targetMine.mineName} has flagged {targetMine.activeViolations || 0} active compliance breach(es) with safety compliance index at {targetMine.complianceScore}%. Dynamic statutory analysis recommends focused regulatory audit inspection.
+                </p>
+              </div>
             </div>
+            <button
+              onClick={() => setShowDirectiveModal(true)}
+              className="px-4 py-2 bg-red-600 hover:bg-red-500 text-white font-bold text-xs rounded-lg shadow-lg shrink-0 transition-colors"
+            >
+              Issue Formal Notice
+            </button>
           </div>
-          <button
-            onClick={() => setShowDirectiveModal(true)}
-            className="px-4 py-2 bg-red-600 hover:bg-red-500 text-white font-bold text-xs rounded-lg shadow-lg shrink-0 transition-colors"
-          >
-            Issue Formal Notice
-          </button>
-        </div>
-      )}
+        );
+      })()}
 
       {/* Mine Comparison Table */}
       <MineComparisonTable
