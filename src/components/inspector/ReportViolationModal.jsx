@@ -9,10 +9,15 @@ export default function ReportViolationModal({ isOpen, onClose, initialData = {}
   const { mines, workers, certificates, reportViolation, uploadFileReference } = useData();
   const { currentUser } = useAuth();
   
+  const isSingleMineRole = currentUser?.role === 'OFFICER' || currentUser?.role === 'INSPECTOR';
+
   const deviceFileInputRef = useRef(null);
   const cameraFileInputRef = useRef(null);
 
-  const [mineId, setMineId] = useState('MINE-01');
+  const [mineId, setMineId] = useState(() => {
+    if (isSingleMineRole && currentUser?.mineId) return currentUser.mineId;
+    return initialData?.mineId || 'MINE-01';
+  });
   const [area, setArea] = useState('Substation Zone 3');
   const [category, setCategory] = useState('Statutory Certification Breach');
   const [severity, setSeverity] = useState('HIGH');
@@ -68,7 +73,7 @@ export default function ReportViolationModal({ isOpen, onClose, initialData = {}
   // Sync state ONLY when modal transitions to open (isOpen === true)
   useEffect(() => {
     if (isOpen) {
-      setMineId(initialData?.mineId || 'MINE-01');
+      setMineId(isSingleMineRole && currentUser?.mineId ? currentUser.mineId : (initialData?.mineId || 'MINE-01'));
       setArea(initialData?.area || 'Substation Zone 3');
       setCategory(initialData?.category || 'Statutory Certification Breach');
       setSeverity(initialData?.severity || 'HIGH');
@@ -213,12 +218,19 @@ export default function ReportViolationModal({ isOpen, onClose, initialData = {}
             <label className="block text-xs font-semibold text-slate-300 mb-1">Target Mine</label>
             <select
               value={mineId}
+              disabled={isSingleMineRole}
               onChange={(e) => setMineId(e.target.value)}
-              className="w-full px-3 py-2 bg-coal-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
+              className={`w-full px-3 py-2 bg-coal-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500 ${isSingleMineRole ? 'opacity-80 cursor-not-allowed border-amber-500/40 text-amber-300 font-semibold' : ''}`}
             >
-              {mines.map(m => (
-                <option key={m.mineId} value={m.mineId}>{m.mineName} ({m.location.split(',')[0]})</option>
-              ))}
+              {isSingleMineRole ? (
+                <option value={mineId}>
+                  {(mines.find(m => m.mineId === mineId)?.mineName || currentUser?.mineName || 'Assigned Mine')} ({mineId}) (Assigned Unit)
+                </option>
+              ) : (
+                mines.map(m => (
+                  <option key={m.mineId} value={m.mineId}>{m.mineName} ({m.location.split(',')[0]})</option>
+                ))
+              )}
             </select>
           </div>
 

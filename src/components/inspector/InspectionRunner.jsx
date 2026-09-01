@@ -8,7 +8,15 @@ export default function InspectionRunner({ onComplete }) {
   const { mines, workers, certificates, createInspection } = useData();
   const { currentUser } = useAuth();
 
-  const [mineId, setMineId] = useState('MINE-01');
+  const isSingleMineRole = currentUser?.role === 'OFFICER' || currentUser?.role === 'INSPECTOR';
+
+  const [mineId, setMineId] = useState(() => {
+    if (isSingleMineRole && currentUser?.mineId) {
+      return currentUser.mineId;
+    }
+    return 'MINE-01';
+  });
+
   const selectedMine = mines.find(m => m.mineId === mineId) || mines[0];
   const [area, setArea] = useState(selectedMine?.zones?.[0]?.zoneName || 'North Shaft');
   const [inspectionType, setInspectionType] = useState('Electrical & Personnel Compliance Safety Inspection');
@@ -16,6 +24,12 @@ export default function InspectionRunner({ onComplete }) {
   const [showViolationModal, setShowViolationModal] = useState(false);
   const [submittedInspection, setSubmittedInspection] = useState(null);
   const [inspectionSuccessMsg, setInspectionSuccessMsg] = useState('');
+
+  useEffect(() => {
+    if (isSingleMineRole && currentUser?.mineId) {
+      setMineId(currentUser.mineId);
+    }
+  }, [currentUser, isSingleMineRole]);
 
   // GPS Geolocation State
   const [gpsLocation, setGpsLocation] = useState(null);
@@ -189,12 +203,19 @@ export default function InspectionRunner({ onComplete }) {
             <label className="block text-xs font-semibold text-slate-300 mb-1.5">Assigned Coal Mine</label>
             <select
               value={mineId}
+              disabled={isSingleMineRole}
               onChange={(e) => handleMineChange(e.target.value)}
-              className="w-full px-3 py-2 bg-coal-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500 font-medium"
+              className={`w-full px-3 py-2 bg-coal-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500 font-medium ${isSingleMineRole ? 'opacity-80 cursor-not-allowed border-amber-500/40 text-amber-300 font-semibold' : ''}`}
             >
-              {mines.map(m => (
-                <option key={m.mineId} value={m.mineId}>{m.mineName} ({m.mineId})</option>
-              ))}
+              {isSingleMineRole ? (
+                <option value={mineId}>
+                  {(selectedMine?.mineName || currentUser?.mineName || 'Assigned Mine')} ({mineId}) (Assigned Unit)
+                </option>
+              ) : (
+                mines.map(m => (
+                  <option key={m.mineId} value={m.mineId}>{m.mineName} ({m.mineId})</option>
+                ))
+              )}
             </select>
           </div>
 
