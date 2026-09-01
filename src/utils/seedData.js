@@ -10,8 +10,8 @@ export const DEMO_MINES = [
     "type": "Underground & Opencast",
     "complianceScore": 88,
     "riskLevel": "LOW",
-    "officer": "Rajesh Deshmukh",
-    "officerId": "MO-001",
+    "officer": "Vikram Singh",
+    "officerId": "MO-M01",
     "workersCount": 20,
     "activeViolations": 1,
     "pendingActions": 1,
@@ -46,8 +46,8 @@ export const DEMO_MINES = [
     "type": "Opencast Mining",
     "complianceScore": 82,
     "riskLevel": "LOW",
-    "officer": "Anil Sengupta",
-    "officerId": "MO-002",
+    "officer": "Priya Nair",
+    "officerId": "MO-M02",
     "workersCount": 20,
     "activeViolations": 1,
     "pendingActions": 1,
@@ -82,8 +82,8 @@ export const DEMO_MINES = [
     "type": "Deep Underground Shaft",
     "complianceScore": 61,
     "riskLevel": "HIGH",
-    "officer": "Rajesh Trivedi",
-    "officerId": "MO-003",
+    "officer": "Aditya Rao",
+    "officerId": "MO-M03",
     "workersCount": 20,
     "activeViolations": 2,
     "pendingActions": 1,
@@ -118,8 +118,8 @@ export const DEMO_MINES = [
     "type": "Opencast Mechanized",
     "complianceScore": 91,
     "riskLevel": "LOW",
-    "officer": "Kavita Raman",
-    "officerId": "MO-004",
+    "officer": "Neha Kapoor",
+    "officerId": "MO-M04",
     "workersCount": 20,
     "activeViolations": 0,
     "pendingActions": 0,
@@ -154,8 +154,8 @@ export const DEMO_MINES = [
     "type": "Underground Continuous Miner",
     "complianceScore": 73,
     "riskLevel": "MEDIUM",
-    "officer": "Bikram Mohanty",
-    "officerId": "MO-005",
+    "officer": "Siddharth Patil",
+    "officerId": "MO-M05",
     "workersCount": 20,
     "activeViolations": 1,
     "pendingActions": 1,
@@ -195,7 +195,7 @@ export const CERTIFICATE_CATEGORIES = [
 export const DEMO_WORKERS = [
   {
     "workerId": "W-20001",
-    "name": "Rahul Patil",
+    "name": "Arnav Patil",
     "mineId": "MINE-01",
     "mineName": "Demo Mine Alpha",
     "zoneId": "M01-Z1",
@@ -209,7 +209,7 @@ export const DEMO_WORKERS = [
   },
   {
     "workerId": "W-20002",
-    "name": "Amit Patil",
+    "name": "Kabir Patil",
     "mineId": "MINE-01",
     "mineName": "Demo Mine Alpha",
     "zoneId": "M01-Z1",
@@ -218,12 +218,12 @@ export const DEMO_WORKERS = [
     "role": "Fitter",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A+",
     "contact": "+91 98765 0002"
   },
   {
     "workerId": "W-20003",
-    "name": "Suresh Patil",
+    "name": "Yash Patil",
     "mineId": "MINE-01",
     "mineName": "Demo Mine Alpha",
     "zoneId": "M01-Z1",
@@ -232,12 +232,12 @@ export const DEMO_WORKERS = [
     "role": "Operator",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B+",
     "contact": "+91 98765 0003"
   },
   {
     "workerId": "W-20004",
-    "name": "Vikas Patil",
+    "name": "Dev Patil",
     "mineId": "MINE-01",
     "mineName": "Demo Mine Alpha",
     "zoneId": "M01-Z1",
@@ -246,12 +246,12 @@ export const DEMO_WORKERS = [
     "role": "Blaster",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "AB+",
     "contact": "+91 98765 0004"
   },
   {
     "workerId": "W-20005",
-    "name": "Arjun Patil",
+    "name": "Manav Patil",
     "mineId": "MINE-01",
     "mineName": "Demo Mine Alpha",
     "zoneId": "M01-Z1",
@@ -260,12 +260,12 @@ export const DEMO_WORKERS = [
     "role": "Technician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "O-",
     "contact": "+91 98765 0005"
   },
   {
     "workerId": "W-20006",
-    "name": "Rohan Shinde",
+    "name": "Arnav Shinde",
     "mineId": "MINE-01",
     "mineName": "Demo Mine Alpha",
     "zoneId": "M01-Z2",
@@ -274,12 +274,12 @@ export const DEMO_WORKERS = [
     "role": "Electrician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A-",
     "contact": "+91 98765 0006"
   },
   {
     "workerId": "W-20007",
-    "name": "Manoj Shinde",
+    "name": "Kabir Shinde",
     "mineId": "MINE-01",
     "mineName": "Demo Mine Alpha",
     "zoneId": "M01-Z2",
@@ -288,12 +288,12 @@ export const DEMO_WORKERS = [
     "role": "Fitter",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B-",
     "contact": "+91 98765 0007"
   },
   {
     "workerId": "W-20008",
-    "name": "Kiran Shinde",
+    "name": "Yash Shinde",
     "mineId": "MINE-01",
     "mineName": "Demo Mine Alpha",
     "zoneId": "M01-Z2",
@@ -307,7 +307,7 @@ export const DEMO_WORKERS = [
   },
   {
     "workerId": "W-20009",
-    "name": "Deepak Shinde",
+    "name": "Dev Shinde",
     "mineId": "MINE-01",
     "mineName": "Demo Mine Alpha",
     "zoneId": "M01-Z2",
@@ -316,12 +316,12 @@ export const DEMO_WORKERS = [
     "role": "Blaster",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A+",
     "contact": "+91 98765 0009"
   },
   {
     "workerId": "W-20010",
-    "name": "Nitin Shinde",
+    "name": "Manav Shinde",
     "mineId": "MINE-01",
     "mineName": "Demo Mine Alpha",
     "zoneId": "M01-Z2",
@@ -330,12 +330,12 @@ export const DEMO_WORKERS = [
     "role": "Technician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B+",
     "contact": "+91 98765 0010"
   },
   {
     "workerId": "W-20011",
-    "name": "Sanjay Jadhav",
+    "name": "Arnav Jadhav",
     "mineId": "MINE-01",
     "mineName": "Demo Mine Alpha",
     "zoneId": "M01-Z3",
@@ -344,12 +344,12 @@ export const DEMO_WORKERS = [
     "role": "Electrician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "AB+",
     "contact": "+91 98765 0011"
   },
   {
     "workerId": "W-20012",
-    "name": "Vijay Jadhav",
+    "name": "Kabir Jadhav",
     "mineId": "MINE-01",
     "mineName": "Demo Mine Alpha",
     "zoneId": "M01-Z3",
@@ -358,12 +358,12 @@ export const DEMO_WORKERS = [
     "role": "Fitter",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "O-",
     "contact": "+91 98765 0012"
   },
   {
     "workerId": "W-20013",
-    "name": "Prakash Jadhav",
+    "name": "Yash Jadhav",
     "mineId": "MINE-01",
     "mineName": "Demo Mine Alpha",
     "zoneId": "M01-Z3",
@@ -372,12 +372,12 @@ export const DEMO_WORKERS = [
     "role": "Operator",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A-",
     "contact": "+91 98765 0013"
   },
   {
     "workerId": "W-20014",
-    "name": "Sunil Jadhav",
+    "name": "Dev Jadhav",
     "mineId": "MINE-01",
     "mineName": "Demo Mine Alpha",
     "zoneId": "M01-Z3",
@@ -386,12 +386,12 @@ export const DEMO_WORKERS = [
     "role": "Blaster",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B-",
     "contact": "+91 98765 0014"
   },
   {
     "workerId": "W-20015",
-    "name": "Anil Jadhav",
+    "name": "Manav Jadhav",
     "mineId": "MINE-01",
     "mineName": "Demo Mine Alpha",
     "zoneId": "M01-Z3",
@@ -405,7 +405,7 @@ export const DEMO_WORKERS = [
   },
   {
     "workerId": "W-20016",
-    "name": "Rajesh Pawar",
+    "name": "Arnav Pawar",
     "mineId": "MINE-01",
     "mineName": "Demo Mine Alpha",
     "zoneId": "M01-Z4",
@@ -414,12 +414,12 @@ export const DEMO_WORKERS = [
     "role": "Electrician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A+",
     "contact": "+91 98765 0016"
   },
   {
     "workerId": "W-20017",
-    "name": "Dinesh Pawar",
+    "name": "Kabir Pawar",
     "mineId": "MINE-01",
     "mineName": "Demo Mine Alpha",
     "zoneId": "M01-Z4",
@@ -428,12 +428,12 @@ export const DEMO_WORKERS = [
     "role": "Fitter",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B+",
     "contact": "+91 98765 0017"
   },
   {
     "workerId": "W-20018",
-    "name": "Ramesh Pawar",
+    "name": "Yash Pawar",
     "mineId": "MINE-01",
     "mineName": "Demo Mine Alpha",
     "zoneId": "M01-Z4",
@@ -442,12 +442,12 @@ export const DEMO_WORKERS = [
     "role": "Operator",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "AB+",
     "contact": "+91 98765 0018"
   },
   {
     "workerId": "W-20019",
-    "name": "Mahesh Pawar",
+    "name": "Dev Pawar",
     "mineId": "MINE-01",
     "mineName": "Demo Mine Alpha",
     "zoneId": "M01-Z4",
@@ -456,12 +456,12 @@ export const DEMO_WORKERS = [
     "role": "Blaster",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "O-",
     "contact": "+91 98765 0019"
   },
   {
     "workerId": "W-20020",
-    "name": "Ganesh Pawar",
+    "name": "Manav Pawar",
     "mineId": "MINE-01",
     "mineName": "Demo Mine Alpha",
     "zoneId": "M01-Z4",
@@ -470,12 +470,12 @@ export const DEMO_WORKERS = [
     "role": "Technician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A-",
     "contact": "+91 98765 0020"
   },
   {
     "workerId": "W-20021",
-    "name": "Rahul Kulkarni",
+    "name": "Ritvik Patil",
     "mineId": "MINE-02",
     "mineName": "Demo Mine Beta",
     "zoneId": "M02-Z1",
@@ -484,12 +484,12 @@ export const DEMO_WORKERS = [
     "role": "Electrician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B-",
     "contact": "+91 98765 0021"
   },
   {
     "workerId": "W-20022",
-    "name": "Amit Kulkarni",
+    "name": "Om Patil",
     "mineId": "MINE-02",
     "mineName": "Demo Mine Beta",
     "zoneId": "M02-Z1",
@@ -503,7 +503,7 @@ export const DEMO_WORKERS = [
   },
   {
     "workerId": "W-20023",
-    "name": "Suresh Kulkarni",
+    "name": "Ayaan Patil",
     "mineId": "MINE-02",
     "mineName": "Demo Mine Beta",
     "zoneId": "M02-Z1",
@@ -512,12 +512,12 @@ export const DEMO_WORKERS = [
     "role": "Operator",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A+",
     "contact": "+91 98765 0023"
   },
   {
     "workerId": "W-20024",
-    "name": "Vikas Kulkarni",
+    "name": "Nikhil Patil",
     "mineId": "MINE-02",
     "mineName": "Demo Mine Beta",
     "zoneId": "M02-Z1",
@@ -526,12 +526,12 @@ export const DEMO_WORKERS = [
     "role": "Blaster",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B+",
     "contact": "+91 98765 0024"
   },
   {
     "workerId": "W-20025",
-    "name": "Arjun Kulkarni",
+    "name": "Dhruv Patil",
     "mineId": "MINE-02",
     "mineName": "Demo Mine Beta",
     "zoneId": "M02-Z1",
@@ -540,12 +540,12 @@ export const DEMO_WORKERS = [
     "role": "Technician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "AB+",
     "contact": "+91 98765 0025"
   },
   {
     "workerId": "W-20026",
-    "name": "Rohan Deshmukh",
+    "name": "Ritvik Shinde",
     "mineId": "MINE-02",
     "mineName": "Demo Mine Beta",
     "zoneId": "M02-Z2",
@@ -554,12 +554,12 @@ export const DEMO_WORKERS = [
     "role": "Electrician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "O-",
     "contact": "+91 98765 0026"
   },
   {
     "workerId": "W-20027",
-    "name": "Manoj Deshmukh",
+    "name": "Om Shinde",
     "mineId": "MINE-02",
     "mineName": "Demo Mine Beta",
     "zoneId": "M02-Z2",
@@ -568,12 +568,12 @@ export const DEMO_WORKERS = [
     "role": "Fitter",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A-",
     "contact": "+91 98765 0027"
   },
   {
     "workerId": "W-20028",
-    "name": "Kiran Deshmukh",
+    "name": "Ayaan Shinde",
     "mineId": "MINE-02",
     "mineName": "Demo Mine Beta",
     "zoneId": "M02-Z2",
@@ -582,12 +582,12 @@ export const DEMO_WORKERS = [
     "role": "Operator",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B-",
     "contact": "+91 98765 0028"
   },
   {
     "workerId": "W-20029",
-    "name": "Deepak Deshmukh",
+    "name": "Nikhil Shinde",
     "mineId": "MINE-02",
     "mineName": "Demo Mine Beta",
     "zoneId": "M02-Z2",
@@ -601,7 +601,7 @@ export const DEMO_WORKERS = [
   },
   {
     "workerId": "W-20030",
-    "name": "Nitin Deshmukh",
+    "name": "Dhruv Shinde",
     "mineId": "MINE-02",
     "mineName": "Demo Mine Beta",
     "zoneId": "M02-Z2",
@@ -610,12 +610,12 @@ export const DEMO_WORKERS = [
     "role": "Technician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A+",
     "contact": "+91 98765 0030"
   },
   {
     "workerId": "W-20031",
-    "name": "Sanjay Deshpande",
+    "name": "Ritvik Jadhav",
     "mineId": "MINE-02",
     "mineName": "Demo Mine Beta",
     "zoneId": "M02-Z3",
@@ -624,12 +624,12 @@ export const DEMO_WORKERS = [
     "role": "Electrician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B+",
     "contact": "+91 98765 0031"
   },
   {
     "workerId": "W-20032",
-    "name": "Vijay Deshpande",
+    "name": "Om Jadhav",
     "mineId": "MINE-02",
     "mineName": "Demo Mine Beta",
     "zoneId": "M02-Z3",
@@ -638,12 +638,12 @@ export const DEMO_WORKERS = [
     "role": "Fitter",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "AB+",
     "contact": "+91 98765 0032"
   },
   {
     "workerId": "W-20033",
-    "name": "Prakash Deshpande",
+    "name": "Ayaan Jadhav",
     "mineId": "MINE-02",
     "mineName": "Demo Mine Beta",
     "zoneId": "M02-Z3",
@@ -652,12 +652,12 @@ export const DEMO_WORKERS = [
     "role": "Operator",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "O-",
     "contact": "+91 98765 0033"
   },
   {
     "workerId": "W-20034",
-    "name": "Sunil Deshpande",
+    "name": "Nikhil Jadhav",
     "mineId": "MINE-02",
     "mineName": "Demo Mine Beta",
     "zoneId": "M02-Z3",
@@ -666,12 +666,12 @@ export const DEMO_WORKERS = [
     "role": "Blaster",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A-",
     "contact": "+91 98765 0034"
   },
   {
     "workerId": "W-20035",
-    "name": "Anil Deshpande",
+    "name": "Dhruv Jadhav",
     "mineId": "MINE-02",
     "mineName": "Demo Mine Beta",
     "zoneId": "M02-Z3",
@@ -680,12 +680,12 @@ export const DEMO_WORKERS = [
     "role": "Technician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B-",
     "contact": "+91 98765 0035"
   },
   {
     "workerId": "W-20036",
-    "name": "Rajesh Joshi",
+    "name": "Ritvik Pawar",
     "mineId": "MINE-02",
     "mineName": "Demo Mine Beta",
     "zoneId": "M02-Z4",
@@ -699,7 +699,7 @@ export const DEMO_WORKERS = [
   },
   {
     "workerId": "W-20037",
-    "name": "Dinesh Joshi",
+    "name": "Om Pawar",
     "mineId": "MINE-02",
     "mineName": "Demo Mine Beta",
     "zoneId": "M02-Z4",
@@ -708,12 +708,12 @@ export const DEMO_WORKERS = [
     "role": "Fitter",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A+",
     "contact": "+91 98765 0037"
   },
   {
     "workerId": "W-20038",
-    "name": "Ramesh Joshi",
+    "name": "Ayaan Pawar",
     "mineId": "MINE-02",
     "mineName": "Demo Mine Beta",
     "zoneId": "M02-Z4",
@@ -722,12 +722,12 @@ export const DEMO_WORKERS = [
     "role": "Operator",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B+",
     "contact": "+91 98765 0038"
   },
   {
     "workerId": "W-20039",
-    "name": "Mahesh Joshi",
+    "name": "Nikhil Pawar",
     "mineId": "MINE-02",
     "mineName": "Demo Mine Beta",
     "zoneId": "M02-Z4",
@@ -736,12 +736,12 @@ export const DEMO_WORKERS = [
     "role": "Blaster",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "AB+",
     "contact": "+91 98765 0039"
   },
   {
     "workerId": "W-20040",
-    "name": "Ganesh Joshi",
+    "name": "Dhruv Pawar",
     "mineId": "MINE-02",
     "mineName": "Demo Mine Beta",
     "zoneId": "M02-Z4",
@@ -750,12 +750,12 @@ export const DEMO_WORKERS = [
     "role": "Technician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "O-",
     "contact": "+91 98765 0040"
   },
   {
     "workerId": "W-20041",
-    "name": "Rahul Chavan",
+    "name": "Sameer Patil",
     "mineId": "MINE-03",
     "mineName": "Demo Mine Gamma",
     "zoneId": "M03-Z1",
@@ -764,12 +764,12 @@ export const DEMO_WORKERS = [
     "role": "Electrician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A-",
     "contact": "+91 98765 0041"
   },
   {
     "workerId": "W-20042",
-    "name": "Amit Chavan",
+    "name": "Pranav Patil",
     "mineId": "MINE-03",
     "mineName": "Demo Mine Gamma",
     "zoneId": "M03-Z1",
@@ -778,12 +778,12 @@ export const DEMO_WORKERS = [
     "role": "Fitter",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B-",
     "contact": "+91 98765 0042"
   },
   {
     "workerId": "W-20043",
-    "name": "Suresh Chavan",
+    "name": "Varun Patil",
     "mineId": "MINE-03",
     "mineName": "Demo Mine Gamma",
     "zoneId": "M03-Z1",
@@ -797,7 +797,7 @@ export const DEMO_WORKERS = [
   },
   {
     "workerId": "W-20044",
-    "name": "Vikas Chavan",
+    "name": "Akshay Patil",
     "mineId": "MINE-03",
     "mineName": "Demo Mine Gamma",
     "zoneId": "M03-Z1",
@@ -806,12 +806,12 @@ export const DEMO_WORKERS = [
     "role": "Blaster",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A+",
     "contact": "+91 98765 0044"
   },
   {
     "workerId": "W-20045",
-    "name": "Arjun Chavan",
+    "name": "Raghav Patil",
     "mineId": "MINE-03",
     "mineName": "Demo Mine Gamma",
     "zoneId": "M03-Z1",
@@ -820,12 +820,12 @@ export const DEMO_WORKERS = [
     "role": "Technician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B+",
     "contact": "+91 98765 0045"
   },
   {
     "workerId": "W-20046",
-    "name": "Rohan Gaikwad",
+    "name": "Sameer Shinde",
     "mineId": "MINE-03",
     "mineName": "Demo Mine Gamma",
     "zoneId": "M03-Z2",
@@ -834,12 +834,12 @@ export const DEMO_WORKERS = [
     "role": "Electrician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "AB+",
     "contact": "+91 98765 0046"
   },
   {
     "workerId": "W-20047",
-    "name": "Manoj Gaikwad",
+    "name": "Pranav Shinde",
     "mineId": "MINE-03",
     "mineName": "Demo Mine Gamma",
     "zoneId": "M03-Z2",
@@ -848,12 +848,12 @@ export const DEMO_WORKERS = [
     "role": "Fitter",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "O-",
     "contact": "+91 98765 0047"
   },
   {
     "workerId": "W-20048",
-    "name": "Kiran Gaikwad",
+    "name": "Varun Shinde",
     "mineId": "MINE-03",
     "mineName": "Demo Mine Gamma",
     "zoneId": "M03-Z2",
@@ -862,12 +862,12 @@ export const DEMO_WORKERS = [
     "role": "Operator",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A-",
     "contact": "+91 98765 0048"
   },
   {
     "workerId": "W-20049",
-    "name": "Deepak Gaikwad",
+    "name": "Akshay Shinde",
     "mineId": "MINE-03",
     "mineName": "Demo Mine Gamma",
     "zoneId": "M03-Z2",
@@ -876,12 +876,12 @@ export const DEMO_WORKERS = [
     "role": "Blaster",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B-",
     "contact": "+91 98765 0049"
   },
   {
     "workerId": "W-20050",
-    "name": "Nitin Gaikwad",
+    "name": "Raghav Shinde",
     "mineId": "MINE-03",
     "mineName": "Demo Mine Gamma",
     "zoneId": "M03-Z2",
@@ -895,7 +895,7 @@ export const DEMO_WORKERS = [
   },
   {
     "workerId": "W-20051",
-    "name": "Sanjay More",
+    "name": "Sameer Jadhav",
     "mineId": "MINE-03",
     "mineName": "Demo Mine Gamma",
     "zoneId": "M03-Z3",
@@ -904,12 +904,12 @@ export const DEMO_WORKERS = [
     "role": "Electrician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A+",
     "contact": "+91 98765 0051"
   },
   {
     "workerId": "W-20052",
-    "name": "Vijay More",
+    "name": "Pranav Jadhav",
     "mineId": "MINE-03",
     "mineName": "Demo Mine Gamma",
     "zoneId": "M03-Z3",
@@ -918,12 +918,12 @@ export const DEMO_WORKERS = [
     "role": "Fitter",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B+",
     "contact": "+91 98765 0052"
   },
   {
     "workerId": "W-20053",
-    "name": "Prakash More",
+    "name": "Varun Jadhav",
     "mineId": "MINE-03",
     "mineName": "Demo Mine Gamma",
     "zoneId": "M03-Z3",
@@ -932,12 +932,12 @@ export const DEMO_WORKERS = [
     "role": "Operator",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "AB+",
     "contact": "+91 98765 0053"
   },
   {
     "workerId": "W-20054",
-    "name": "Sunil More",
+    "name": "Akshay Jadhav",
     "mineId": "MINE-03",
     "mineName": "Demo Mine Gamma",
     "zoneId": "M03-Z3",
@@ -946,12 +946,12 @@ export const DEMO_WORKERS = [
     "role": "Blaster",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "O-",
     "contact": "+91 98765 0054"
   },
   {
     "workerId": "W-20055",
-    "name": "Anil More",
+    "name": "Raghav Jadhav",
     "mineId": "MINE-03",
     "mineName": "Demo Mine Gamma",
     "zoneId": "M03-Z3",
@@ -960,12 +960,12 @@ export const DEMO_WORKERS = [
     "role": "Technician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A-",
     "contact": "+91 98765 0055"
   },
   {
     "workerId": "W-20056",
-    "name": "Rajesh Kadam",
+    "name": "Sameer Pawar",
     "mineId": "MINE-03",
     "mineName": "Demo Mine Gamma",
     "zoneId": "M03-Z4",
@@ -974,12 +974,12 @@ export const DEMO_WORKERS = [
     "role": "Electrician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B-",
     "contact": "+91 98765 0056"
   },
   {
     "workerId": "W-20057",
-    "name": "Dinesh Kadam",
+    "name": "Pranav Pawar",
     "mineId": "MINE-03",
     "mineName": "Demo Mine Gamma",
     "zoneId": "M03-Z4",
@@ -993,7 +993,7 @@ export const DEMO_WORKERS = [
   },
   {
     "workerId": "W-20058",
-    "name": "Ramesh Kadam",
+    "name": "Varun Pawar",
     "mineId": "MINE-03",
     "mineName": "Demo Mine Gamma",
     "zoneId": "M03-Z4",
@@ -1002,12 +1002,12 @@ export const DEMO_WORKERS = [
     "role": "Operator",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A+",
     "contact": "+91 98765 0058"
   },
   {
     "workerId": "W-20059",
-    "name": "Mahesh Kadam",
+    "name": "Akshay Pawar",
     "mineId": "MINE-03",
     "mineName": "Demo Mine Gamma",
     "zoneId": "M03-Z4",
@@ -1016,12 +1016,12 @@ export const DEMO_WORKERS = [
     "role": "Blaster",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B+",
     "contact": "+91 98765 0059"
   },
   {
     "workerId": "W-20060",
-    "name": "Ganesh Kadam",
+    "name": "Raghav Pawar",
     "mineId": "MINE-03",
     "mineName": "Demo Mine Gamma",
     "zoneId": "M03-Z4",
@@ -1030,12 +1030,12 @@ export const DEMO_WORKERS = [
     "role": "Technician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "AB+",
     "contact": "+91 98765 0060"
   },
   {
     "workerId": "W-20061",
-    "name": "Rahul Raut",
+    "name": "Aman Patil",
     "mineId": "MINE-04",
     "mineName": "Demo Mine Delta",
     "zoneId": "M04-Z1",
@@ -1044,12 +1044,12 @@ export const DEMO_WORKERS = [
     "role": "Electrician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "O-",
     "contact": "+91 98765 0061"
   },
   {
     "workerId": "W-20062",
-    "name": "Amit Raut",
+    "name": "Harsh Patil",
     "mineId": "MINE-04",
     "mineName": "Demo Mine Delta",
     "zoneId": "M04-Z1",
@@ -1058,12 +1058,12 @@ export const DEMO_WORKERS = [
     "role": "Fitter",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A-",
     "contact": "+91 98765 0062"
   },
   {
     "workerId": "W-20063",
-    "name": "Suresh Raut",
+    "name": "Tushar Patil",
     "mineId": "MINE-04",
     "mineName": "Demo Mine Delta",
     "zoneId": "M04-Z1",
@@ -1072,12 +1072,12 @@ export const DEMO_WORKERS = [
     "role": "Operator",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B-",
     "contact": "+91 98765 0063"
   },
   {
     "workerId": "W-20064",
-    "name": "Vikas Raut",
+    "name": "Vivek Patil",
     "mineId": "MINE-04",
     "mineName": "Demo Mine Delta",
     "zoneId": "M04-Z1",
@@ -1091,7 +1091,7 @@ export const DEMO_WORKERS = [
   },
   {
     "workerId": "W-20065",
-    "name": "Arjun Raut",
+    "name": "Naman Patil",
     "mineId": "MINE-04",
     "mineName": "Demo Mine Delta",
     "zoneId": "M04-Z1",
@@ -1100,12 +1100,12 @@ export const DEMO_WORKERS = [
     "role": "Technician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A+",
     "contact": "+91 98765 0065"
   },
   {
     "workerId": "W-20066",
-    "name": "Rohan Bhosale",
+    "name": "Aman Shinde",
     "mineId": "MINE-04",
     "mineName": "Demo Mine Delta",
     "zoneId": "M04-Z2",
@@ -1114,12 +1114,12 @@ export const DEMO_WORKERS = [
     "role": "Electrician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B+",
     "contact": "+91 98765 0066"
   },
   {
     "workerId": "W-20067",
-    "name": "Manoj Bhosale",
+    "name": "Harsh Shinde",
     "mineId": "MINE-04",
     "mineName": "Demo Mine Delta",
     "zoneId": "M04-Z2",
@@ -1128,12 +1128,12 @@ export const DEMO_WORKERS = [
     "role": "Fitter",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "AB+",
     "contact": "+91 98765 0067"
   },
   {
     "workerId": "W-20068",
-    "name": "Kiran Bhosale",
+    "name": "Tushar Shinde",
     "mineId": "MINE-04",
     "mineName": "Demo Mine Delta",
     "zoneId": "M04-Z2",
@@ -1142,12 +1142,12 @@ export const DEMO_WORKERS = [
     "role": "Operator",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "O-",
     "contact": "+91 98765 0068"
   },
   {
     "workerId": "W-20069",
-    "name": "Deepak Bhosale",
+    "name": "Vivek Shinde",
     "mineId": "MINE-04",
     "mineName": "Demo Mine Delta",
     "zoneId": "M04-Z2",
@@ -1156,12 +1156,12 @@ export const DEMO_WORKERS = [
     "role": "Blaster",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A-",
     "contact": "+91 98765 0069"
   },
   {
     "workerId": "W-20070",
-    "name": "Nitin Bhosale",
+    "name": "Naman Shinde",
     "mineId": "MINE-04",
     "mineName": "Demo Mine Delta",
     "zoneId": "M04-Z2",
@@ -1170,12 +1170,12 @@ export const DEMO_WORKERS = [
     "role": "Technician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B-",
     "contact": "+91 98765 0070"
   },
   {
     "workerId": "W-20071",
-    "name": "Sanjay Sawant",
+    "name": "Aman Jadhav",
     "mineId": "MINE-04",
     "mineName": "Demo Mine Delta",
     "zoneId": "M04-Z3",
@@ -1189,7 +1189,7 @@ export const DEMO_WORKERS = [
   },
   {
     "workerId": "W-20072",
-    "name": "Vijay Sawant",
+    "name": "Harsh Jadhav",
     "mineId": "MINE-04",
     "mineName": "Demo Mine Delta",
     "zoneId": "M04-Z3",
@@ -1198,12 +1198,12 @@ export const DEMO_WORKERS = [
     "role": "Fitter",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A+",
     "contact": "+91 98765 0072"
   },
   {
     "workerId": "W-20073",
-    "name": "Prakash Sawant",
+    "name": "Tushar Jadhav",
     "mineId": "MINE-04",
     "mineName": "Demo Mine Delta",
     "zoneId": "M04-Z3",
@@ -1212,12 +1212,12 @@ export const DEMO_WORKERS = [
     "role": "Operator",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B+",
     "contact": "+91 98765 0073"
   },
   {
     "workerId": "W-20074",
-    "name": "Sunil Sawant",
+    "name": "Vivek Jadhav",
     "mineId": "MINE-04",
     "mineName": "Demo Mine Delta",
     "zoneId": "M04-Z3",
@@ -1226,12 +1226,12 @@ export const DEMO_WORKERS = [
     "role": "Blaster",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "AB+",
     "contact": "+91 98765 0074"
   },
   {
     "workerId": "W-20075",
-    "name": "Anil Sawant",
+    "name": "Naman Jadhav",
     "mineId": "MINE-04",
     "mineName": "Demo Mine Delta",
     "zoneId": "M04-Z3",
@@ -1240,12 +1240,12 @@ export const DEMO_WORKERS = [
     "role": "Technician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "O-",
     "contact": "+91 98765 0075"
   },
   {
     "workerId": "W-20076",
-    "name": "Rajesh Suryavanshi",
+    "name": "Aman Pawar",
     "mineId": "MINE-04",
     "mineName": "Demo Mine Delta",
     "zoneId": "M04-Z4",
@@ -1254,12 +1254,12 @@ export const DEMO_WORKERS = [
     "role": "Electrician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A-",
     "contact": "+91 98765 0076"
   },
   {
     "workerId": "W-20077",
-    "name": "Dinesh Suryavanshi",
+    "name": "Harsh Pawar",
     "mineId": "MINE-04",
     "mineName": "Demo Mine Delta",
     "zoneId": "M04-Z4",
@@ -1268,12 +1268,12 @@ export const DEMO_WORKERS = [
     "role": "Fitter",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B-",
     "contact": "+91 98765 0077"
   },
   {
     "workerId": "W-20078",
-    "name": "Ramesh Suryavanshi",
+    "name": "Tushar Pawar",
     "mineId": "MINE-04",
     "mineName": "Demo Mine Delta",
     "zoneId": "M04-Z4",
@@ -1287,7 +1287,7 @@ export const DEMO_WORKERS = [
   },
   {
     "workerId": "W-20079",
-    "name": "Mahesh Suryavanshi",
+    "name": "Vivek Pawar",
     "mineId": "MINE-04",
     "mineName": "Demo Mine Delta",
     "zoneId": "M04-Z4",
@@ -1296,12 +1296,12 @@ export const DEMO_WORKERS = [
     "role": "Blaster",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A+",
     "contact": "+91 98765 0079"
   },
   {
     "workerId": "W-20080",
-    "name": "Ganesh Suryavanshi",
+    "name": "Naman Pawar",
     "mineId": "MINE-04",
     "mineName": "Demo Mine Delta",
     "zoneId": "M04-Z4",
@@ -1310,12 +1310,12 @@ export const DEMO_WORKERS = [
     "role": "Technician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B+",
     "contact": "+91 98765 0080"
   },
   {
     "workerId": "W-20081",
-    "name": "Rahul Mohite",
+    "name": "Reyansh Patil",
     "mineId": "MINE-05",
     "mineName": "Demo Mine Epsilon",
     "zoneId": "M05-Z1",
@@ -1324,12 +1324,12 @@ export const DEMO_WORKERS = [
     "role": "Electrician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "AB+",
     "contact": "+91 98765 0081"
   },
   {
     "workerId": "W-20082",
-    "name": "Amit Mohite",
+    "name": "Kartik Patil",
     "mineId": "MINE-05",
     "mineName": "Demo Mine Epsilon",
     "zoneId": "M05-Z1",
@@ -1338,12 +1338,12 @@ export const DEMO_WORKERS = [
     "role": "Fitter",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "O-",
     "contact": "+91 98765 0082"
   },
   {
     "workerId": "W-20083",
-    "name": "Suresh Mohite",
+    "name": "Gaurav Patil",
     "mineId": "MINE-05",
     "mineName": "Demo Mine Epsilon",
     "zoneId": "M05-Z1",
@@ -1352,12 +1352,12 @@ export const DEMO_WORKERS = [
     "role": "Operator",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A-",
     "contact": "+91 98765 0083"
   },
   {
     "workerId": "W-20084",
-    "name": "Vikas Mohite",
+    "name": "Mihir Patil",
     "mineId": "MINE-05",
     "mineName": "Demo Mine Epsilon",
     "zoneId": "M05-Z1",
@@ -1366,12 +1366,12 @@ export const DEMO_WORKERS = [
     "role": "Blaster",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B-",
     "contact": "+91 98765 0084"
   },
   {
     "workerId": "W-20085",
-    "name": "Arjun Mohite",
+    "name": "Ishan Patil",
     "mineId": "MINE-05",
     "mineName": "Demo Mine Epsilon",
     "zoneId": "M05-Z1",
@@ -1385,7 +1385,7 @@ export const DEMO_WORKERS = [
   },
   {
     "workerId": "W-20086",
-    "name": "Rohan Jagtap",
+    "name": "Reyansh Shinde",
     "mineId": "MINE-05",
     "mineName": "Demo Mine Epsilon",
     "zoneId": "M05-Z2",
@@ -1394,12 +1394,12 @@ export const DEMO_WORKERS = [
     "role": "Electrician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A+",
     "contact": "+91 98765 0086"
   },
   {
     "workerId": "W-20087",
-    "name": "Manoj Jagtap",
+    "name": "Kartik Shinde",
     "mineId": "MINE-05",
     "mineName": "Demo Mine Epsilon",
     "zoneId": "M05-Z2",
@@ -1408,12 +1408,12 @@ export const DEMO_WORKERS = [
     "role": "Fitter",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B+",
     "contact": "+91 98765 0087"
   },
   {
     "workerId": "W-20088",
-    "name": "Kiran Jagtap",
+    "name": "Gaurav Shinde",
     "mineId": "MINE-05",
     "mineName": "Demo Mine Epsilon",
     "zoneId": "M05-Z2",
@@ -1422,12 +1422,12 @@ export const DEMO_WORKERS = [
     "role": "Operator",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "AB+",
     "contact": "+91 98765 0088"
   },
   {
     "workerId": "W-20089",
-    "name": "Deepak Jagtap",
+    "name": "Mihir Shinde",
     "mineId": "MINE-05",
     "mineName": "Demo Mine Epsilon",
     "zoneId": "M05-Z2",
@@ -1436,12 +1436,12 @@ export const DEMO_WORKERS = [
     "role": "Blaster",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "O-",
     "contact": "+91 98765 0089"
   },
   {
     "workerId": "W-20090",
-    "name": "Nitin Jagtap",
+    "name": "Ishan Shinde",
     "mineId": "MINE-05",
     "mineName": "Demo Mine Epsilon",
     "zoneId": "M05-Z2",
@@ -1450,12 +1450,12 @@ export const DEMO_WORKERS = [
     "role": "Technician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A-",
     "contact": "+91 98765 0090"
   },
   {
     "workerId": "W-20091",
-    "name": "Sanjay Naik",
+    "name": "Reyansh Jadhav",
     "mineId": "MINE-05",
     "mineName": "Demo Mine Epsilon",
     "zoneId": "M05-Z3",
@@ -1464,12 +1464,12 @@ export const DEMO_WORKERS = [
     "role": "Electrician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B-",
     "contact": "+91 98765 0091"
   },
   {
     "workerId": "W-20092",
-    "name": "Vijay Naik",
+    "name": "Kartik Jadhav",
     "mineId": "MINE-05",
     "mineName": "Demo Mine Epsilon",
     "zoneId": "M05-Z3",
@@ -1483,7 +1483,7 @@ export const DEMO_WORKERS = [
   },
   {
     "workerId": "W-20093",
-    "name": "Prakash Naik",
+    "name": "Gaurav Jadhav",
     "mineId": "MINE-05",
     "mineName": "Demo Mine Epsilon",
     "zoneId": "M05-Z3",
@@ -1492,12 +1492,12 @@ export const DEMO_WORKERS = [
     "role": "Operator",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A+",
     "contact": "+91 98765 0093"
   },
   {
     "workerId": "W-20094",
-    "name": "Sunil Naik",
+    "name": "Mihir Jadhav",
     "mineId": "MINE-05",
     "mineName": "Demo Mine Epsilon",
     "zoneId": "M05-Z3",
@@ -1506,12 +1506,12 @@ export const DEMO_WORKERS = [
     "role": "Blaster",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B+",
     "contact": "+91 98765 0094"
   },
   {
     "workerId": "W-20095",
-    "name": "Anil Naik",
+    "name": "Ishan Jadhav",
     "mineId": "MINE-05",
     "mineName": "Demo Mine Epsilon",
     "zoneId": "M05-Z3",
@@ -1520,12 +1520,12 @@ export const DEMO_WORKERS = [
     "role": "Technician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "AB+",
     "contact": "+91 98765 0095"
   },
   {
     "workerId": "W-20096",
-    "name": "Rajesh Shetty",
+    "name": "Reyansh Pawar",
     "mineId": "MINE-05",
     "mineName": "Demo Mine Epsilon",
     "zoneId": "M05-Z4",
@@ -1534,12 +1534,12 @@ export const DEMO_WORKERS = [
     "role": "Electrician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "O-",
     "contact": "+91 98765 0096"
   },
   {
     "workerId": "W-20097",
-    "name": "Dinesh Shetty",
+    "name": "Kartik Pawar",
     "mineId": "MINE-05",
     "mineName": "Demo Mine Epsilon",
     "zoneId": "M05-Z4",
@@ -1548,12 +1548,12 @@ export const DEMO_WORKERS = [
     "role": "Fitter",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A-",
     "contact": "+91 98765 0097"
   },
   {
     "workerId": "W-20098",
-    "name": "Ramesh Shetty",
+    "name": "Gaurav Pawar",
     "mineId": "MINE-05",
     "mineName": "Demo Mine Epsilon",
     "zoneId": "M05-Z4",
@@ -1562,12 +1562,12 @@ export const DEMO_WORKERS = [
     "role": "Operator",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "B-",
     "contact": "+91 98765 0098"
   },
   {
     "workerId": "W-20099",
-    "name": "Mahesh Shetty",
+    "name": "Mihir Pawar",
     "mineId": "MINE-05",
     "mineName": "Demo Mine Epsilon",
     "zoneId": "M05-Z4",
@@ -1581,7 +1581,7 @@ export const DEMO_WORKERS = [
   },
   {
     "workerId": "W-20100",
-    "name": "Ganesh Shetty",
+    "name": "Ishan Pawar",
     "mineId": "MINE-05",
     "mineName": "Demo Mine Epsilon",
     "zoneId": "M05-Z4",
@@ -1590,136 +1590,136 @@ export const DEMO_WORKERS = [
     "role": "Technician",
     "status": "ACTIVE",
     "joiningDate": "2023-01-15",
-    "bloodGroup": "O+",
+    "bloodGroup": "A+",
     "contact": "+91 98765 0100"
   }
 ];
 
 export const DEMO_ACCOUNTS = [
   {
-    "userId": "INS-001",
+    "userId": "INS-M01",
     "email": "inspector.alpha@mineguard.demo",
-    "password": "Password@123",
-    "name": "Anita Kulkarni",
+    "password": "Inspector@123",
+    "name": "Aarav Deshmukh",
     "role": "INSPECTOR",
     "designation": "Govt. Statutory Mine Inspector - Alpha",
     "mineId": "MINE-01",
     "mineName": "Demo Mine Alpha",
-    "badge": "INS-001",
+    "badge": "INS-M01",
     "avatar": "👷‍♂️"
   },
   {
-    "userId": "INS-002",
+    "userId": "INS-M02",
     "email": "inspector.beta@mineguard.demo",
-    "password": "Password@123",
-    "name": "Sunil Verma",
+    "password": "Inspector@123",
+    "name": "Meera Joshi",
     "role": "INSPECTOR",
     "designation": "Govt. Statutory Mine Inspector - Beta",
     "mineId": "MINE-02",
     "mineName": "Demo Mine Beta",
-    "badge": "INS-002",
+    "badge": "INS-M02",
     "avatar": "👷‍♂️"
   },
   {
-    "userId": "INS-003",
+    "userId": "INS-M03",
     "email": "inspector.gamma@mineguard.demo",
-    "password": "Password@123",
-    "name": "Pooja Bannerjee",
+    "password": "Inspector@123",
+    "name": "Kunal Verma",
     "role": "INSPECTOR",
     "designation": "Govt. Statutory Mine Inspector - Gamma",
     "mineId": "MINE-03",
     "mineName": "Demo Mine Gamma",
-    "badge": "INS-003",
+    "badge": "INS-M03",
     "avatar": "👷‍♂️"
   },
   {
-    "userId": "INS-004",
+    "userId": "INS-M04",
     "email": "inspector.delta@mineguard.demo",
-    "password": "Password@123",
-    "name": "Ramesh Patnaik",
+    "password": "Inspector@123",
+    "name": "Ishita Kulkarni",
     "role": "INSPECTOR",
     "designation": "Govt. Statutory Mine Inspector - Delta",
     "mineId": "MINE-04",
     "mineName": "Demo Mine Delta",
-    "badge": "INS-004",
+    "badge": "INS-M04",
     "avatar": "👷‍♂️"
   },
   {
-    "userId": "INS-005",
+    "userId": "INS-M05",
     "email": "inspector.epsilon@mineguard.demo",
-    "password": "Password@123",
-    "name": "Sanjay Roy",
+    "password": "Inspector@123",
+    "name": "Rohan Mehta",
     "role": "INSPECTOR",
     "designation": "Govt. Statutory Mine Inspector - Epsilon",
     "mineId": "MINE-05",
     "mineName": "Demo Mine Epsilon",
-    "badge": "INS-005",
+    "badge": "INS-M05",
     "avatar": "👷‍♂️"
   },
   {
-    "userId": "MO-001",
+    "userId": "MO-M01",
     "email": "officer.alpha@mineguard.demo",
-    "password": "Password@123",
-    "name": "Rajesh Deshmukh",
+    "password": "Officer@123",
+    "name": "Vikram Singh",
     "role": "OFFICER",
     "designation": "Mine Safety Officer - Alpha",
     "mineId": "MINE-01",
     "mineName": "Demo Mine Alpha",
-    "badge": "MO-001",
+    "badge": "MO-M01",
     "avatar": "🧑‍💼"
   },
   {
-    "userId": "MO-002",
+    "userId": "MO-M02",
     "email": "officer.beta@mineguard.demo",
-    "password": "Password@123",
-    "name": "Anil Sengupta",
+    "password": "Officer@123",
+    "name": "Priya Nair",
     "role": "OFFICER",
     "designation": "Mine Safety Officer - Beta",
     "mineId": "MINE-02",
     "mineName": "Demo Mine Beta",
-    "badge": "MO-002",
+    "badge": "MO-M02",
     "avatar": "🧑‍💼"
   },
   {
-    "userId": "MO-003",
+    "userId": "MO-M03",
     "email": "officer.gamma@mineguard.demo",
-    "password": "Password@123",
-    "name": "Rajesh Trivedi",
+    "password": "Officer@123",
+    "name": "Aditya Rao",
     "role": "OFFICER",
     "designation": "Mine Safety Officer - Gamma",
     "mineId": "MINE-03",
     "mineName": "Demo Mine Gamma",
-    "badge": "MO-003",
+    "badge": "MO-M03",
     "avatar": "🧑‍💼"
   },
   {
-    "userId": "MO-004",
+    "userId": "MO-M04",
     "email": "officer.delta@mineguard.demo",
-    "password": "Password@123",
-    "name": "Kavita Raman",
+    "password": "Officer@123",
+    "name": "Neha Kapoor",
     "role": "OFFICER",
     "designation": "Mine Safety Officer - Delta",
     "mineId": "MINE-04",
     "mineName": "Demo Mine Delta",
-    "badge": "MO-004",
+    "badge": "MO-M04",
     "avatar": "🧑‍💼"
   },
   {
-    "userId": "MO-005",
+    "userId": "MO-M05",
     "email": "officer.epsilon@mineguard.demo",
-    "password": "Password@123",
-    "name": "Bikram Mohanty",
+    "password": "Officer@123",
+    "name": "Siddharth Patil",
     "role": "OFFICER",
     "designation": "Mine Safety Officer - Epsilon",
     "mineId": "MINE-05",
     "mineName": "Demo Mine Epsilon",
-    "badge": "MO-005",
+    "badge": "MO-M05",
     "avatar": "🧑‍💼"
   },
   {
     "userId": "MGMT-001",
     "email": "management@mineguard.demo",
-    "password": "Password@123",
+    "password": "Management@123",
     "name": "Neha Sharma",
     "role": "MANAGEMENT",
     "designation": "Executive Management Director",
@@ -1731,8 +1731,8 @@ export const DEMO_ACCOUNTS = [
   {
     "userId": "AUTH-001",
     "email": "authority@mineguard.demo",
-    "password": "Password@123",
-    "name": "Vivek Mehta",
+    "password": "Authority@123",
+    "name": "Dr. Arindam Sen",
     "role": "AUTHORITY",
     "designation": "Regulatory Regional Director",
     "mineId": null,
@@ -1746,7 +1746,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20001",
     "workerId": "W-20001",
-    "workerName": "Rahul Patil",
+    "workerName": "Arnav Patil",
     "certificateType": "Electrical Competency Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -1762,7 +1762,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20002",
     "workerId": "W-20002",
-    "workerName": "Amit Patil",
+    "workerName": "Kabir Patil",
     "certificateType": "Equipment Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -1778,7 +1778,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20003",
     "workerId": "W-20003",
-    "workerName": "Suresh Patil",
+    "workerName": "Yash Patil",
     "certificateType": "Heavy Machinery Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -1794,7 +1794,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20004",
     "workerId": "W-20004",
-    "workerName": "Vikas Patil",
+    "workerName": "Dev Patil",
     "certificateType": "Mining Safety & Blasting Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -1810,7 +1810,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20005",
     "workerId": "W-20005",
-    "workerName": "Arjun Patil",
+    "workerName": "Manav Patil",
     "certificateType": "First Aid & Emergency Response Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -1826,7 +1826,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20006",
     "workerId": "W-20006",
-    "workerName": "Rohan Shinde",
+    "workerName": "Arnav Shinde",
     "certificateType": "Electrical Competency Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -1842,7 +1842,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20007",
     "workerId": "W-20007",
-    "workerName": "Manoj Shinde",
+    "workerName": "Kabir Shinde",
     "certificateType": "Equipment Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -1858,7 +1858,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20008",
     "workerId": "W-20008",
-    "workerName": "Kiran Shinde",
+    "workerName": "Yash Shinde",
     "certificateType": "Heavy Machinery Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -1874,7 +1874,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20009",
     "workerId": "W-20009",
-    "workerName": "Deepak Shinde",
+    "workerName": "Dev Shinde",
     "certificateType": "Mining Safety & Blasting Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -1890,7 +1890,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20010",
     "workerId": "W-20010",
-    "workerName": "Nitin Shinde",
+    "workerName": "Manav Shinde",
     "certificateType": "First Aid & Emergency Response Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -1906,7 +1906,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20011",
     "workerId": "W-20011",
-    "workerName": "Sanjay Jadhav",
+    "workerName": "Arnav Jadhav",
     "certificateType": "Electrical Competency Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -1922,7 +1922,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20012",
     "workerId": "W-20012",
-    "workerName": "Vijay Jadhav",
+    "workerName": "Kabir Jadhav",
     "certificateType": "Equipment Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -1938,7 +1938,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20013",
     "workerId": "W-20013",
-    "workerName": "Prakash Jadhav",
+    "workerName": "Yash Jadhav",
     "certificateType": "Heavy Machinery Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -1954,7 +1954,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20014",
     "workerId": "W-20014",
-    "workerName": "Sunil Jadhav",
+    "workerName": "Dev Jadhav",
     "certificateType": "Mining Safety & Blasting Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -1970,15 +1970,15 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20015",
     "workerId": "W-20015",
-    "workerName": "Anil Jadhav",
+    "workerName": "Manav Jadhav",
     "certificateType": "First Aid & Emergency Response Certificate",
     "issueDate": "2024-01-15",
-    "expiryDate": "2027-12-31",
+    "expiryDate": "2026-09-15",
     "issuingAuthority": "Directorate General of Mines Safety (DGMS)",
     "documentUrl": "first_aid___emergency_response_certificate_w-20015.pdf",
-    "verificationStatus": "VALID",
-    "status": "VALID",
-    "assessmentStatus": "PASSED",
+    "verificationStatus": "EXPIRING_SOON",
+    "status": "EXPIRING_SOON",
+    "assessmentStatus": "WARNING",
     "mineId": "MINE-01",
     "zoneId": "M01-Z3",
     "area": "Processing Plant"
@@ -1986,7 +1986,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20016",
     "workerId": "W-20016",
-    "workerName": "Rajesh Pawar",
+    "workerName": "Arnav Pawar",
     "certificateType": "Electrical Competency Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2002,7 +2002,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20017",
     "workerId": "W-20017",
-    "workerName": "Dinesh Pawar",
+    "workerName": "Kabir Pawar",
     "certificateType": "Equipment Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2018,7 +2018,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20018",
     "workerId": "W-20018",
-    "workerName": "Ramesh Pawar",
+    "workerName": "Yash Pawar",
     "certificateType": "Heavy Machinery Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2034,7 +2034,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20019",
     "workerId": "W-20019",
-    "workerName": "Mahesh Pawar",
+    "workerName": "Dev Pawar",
     "certificateType": "Mining Safety & Blasting Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2050,7 +2050,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20020",
     "workerId": "W-20020",
-    "workerName": "Ganesh Pawar",
+    "workerName": "Manav Pawar",
     "certificateType": "First Aid & Emergency Response Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2066,7 +2066,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20021",
     "workerId": "W-20021",
-    "workerName": "Rahul Kulkarni",
+    "workerName": "Ritvik Patil",
     "certificateType": "Electrical Competency Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2082,7 +2082,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20022",
     "workerId": "W-20022",
-    "workerName": "Amit Kulkarni",
+    "workerName": "Om Patil",
     "certificateType": "Equipment Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2098,7 +2098,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20023",
     "workerId": "W-20023",
-    "workerName": "Suresh Kulkarni",
+    "workerName": "Ayaan Patil",
     "certificateType": "Heavy Machinery Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2114,7 +2114,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20024",
     "workerId": "W-20024",
-    "workerName": "Vikas Kulkarni",
+    "workerName": "Nikhil Patil",
     "certificateType": "Mining Safety & Blasting Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2130,7 +2130,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20025",
     "workerId": "W-20025",
-    "workerName": "Arjun Kulkarni",
+    "workerName": "Dhruv Patil",
     "certificateType": "First Aid & Emergency Response Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2146,7 +2146,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20026",
     "workerId": "W-20026",
-    "workerName": "Rohan Deshmukh",
+    "workerName": "Ritvik Shinde",
     "certificateType": "Electrical Competency Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2162,7 +2162,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20027",
     "workerId": "W-20027",
-    "workerName": "Manoj Deshmukh",
+    "workerName": "Om Shinde",
     "certificateType": "Equipment Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2178,7 +2178,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20028",
     "workerId": "W-20028",
-    "workerName": "Kiran Deshmukh",
+    "workerName": "Ayaan Shinde",
     "certificateType": "Heavy Machinery Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2194,7 +2194,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20029",
     "workerId": "W-20029",
-    "workerName": "Deepak Deshmukh",
+    "workerName": "Nikhil Shinde",
     "certificateType": "Mining Safety & Blasting Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2210,7 +2210,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20030",
     "workerId": "W-20030",
-    "workerName": "Nitin Deshmukh",
+    "workerName": "Dhruv Shinde",
     "certificateType": "First Aid & Emergency Response Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2226,7 +2226,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20031",
     "workerId": "W-20031",
-    "workerName": "Sanjay Deshpande",
+    "workerName": "Ritvik Jadhav",
     "certificateType": "Electrical Competency Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2242,7 +2242,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20032",
     "workerId": "W-20032",
-    "workerName": "Vijay Deshpande",
+    "workerName": "Om Jadhav",
     "certificateType": "Equipment Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2258,7 +2258,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20033",
     "workerId": "W-20033",
-    "workerName": "Prakash Deshpande",
+    "workerName": "Ayaan Jadhav",
     "certificateType": "Heavy Machinery Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2274,7 +2274,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20034",
     "workerId": "W-20034",
-    "workerName": "Sunil Deshpande",
+    "workerName": "Nikhil Jadhav",
     "certificateType": "Mining Safety & Blasting Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2290,7 +2290,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20035",
     "workerId": "W-20035",
-    "workerName": "Anil Deshpande",
+    "workerName": "Dhruv Jadhav",
     "certificateType": "First Aid & Emergency Response Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2306,7 +2306,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20036",
     "workerId": "W-20036",
-    "workerName": "Rajesh Joshi",
+    "workerName": "Ritvik Pawar",
     "certificateType": "Electrical Competency Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2322,7 +2322,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20037",
     "workerId": "W-20037",
-    "workerName": "Dinesh Joshi",
+    "workerName": "Om Pawar",
     "certificateType": "Equipment Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2338,7 +2338,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20038",
     "workerId": "W-20038",
-    "workerName": "Ramesh Joshi",
+    "workerName": "Ayaan Pawar",
     "certificateType": "Heavy Machinery Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2354,7 +2354,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20039",
     "workerId": "W-20039",
-    "workerName": "Mahesh Joshi",
+    "workerName": "Nikhil Pawar",
     "certificateType": "Mining Safety & Blasting Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2370,7 +2370,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20040",
     "workerId": "W-20040",
-    "workerName": "Ganesh Joshi",
+    "workerName": "Dhruv Pawar",
     "certificateType": "First Aid & Emergency Response Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2386,7 +2386,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20041",
     "workerId": "W-20041",
-    "workerName": "Rahul Chavan",
+    "workerName": "Sameer Patil",
     "certificateType": "Electrical Competency Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2402,7 +2402,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20042",
     "workerId": "W-20042",
-    "workerName": "Amit Chavan",
+    "workerName": "Pranav Patil",
     "certificateType": "Equipment Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2418,7 +2418,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20043",
     "workerId": "W-20043",
-    "workerName": "Suresh Chavan",
+    "workerName": "Varun Patil",
     "certificateType": "Heavy Machinery Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2434,7 +2434,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20044",
     "workerId": "W-20044",
-    "workerName": "Vikas Chavan",
+    "workerName": "Akshay Patil",
     "certificateType": "Mining Safety & Blasting Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2450,15 +2450,15 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20045",
     "workerId": "W-20045",
-    "workerName": "Arjun Chavan",
+    "workerName": "Raghav Patil",
     "certificateType": "First Aid & Emergency Response Certificate",
     "issueDate": "2024-01-15",
-    "expiryDate": "2027-12-31",
+    "expiryDate": "2026-09-15",
     "issuingAuthority": "Directorate General of Mines Safety (DGMS)",
     "documentUrl": "first_aid___emergency_response_certificate_w-20045.pdf",
-    "verificationStatus": "VALID",
-    "status": "VALID",
-    "assessmentStatus": "PASSED",
+    "verificationStatus": "EXPIRING_SOON",
+    "status": "EXPIRING_SOON",
+    "assessmentStatus": "WARNING",
     "mineId": "MINE-03",
     "zoneId": "M03-Z1",
     "area": "North Shaft"
@@ -2466,7 +2466,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20046",
     "workerId": "W-20046",
-    "workerName": "Rohan Gaikwad",
+    "workerName": "Sameer Shinde",
     "certificateType": "Electrical Competency Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2482,7 +2482,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20047",
     "workerId": "W-20047",
-    "workerName": "Manoj Gaikwad",
+    "workerName": "Pranav Shinde",
     "certificateType": "Equipment Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2498,7 +2498,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20048",
     "workerId": "W-20048",
-    "workerName": "Kiran Gaikwad",
+    "workerName": "Varun Shinde",
     "certificateType": "Heavy Machinery Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2514,7 +2514,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20049",
     "workerId": "W-20049",
-    "workerName": "Deepak Gaikwad",
+    "workerName": "Akshay Shinde",
     "certificateType": "Mining Safety & Blasting Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2530,7 +2530,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20050",
     "workerId": "W-20050",
-    "workerName": "Nitin Gaikwad",
+    "workerName": "Raghav Shinde",
     "certificateType": "First Aid & Emergency Response Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2546,7 +2546,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20051",
     "workerId": "W-20051",
-    "workerName": "Sanjay More",
+    "workerName": "Sameer Jadhav",
     "certificateType": "Electrical Competency Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2562,7 +2562,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20052",
     "workerId": "W-20052",
-    "workerName": "Vijay More",
+    "workerName": "Pranav Jadhav",
     "certificateType": "Equipment Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2578,7 +2578,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20053",
     "workerId": "W-20053",
-    "workerName": "Prakash More",
+    "workerName": "Varun Jadhav",
     "certificateType": "Heavy Machinery Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2594,7 +2594,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20054",
     "workerId": "W-20054",
-    "workerName": "Sunil More",
+    "workerName": "Akshay Jadhav",
     "certificateType": "Mining Safety & Blasting Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2610,7 +2610,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20055",
     "workerId": "W-20055",
-    "workerName": "Anil More",
+    "workerName": "Raghav Jadhav",
     "certificateType": "First Aid & Emergency Response Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2626,7 +2626,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20056",
     "workerId": "W-20056",
-    "workerName": "Rajesh Kadam",
+    "workerName": "Sameer Pawar",
     "certificateType": "Electrical Competency Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2642,7 +2642,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20057",
     "workerId": "W-20057",
-    "workerName": "Dinesh Kadam",
+    "workerName": "Pranav Pawar",
     "certificateType": "Equipment Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2658,7 +2658,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20058",
     "workerId": "W-20058",
-    "workerName": "Ramesh Kadam",
+    "workerName": "Varun Pawar",
     "certificateType": "Heavy Machinery Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2674,7 +2674,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20059",
     "workerId": "W-20059",
-    "workerName": "Mahesh Kadam",
+    "workerName": "Akshay Pawar",
     "certificateType": "Mining Safety & Blasting Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2690,7 +2690,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20060",
     "workerId": "W-20060",
-    "workerName": "Ganesh Kadam",
+    "workerName": "Raghav Pawar",
     "certificateType": "First Aid & Emergency Response Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2706,7 +2706,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20061",
     "workerId": "W-20061",
-    "workerName": "Rahul Raut",
+    "workerName": "Aman Patil",
     "certificateType": "Electrical Competency Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2722,7 +2722,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20062",
     "workerId": "W-20062",
-    "workerName": "Amit Raut",
+    "workerName": "Harsh Patil",
     "certificateType": "Equipment Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2738,7 +2738,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20063",
     "workerId": "W-20063",
-    "workerName": "Suresh Raut",
+    "workerName": "Tushar Patil",
     "certificateType": "Heavy Machinery Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2754,7 +2754,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20064",
     "workerId": "W-20064",
-    "workerName": "Vikas Raut",
+    "workerName": "Vivek Patil",
     "certificateType": "Mining Safety & Blasting Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2770,7 +2770,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20065",
     "workerId": "W-20065",
-    "workerName": "Arjun Raut",
+    "workerName": "Naman Patil",
     "certificateType": "First Aid & Emergency Response Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2786,7 +2786,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20066",
     "workerId": "W-20066",
-    "workerName": "Rohan Bhosale",
+    "workerName": "Aman Shinde",
     "certificateType": "Electrical Competency Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2802,7 +2802,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20067",
     "workerId": "W-20067",
-    "workerName": "Manoj Bhosale",
+    "workerName": "Harsh Shinde",
     "certificateType": "Equipment Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2818,7 +2818,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20068",
     "workerId": "W-20068",
-    "workerName": "Kiran Bhosale",
+    "workerName": "Tushar Shinde",
     "certificateType": "Heavy Machinery Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2834,7 +2834,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20069",
     "workerId": "W-20069",
-    "workerName": "Deepak Bhosale",
+    "workerName": "Vivek Shinde",
     "certificateType": "Mining Safety & Blasting Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2850,7 +2850,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20070",
     "workerId": "W-20070",
-    "workerName": "Nitin Bhosale",
+    "workerName": "Naman Shinde",
     "certificateType": "First Aid & Emergency Response Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2866,7 +2866,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20071",
     "workerId": "W-20071",
-    "workerName": "Sanjay Sawant",
+    "workerName": "Aman Jadhav",
     "certificateType": "Electrical Competency Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2882,7 +2882,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20072",
     "workerId": "W-20072",
-    "workerName": "Vijay Sawant",
+    "workerName": "Harsh Jadhav",
     "certificateType": "Equipment Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2898,7 +2898,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20073",
     "workerId": "W-20073",
-    "workerName": "Prakash Sawant",
+    "workerName": "Tushar Jadhav",
     "certificateType": "Heavy Machinery Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2914,7 +2914,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20074",
     "workerId": "W-20074",
-    "workerName": "Sunil Sawant",
+    "workerName": "Vivek Jadhav",
     "certificateType": "Mining Safety & Blasting Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2930,7 +2930,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20075",
     "workerId": "W-20075",
-    "workerName": "Anil Sawant",
+    "workerName": "Naman Jadhav",
     "certificateType": "First Aid & Emergency Response Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2946,7 +2946,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20076",
     "workerId": "W-20076",
-    "workerName": "Rajesh Suryavanshi",
+    "workerName": "Aman Pawar",
     "certificateType": "Electrical Competency Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2962,7 +2962,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20077",
     "workerId": "W-20077",
-    "workerName": "Dinesh Suryavanshi",
+    "workerName": "Harsh Pawar",
     "certificateType": "Equipment Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2978,7 +2978,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20078",
     "workerId": "W-20078",
-    "workerName": "Ramesh Suryavanshi",
+    "workerName": "Tushar Pawar",
     "certificateType": "Heavy Machinery Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -2994,7 +2994,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20079",
     "workerId": "W-20079",
-    "workerName": "Mahesh Suryavanshi",
+    "workerName": "Vivek Pawar",
     "certificateType": "Mining Safety & Blasting Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -3010,7 +3010,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20080",
     "workerId": "W-20080",
-    "workerName": "Ganesh Suryavanshi",
+    "workerName": "Naman Pawar",
     "certificateType": "First Aid & Emergency Response Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -3026,7 +3026,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20081",
     "workerId": "W-20081",
-    "workerName": "Rahul Mohite",
+    "workerName": "Reyansh Patil",
     "certificateType": "Electrical Competency Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -3042,7 +3042,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20082",
     "workerId": "W-20082",
-    "workerName": "Amit Mohite",
+    "workerName": "Kartik Patil",
     "certificateType": "Equipment Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -3058,7 +3058,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20083",
     "workerId": "W-20083",
-    "workerName": "Suresh Mohite",
+    "workerName": "Gaurav Patil",
     "certificateType": "Heavy Machinery Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -3074,7 +3074,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20084",
     "workerId": "W-20084",
-    "workerName": "Vikas Mohite",
+    "workerName": "Mihir Patil",
     "certificateType": "Mining Safety & Blasting Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -3090,7 +3090,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20085",
     "workerId": "W-20085",
-    "workerName": "Arjun Mohite",
+    "workerName": "Ishan Patil",
     "certificateType": "First Aid & Emergency Response Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -3106,7 +3106,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20086",
     "workerId": "W-20086",
-    "workerName": "Rohan Jagtap",
+    "workerName": "Reyansh Shinde",
     "certificateType": "Electrical Competency Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -3122,7 +3122,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20087",
     "workerId": "W-20087",
-    "workerName": "Manoj Jagtap",
+    "workerName": "Kartik Shinde",
     "certificateType": "Equipment Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -3138,7 +3138,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20088",
     "workerId": "W-20088",
-    "workerName": "Kiran Jagtap",
+    "workerName": "Gaurav Shinde",
     "certificateType": "Heavy Machinery Operation Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -3154,7 +3154,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20089",
     "workerId": "W-20089",
-    "workerName": "Deepak Jagtap",
+    "workerName": "Mihir Shinde",
     "certificateType": "Mining Safety & Blasting Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -3170,7 +3170,7 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20090",
     "workerId": "W-20090",
-    "workerName": "Nitin Jagtap",
+    "workerName": "Ishan Shinde",
     "certificateType": "First Aid & Emergency Response Certificate",
     "issueDate": "2024-01-15",
     "expiryDate": "2027-12-31",
@@ -3186,10 +3186,10 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20091",
     "workerId": "W-20091",
-    "workerName": "Sanjay Naik",
+    "workerName": "Reyansh Jadhav",
     "certificateType": "Electrical Competency Certificate",
-    "issueDate": "2022-01-15",
-    "expiryDate": "2025-12-31",
+    "issueDate": "2024-01-15",
+    "expiryDate": "2026-07-15",
     "issuingAuthority": "Directorate General of Mines Safety (DGMS)",
     "documentUrl": "electrical_competency_certificate_w-20091.pdf",
     "verificationStatus": "EXPIRED",
@@ -3202,15 +3202,15 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20092",
     "workerId": "W-20092",
-    "workerName": "Vijay Naik",
+    "workerName": "Kartik Jadhav",
     "certificateType": "Equipment Operation Certificate",
-    "issueDate": "2022-01-15",
-    "expiryDate": "2025-12-31",
+    "issueDate": "2024-01-15",
+    "expiryDate": "2027-12-31",
     "issuingAuthority": "Directorate General of Mines Safety (DGMS)",
     "documentUrl": "equipment_operation_certificate_w-20092.pdf",
-    "verificationStatus": "EXPIRED",
-    "status": "EXPIRED",
-    "assessmentStatus": "EXPIRED",
+    "verificationStatus": "VALID",
+    "status": "VALID",
+    "assessmentStatus": "PASSED",
     "mineId": "MINE-05",
     "zoneId": "M05-Z3",
     "area": "Processing Plant"
@@ -3218,15 +3218,15 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20093",
     "workerId": "W-20093",
-    "workerName": "Prakash Naik",
+    "workerName": "Gaurav Jadhav",
     "certificateType": "Heavy Machinery Operation Certificate",
-    "issueDate": "2022-01-15",
-    "expiryDate": "2025-12-31",
+    "issueDate": "2024-01-15",
+    "expiryDate": "2027-12-31",
     "issuingAuthority": "Directorate General of Mines Safety (DGMS)",
     "documentUrl": "heavy_machinery_operation_certificate_w-20093.pdf",
-    "verificationStatus": "EXPIRED",
-    "status": "EXPIRED",
-    "assessmentStatus": "EXPIRED",
+    "verificationStatus": "VALID",
+    "status": "VALID",
+    "assessmentStatus": "PASSED",
     "mineId": "MINE-05",
     "zoneId": "M05-Z3",
     "area": "Processing Plant"
@@ -3234,15 +3234,15 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20094",
     "workerId": "W-20094",
-    "workerName": "Sunil Naik",
+    "workerName": "Mihir Jadhav",
     "certificateType": "Mining Safety & Blasting Certificate",
-    "issueDate": "2022-01-15",
-    "expiryDate": "2025-12-31",
+    "issueDate": "2024-01-15",
+    "expiryDate": "2027-12-31",
     "issuingAuthority": "Directorate General of Mines Safety (DGMS)",
     "documentUrl": "mining_safety___blasting_certificate_w-20094.pdf",
-    "verificationStatus": "EXPIRED",
-    "status": "EXPIRED",
-    "assessmentStatus": "EXPIRED",
+    "verificationStatus": "VALID",
+    "status": "VALID",
+    "assessmentStatus": "PASSED",
     "mineId": "MINE-05",
     "zoneId": "M05-Z3",
     "area": "Processing Plant"
@@ -3250,15 +3250,15 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20095",
     "workerId": "W-20095",
-    "workerName": "Anil Naik",
+    "workerName": "Ishan Jadhav",
     "certificateType": "First Aid & Emergency Response Certificate",
-    "issueDate": "2022-01-15",
-    "expiryDate": "2025-12-31",
+    "issueDate": "2024-01-15",
+    "expiryDate": "2027-12-31",
     "issuingAuthority": "Directorate General of Mines Safety (DGMS)",
     "documentUrl": "first_aid___emergency_response_certificate_w-20095.pdf",
-    "verificationStatus": "EXPIRED",
-    "status": "EXPIRED",
-    "assessmentStatus": "EXPIRED",
+    "verificationStatus": "VALID",
+    "status": "VALID",
+    "assessmentStatus": "PASSED",
     "mineId": "MINE-05",
     "zoneId": "M05-Z3",
     "area": "Processing Plant"
@@ -3266,15 +3266,15 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20096",
     "workerId": "W-20096",
-    "workerName": "Rajesh Shetty",
+    "workerName": "Reyansh Pawar",
     "certificateType": "Electrical Competency Certificate",
-    "issueDate": "2022-01-15",
-    "expiryDate": "2025-12-31",
+    "issueDate": "2024-01-15",
+    "expiryDate": "2027-12-31",
     "issuingAuthority": "Directorate General of Mines Safety (DGMS)",
     "documentUrl": "electrical_competency_certificate_w-20096.pdf",
-    "verificationStatus": "EXPIRED",
-    "status": "EXPIRED",
-    "assessmentStatus": "EXPIRED",
+    "verificationStatus": "VALID",
+    "status": "VALID",
+    "assessmentStatus": "PASSED",
     "mineId": "MINE-05",
     "zoneId": "M05-Z4",
     "area": "Substation"
@@ -3282,15 +3282,15 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20097",
     "workerId": "W-20097",
-    "workerName": "Dinesh Shetty",
+    "workerName": "Kartik Pawar",
     "certificateType": "Equipment Operation Certificate",
-    "issueDate": "2022-01-15",
-    "expiryDate": "2025-12-31",
+    "issueDate": "2024-01-15",
+    "expiryDate": "2027-12-31",
     "issuingAuthority": "Directorate General of Mines Safety (DGMS)",
     "documentUrl": "equipment_operation_certificate_w-20097.pdf",
-    "verificationStatus": "EXPIRED",
-    "status": "EXPIRED",
-    "assessmentStatus": "EXPIRED",
+    "verificationStatus": "VALID",
+    "status": "VALID",
+    "assessmentStatus": "PASSED",
     "mineId": "MINE-05",
     "zoneId": "M05-Z4",
     "area": "Substation"
@@ -3298,15 +3298,15 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20098",
     "workerId": "W-20098",
-    "workerName": "Ramesh Shetty",
+    "workerName": "Gaurav Pawar",
     "certificateType": "Heavy Machinery Operation Certificate",
-    "issueDate": "2022-01-15",
-    "expiryDate": "2025-12-31",
+    "issueDate": "2024-01-15",
+    "expiryDate": "2027-12-31",
     "issuingAuthority": "Directorate General of Mines Safety (DGMS)",
     "documentUrl": "heavy_machinery_operation_certificate_w-20098.pdf",
-    "verificationStatus": "EXPIRED",
-    "status": "EXPIRED",
-    "assessmentStatus": "EXPIRED",
+    "verificationStatus": "VALID",
+    "status": "VALID",
+    "assessmentStatus": "PASSED",
     "mineId": "MINE-05",
     "zoneId": "M05-Z4",
     "area": "Substation"
@@ -3314,15 +3314,15 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20099",
     "workerId": "W-20099",
-    "workerName": "Mahesh Shetty",
+    "workerName": "Mihir Pawar",
     "certificateType": "Mining Safety & Blasting Certificate",
-    "issueDate": "2022-01-15",
-    "expiryDate": "2025-12-31",
+    "issueDate": "2024-01-15",
+    "expiryDate": "2027-12-31",
     "issuingAuthority": "Directorate General of Mines Safety (DGMS)",
     "documentUrl": "mining_safety___blasting_certificate_w-20099.pdf",
-    "verificationStatus": "EXPIRED",
-    "status": "EXPIRED",
-    "assessmentStatus": "EXPIRED",
+    "verificationStatus": "VALID",
+    "status": "VALID",
+    "assessmentStatus": "PASSED",
     "mineId": "MINE-05",
     "zoneId": "M05-Z4",
     "area": "Substation"
@@ -3330,15 +3330,15 @@ export const DEMO_CERTIFICATES = [
   {
     "certificateId": "MG-TRN-2026-W-20100",
     "workerId": "W-20100",
-    "workerName": "Ganesh Shetty",
+    "workerName": "Ishan Pawar",
     "certificateType": "First Aid & Emergency Response Certificate",
-    "issueDate": "2022-01-15",
-    "expiryDate": "2025-12-31",
+    "issueDate": "2024-01-15",
+    "expiryDate": "2027-12-31",
     "issuingAuthority": "Directorate General of Mines Safety (DGMS)",
     "documentUrl": "first_aid___emergency_response_certificate_w-20100.pdf",
-    "verificationStatus": "EXPIRED",
-    "status": "EXPIRED",
-    "assessmentStatus": "EXPIRED",
+    "verificationStatus": "VALID",
+    "status": "VALID",
+    "assessmentStatus": "PASSED",
     "mineId": "MINE-05",
     "zoneId": "M05-Z4",
     "area": "Substation"
@@ -3355,12 +3355,21 @@ export const DEMO_INSPECTIONS = [
     "date": "2026-08-28",
     "inspectionType": "Routine Safety Audit",
     "overallResult": "COMPLETED",
-    "inspectorId": "INS-001",
-    "inspectorName": "Anita Kulkarni",
+    "inspectorId": "INS-M01",
+    "inspectorName": "Aarav Deshmukh",
     "checklistResults": [
-      { "item": "PPE Compliance", "passed": true },
-      { "item": "Ventilation Check", "passed": true },
-      { "item": "Gas Monitoring", "passed": true }
+      {
+        "item": "PPE Compliance",
+        "passed": true
+      },
+      {
+        "item": "Ventilation Check",
+        "passed": true
+      },
+      {
+        "item": "Gas Monitoring",
+        "passed": true
+      }
     ],
     "notes": "All North Shaft systems operating within normal parameters."
   }
@@ -3369,17 +3378,17 @@ export const DEMO_INSPECTIONS = [
 export const DEMO_VIOLATIONS = [
   {
     "violationId": "VIO-2026-001",
-    "mineId": "MINE-01",
-    "mineName": "Demo Mine Alpha",
-    "area": "North Shaft",
-    "zoneId": "M01-Z1",
+    "mineId": "MINE-05",
+    "mineName": "Demo Mine Epsilon",
+    "area": "Processing Plant",
+    "zoneId": "M05-Z3",
     "category": "Expired Training Certification",
     "severity": "HIGH",
     "workerId": "W-20091",
-    "workerName": "Arjun Sawant",
+    "workerName": "Reyansh Jadhav",
     "certificateId": "MG-TRN-2026-W-20091",
-    "description": "Worker found operating electrical substation with expired electrical competency certification.",
-    "reportedBy": "Anita Kulkarni",
+    "description": "Worker found operating equipment with expired electrical competency certification.",
+    "reportedBy": "Rohan Mehta",
     "date": "2026-08-29",
     "reportedDate": "2026-08-29",
     "status": "OPEN",
@@ -3397,10 +3406,10 @@ export const DEMO_CORRECTIVE_ACTIONS = [
   {
     "actionId": "ACT-2026-001",
     "violationId": "VIO-2026-001",
-    "mineId": "MINE-01",
+    "mineId": "MINE-05",
     "title": "Suspend Operator & Schedule Recertification",
     "description": "Immediately reassign worker W-20091 from high-voltage duties until recertification training is completed.",
-    "assignedTo": "Rajesh Deshmukh",
+    "assignedTo": "Siddharth Patil",
     "dueDate": "2026-09-05",
     "priority": "HIGH",
     "status": "IN PROGRESS",
@@ -3414,19 +3423,24 @@ export const DEMO_CORRECTIVE_ACTIONS = [
 export const DEMO_ALERTS = [
   {
     "alertId": "ALT-2026-001",
-    "mineId": "MINE-01",
+    "mineId": "MINE-05",
     "violationId": "VIO-2026-001",
     "relatedEntity": "VIO-2026-001",
     "title": "High Severity Certification Violation",
-    "message": "Worker W-20091 flagged for expired certification in Demo Mine Alpha (North Shaft).",
-    "description": "Worker W-20091 flagged for expired certification in Demo Mine Alpha (North Shaft).",
+    "message": "Worker W-20091 (Reyansh Jadhav) flagged for expired certification in Demo Mine Epsilon (Processing Plant).",
+    "description": "Worker W-20091 (Reyansh Jadhav) flagged for expired certification in Demo Mine Epsilon (Processing Plant).",
     "type": "VIOLATION_REPORTED",
     "severity": "HIGH",
     "timestamp": "2026-08-29T10:15:00Z",
     "createdDate": "2026-08-29T10:15:00Z",
     "isRead": false,
     "status": "UNREAD",
-    "targetRoles": ["officer", "management", "authority", "inspector"]
+    "targetRoles": [
+      "officer",
+      "management",
+      "authority",
+      "inspector"
+    ]
   }
 ];
 
@@ -3434,11 +3448,11 @@ export const DEMO_AUDIT_TRAIL = [
   {
     "auditId": "AUD-2026-001",
     "timestamp": "2026-08-29T10:15:00Z",
-    "actor": "Anita Kulkarni (Inspector)",
+    "actor": "Rohan Mehta (Inspector)",
     "role": "INSPECTOR",
     "action": "Reported Violation",
     "details": "Logged VIO-2026-001 for worker W-20091 (Expired Certificate)",
-    "mineId": "MINE-01"
+    "mineId": "MINE-05"
   }
 ];
 

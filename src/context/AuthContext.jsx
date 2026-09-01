@@ -9,7 +9,19 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(() => {
     try {
       const saved = localStorage.getItem('mineguard_auth_user');
-      return saved ? JSON.parse(saved) : null;
+      if (!saved) return null;
+      const parsed = JSON.parse(saved);
+      // Auto-migrate legacy demo session IDs or outdated names
+      const match = DEMO_ACCOUNTS.find(acc => 
+        acc.userId.toLowerCase() === parsed.userId?.toLowerCase() ||
+        acc.badge?.toLowerCase() === parsed.badge?.toLowerCase() ||
+        (parsed.userId === 'INS-001' && acc.userId === 'INS-M01') ||
+        (parsed.userId === 'MO-001' && acc.userId === 'MO-M01') ||
+        (parsed.badge === 'INS-001' && acc.badge === 'INS-M01') ||
+        (parsed.badge === 'MO-001' && acc.badge === 'MO-M01')
+      );
+      if (match) return match;
+      return parsed;
     } catch (e) {
       return null;
     }

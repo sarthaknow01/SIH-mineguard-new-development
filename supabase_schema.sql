@@ -259,19 +259,19 @@ END $$;
 
 -- 1. SEED MINES
 INSERT INTO public.mines (mine_id, code, mine_name, location, type, status, compliance_score, risk_level, officer, officer_id, workers_count, active_violations, pending_actions)
-VALUES ('MINE-01', 'M01', 'Demo Mine Alpha', 'Dhanbad Coalfield, Jharkhand', 'Underground & Opencast', NULL, 88, 'LOW', 'Rajesh Deshmukh', 'MO-001', 20, 1, 1)
+VALUES ('MINE-01', 'M01', 'Demo Mine Alpha', 'Dhanbad Coalfield, Jharkhand', 'Underground & Opencast', NULL, 88, 'LOW', 'Vikram Singh', 'MO-M01', 20, 1, 1)
 ON CONFLICT (mine_id) DO UPDATE SET mine_name = EXCLUDED.mine_name, compliance_score = EXCLUDED.compliance_score;
 INSERT INTO public.mines (mine_id, code, mine_name, location, type, status, compliance_score, risk_level, officer, officer_id, workers_count, active_violations, pending_actions)
-VALUES ('MINE-02', 'M02', 'Demo Mine Beta', 'Raniganj Basin, West Bengal', 'Opencast Mining', NULL, 82, 'LOW', 'Anil Sengupta', 'MO-002', 20, 1, 1)
+VALUES ('MINE-02', 'M02', 'Demo Mine Beta', 'Raniganj Basin, West Bengal', 'Opencast Mining', NULL, 82, 'LOW', 'Priya Nair', 'MO-M02', 20, 1, 1)
 ON CONFLICT (mine_id) DO UPDATE SET mine_name = EXCLUDED.mine_name, compliance_score = EXCLUDED.compliance_score;
 INSERT INTO public.mines (mine_id, code, mine_name, location, type, status, compliance_score, risk_level, officer, officer_id, workers_count, active_violations, pending_actions)
-VALUES ('MINE-03', 'M03', 'Demo Mine Gamma', 'Singrauli Coal Belt, Madhya Pradesh', 'Deep Underground Shaft', NULL, 61, 'HIGH', 'Rajesh Trivedi', 'MO-003', 20, 2, 1)
+VALUES ('MINE-03', 'M03', 'Demo Mine Gamma', 'Singrauli Coal Belt, Madhya Pradesh', 'Deep Underground Shaft', NULL, 61, 'HIGH', 'Aditya Rao', 'MO-M03', 20, 2, 1)
 ON CONFLICT (mine_id) DO UPDATE SET mine_name = EXCLUDED.mine_name, compliance_score = EXCLUDED.compliance_score;
 INSERT INTO public.mines (mine_id, code, mine_name, location, type, status, compliance_score, risk_level, officer, officer_id, workers_count, active_violations, pending_actions)
-VALUES ('MINE-04', 'M04', 'Demo Mine Delta', 'Korba Industrial Belt, Chhattisgarh', 'Opencast Mechanized', NULL, 91, 'LOW', 'Kavita Raman', 'MO-004', 20, 0, 0)
+VALUES ('MINE-04', 'M04', 'Demo Mine Delta', 'Korba Industrial Belt, Chhattisgarh', 'Opencast Mechanized', NULL, 91, 'LOW', 'Neha Kapoor', 'MO-M04', 20, 0, 0)
 ON CONFLICT (mine_id) DO UPDATE SET mine_name = EXCLUDED.mine_name, compliance_score = EXCLUDED.compliance_score;
 INSERT INTO public.mines (mine_id, code, mine_name, location, type, status, compliance_score, risk_level, officer, officer_id, workers_count, active_violations, pending_actions)
-VALUES ('MINE-05', 'M05', 'Demo Mine Epsilon', 'Talcher Coalfields, Odisha', 'Underground Continuous Miner', NULL, 73, 'MEDIUM', 'Bikram Mohanty', 'MO-005', 20, 1, 1)
+VALUES ('MINE-05', 'M05', 'Demo Mine Epsilon', 'Talcher Coalfields, Odisha', 'Underground Continuous Miner', NULL, 73, 'MEDIUM', 'Siddharth Patil', 'MO-M05', 20, 1, 1)
 ON CONFLICT (mine_id) DO UPDATE SET mine_name = EXCLUDED.mine_name, compliance_score = EXCLUDED.compliance_score;
 
 -- 2. SEED ZONES
@@ -338,336 +338,336 @@ ON CONFLICT (zone_id) DO UPDATE SET zone_name = EXCLUDED.zone_name;
 
 -- 3. SEED WORKERS
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20001', 'Rahul Patil', 'MINE-01', 'Demo Mine Alpha', 'M01-Z1', 'North Shaft', 'North Shaft', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0001')
+VALUES ('W-20001', 'Arnav Patil', 'MINE-01', 'Demo Mine Alpha', 'M01-Z1', 'North Shaft', 'North Shaft', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0001')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20002', 'Amit Patil', 'MINE-01', 'Demo Mine Alpha', 'M01-Z1', 'North Shaft', 'North Shaft', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0002')
+VALUES ('W-20002', 'Kabir Patil', 'MINE-01', 'Demo Mine Alpha', 'M01-Z1', 'North Shaft', 'North Shaft', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0002')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20003', 'Suresh Patil', 'MINE-01', 'Demo Mine Alpha', 'M01-Z1', 'North Shaft', 'North Shaft', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0003')
+VALUES ('W-20003', 'Yash Patil', 'MINE-01', 'Demo Mine Alpha', 'M01-Z1', 'North Shaft', 'North Shaft', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0003')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20004', 'Vikas Patil', 'MINE-01', 'Demo Mine Alpha', 'M01-Z1', 'North Shaft', 'North Shaft', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0004')
+VALUES ('W-20004', 'Dev Patil', 'MINE-01', 'Demo Mine Alpha', 'M01-Z1', 'North Shaft', 'North Shaft', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0004')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20005', 'Arjun Patil', 'MINE-01', 'Demo Mine Alpha', 'M01-Z1', 'North Shaft', 'North Shaft', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0005')
+VALUES ('W-20005', 'Manav Patil', 'MINE-01', 'Demo Mine Alpha', 'M01-Z1', 'North Shaft', 'North Shaft', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0005')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20006', 'Rohan Shinde', 'MINE-01', 'Demo Mine Alpha', 'M01-Z2', 'South Shaft', 'South Shaft', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0006')
+VALUES ('W-20006', 'Arnav Shinde', 'MINE-01', 'Demo Mine Alpha', 'M01-Z2', 'South Shaft', 'South Shaft', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0006')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20007', 'Manoj Shinde', 'MINE-01', 'Demo Mine Alpha', 'M01-Z2', 'South Shaft', 'South Shaft', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0007')
+VALUES ('W-20007', 'Kabir Shinde', 'MINE-01', 'Demo Mine Alpha', 'M01-Z2', 'South Shaft', 'South Shaft', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0007')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20008', 'Kiran Shinde', 'MINE-01', 'Demo Mine Alpha', 'M01-Z2', 'South Shaft', 'South Shaft', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0008')
+VALUES ('W-20008', 'Yash Shinde', 'MINE-01', 'Demo Mine Alpha', 'M01-Z2', 'South Shaft', 'South Shaft', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0008')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20009', 'Deepak Shinde', 'MINE-01', 'Demo Mine Alpha', 'M01-Z2', 'South Shaft', 'South Shaft', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0009')
+VALUES ('W-20009', 'Dev Shinde', 'MINE-01', 'Demo Mine Alpha', 'M01-Z2', 'South Shaft', 'South Shaft', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0009')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20010', 'Nitin Shinde', 'MINE-01', 'Demo Mine Alpha', 'M01-Z2', 'South Shaft', 'South Shaft', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0010')
+VALUES ('W-20010', 'Manav Shinde', 'MINE-01', 'Demo Mine Alpha', 'M01-Z2', 'South Shaft', 'South Shaft', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0010')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20011', 'Sanjay Jadhav', 'MINE-01', 'Demo Mine Alpha', 'M01-Z3', 'Processing Plant', 'Processing Plant', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0011')
+VALUES ('W-20011', 'Arnav Jadhav', 'MINE-01', 'Demo Mine Alpha', 'M01-Z3', 'Processing Plant', 'Processing Plant', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0011')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20012', 'Vijay Jadhav', 'MINE-01', 'Demo Mine Alpha', 'M01-Z3', 'Processing Plant', 'Processing Plant', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0012')
+VALUES ('W-20012', 'Kabir Jadhav', 'MINE-01', 'Demo Mine Alpha', 'M01-Z3', 'Processing Plant', 'Processing Plant', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0012')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20013', 'Prakash Jadhav', 'MINE-01', 'Demo Mine Alpha', 'M01-Z3', 'Processing Plant', 'Processing Plant', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0013')
+VALUES ('W-20013', 'Yash Jadhav', 'MINE-01', 'Demo Mine Alpha', 'M01-Z3', 'Processing Plant', 'Processing Plant', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0013')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20014', 'Sunil Jadhav', 'MINE-01', 'Demo Mine Alpha', 'M01-Z3', 'Processing Plant', 'Processing Plant', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0014')
+VALUES ('W-20014', 'Dev Jadhav', 'MINE-01', 'Demo Mine Alpha', 'M01-Z3', 'Processing Plant', 'Processing Plant', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0014')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20015', 'Anil Jadhav', 'MINE-01', 'Demo Mine Alpha', 'M01-Z3', 'Processing Plant', 'Processing Plant', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0015')
+VALUES ('W-20015', 'Manav Jadhav', 'MINE-01', 'Demo Mine Alpha', 'M01-Z3', 'Processing Plant', 'Processing Plant', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0015')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20016', 'Rajesh Pawar', 'MINE-01', 'Demo Mine Alpha', 'M01-Z4', 'Substation', 'Substation', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0016')
+VALUES ('W-20016', 'Arnav Pawar', 'MINE-01', 'Demo Mine Alpha', 'M01-Z4', 'Substation', 'Substation', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0016')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20017', 'Dinesh Pawar', 'MINE-01', 'Demo Mine Alpha', 'M01-Z4', 'Substation', 'Substation', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0017')
+VALUES ('W-20017', 'Kabir Pawar', 'MINE-01', 'Demo Mine Alpha', 'M01-Z4', 'Substation', 'Substation', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0017')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20018', 'Ramesh Pawar', 'MINE-01', 'Demo Mine Alpha', 'M01-Z4', 'Substation', 'Substation', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0018')
+VALUES ('W-20018', 'Yash Pawar', 'MINE-01', 'Demo Mine Alpha', 'M01-Z4', 'Substation', 'Substation', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0018')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20019', 'Mahesh Pawar', 'MINE-01', 'Demo Mine Alpha', 'M01-Z4', 'Substation', 'Substation', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0019')
+VALUES ('W-20019', 'Dev Pawar', 'MINE-01', 'Demo Mine Alpha', 'M01-Z4', 'Substation', 'Substation', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0019')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20020', 'Ganesh Pawar', 'MINE-01', 'Demo Mine Alpha', 'M01-Z4', 'Substation', 'Substation', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0020')
+VALUES ('W-20020', 'Manav Pawar', 'MINE-01', 'Demo Mine Alpha', 'M01-Z4', 'Substation', 'Substation', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0020')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20021', 'Rahul Kulkarni', 'MINE-02', 'Demo Mine Beta', 'M02-Z1', 'North Shaft', 'North Shaft', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0021')
+VALUES ('W-20021', 'Ritvik Patil', 'MINE-02', 'Demo Mine Beta', 'M02-Z1', 'North Shaft', 'North Shaft', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0021')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20022', 'Amit Kulkarni', 'MINE-02', 'Demo Mine Beta', 'M02-Z1', 'North Shaft', 'North Shaft', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0022')
+VALUES ('W-20022', 'Om Patil', 'MINE-02', 'Demo Mine Beta', 'M02-Z1', 'North Shaft', 'North Shaft', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0022')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20023', 'Suresh Kulkarni', 'MINE-02', 'Demo Mine Beta', 'M02-Z1', 'North Shaft', 'North Shaft', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0023')
+VALUES ('W-20023', 'Ayaan Patil', 'MINE-02', 'Demo Mine Beta', 'M02-Z1', 'North Shaft', 'North Shaft', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0023')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20024', 'Vikas Kulkarni', 'MINE-02', 'Demo Mine Beta', 'M02-Z1', 'North Shaft', 'North Shaft', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0024')
+VALUES ('W-20024', 'Nikhil Patil', 'MINE-02', 'Demo Mine Beta', 'M02-Z1', 'North Shaft', 'North Shaft', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0024')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20025', 'Arjun Kulkarni', 'MINE-02', 'Demo Mine Beta', 'M02-Z1', 'North Shaft', 'North Shaft', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0025')
+VALUES ('W-20025', 'Dhruv Patil', 'MINE-02', 'Demo Mine Beta', 'M02-Z1', 'North Shaft', 'North Shaft', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0025')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20026', 'Rohan Deshmukh', 'MINE-02', 'Demo Mine Beta', 'M02-Z2', 'South Shaft', 'South Shaft', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0026')
+VALUES ('W-20026', 'Ritvik Shinde', 'MINE-02', 'Demo Mine Beta', 'M02-Z2', 'South Shaft', 'South Shaft', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0026')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20027', 'Manoj Deshmukh', 'MINE-02', 'Demo Mine Beta', 'M02-Z2', 'South Shaft', 'South Shaft', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0027')
+VALUES ('W-20027', 'Om Shinde', 'MINE-02', 'Demo Mine Beta', 'M02-Z2', 'South Shaft', 'South Shaft', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0027')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20028', 'Kiran Deshmukh', 'MINE-02', 'Demo Mine Beta', 'M02-Z2', 'South Shaft', 'South Shaft', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0028')
+VALUES ('W-20028', 'Ayaan Shinde', 'MINE-02', 'Demo Mine Beta', 'M02-Z2', 'South Shaft', 'South Shaft', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0028')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20029', 'Deepak Deshmukh', 'MINE-02', 'Demo Mine Beta', 'M02-Z2', 'South Shaft', 'South Shaft', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0029')
+VALUES ('W-20029', 'Nikhil Shinde', 'MINE-02', 'Demo Mine Beta', 'M02-Z2', 'South Shaft', 'South Shaft', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0029')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20030', 'Nitin Deshmukh', 'MINE-02', 'Demo Mine Beta', 'M02-Z2', 'South Shaft', 'South Shaft', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0030')
+VALUES ('W-20030', 'Dhruv Shinde', 'MINE-02', 'Demo Mine Beta', 'M02-Z2', 'South Shaft', 'South Shaft', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0030')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20031', 'Sanjay Deshpande', 'MINE-02', 'Demo Mine Beta', 'M02-Z3', 'Processing Plant', 'Processing Plant', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0031')
+VALUES ('W-20031', 'Ritvik Jadhav', 'MINE-02', 'Demo Mine Beta', 'M02-Z3', 'Processing Plant', 'Processing Plant', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0031')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20032', 'Vijay Deshpande', 'MINE-02', 'Demo Mine Beta', 'M02-Z3', 'Processing Plant', 'Processing Plant', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0032')
+VALUES ('W-20032', 'Om Jadhav', 'MINE-02', 'Demo Mine Beta', 'M02-Z3', 'Processing Plant', 'Processing Plant', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0032')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20033', 'Prakash Deshpande', 'MINE-02', 'Demo Mine Beta', 'M02-Z3', 'Processing Plant', 'Processing Plant', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0033')
+VALUES ('W-20033', 'Ayaan Jadhav', 'MINE-02', 'Demo Mine Beta', 'M02-Z3', 'Processing Plant', 'Processing Plant', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0033')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20034', 'Sunil Deshpande', 'MINE-02', 'Demo Mine Beta', 'M02-Z3', 'Processing Plant', 'Processing Plant', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0034')
+VALUES ('W-20034', 'Nikhil Jadhav', 'MINE-02', 'Demo Mine Beta', 'M02-Z3', 'Processing Plant', 'Processing Plant', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0034')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20035', 'Anil Deshpande', 'MINE-02', 'Demo Mine Beta', 'M02-Z3', 'Processing Plant', 'Processing Plant', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0035')
+VALUES ('W-20035', 'Dhruv Jadhav', 'MINE-02', 'Demo Mine Beta', 'M02-Z3', 'Processing Plant', 'Processing Plant', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0035')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20036', 'Rajesh Joshi', 'MINE-02', 'Demo Mine Beta', 'M02-Z4', 'Workshop', 'Workshop', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0036')
+VALUES ('W-20036', 'Ritvik Pawar', 'MINE-02', 'Demo Mine Beta', 'M02-Z4', 'Workshop', 'Workshop', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0036')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20037', 'Dinesh Joshi', 'MINE-02', 'Demo Mine Beta', 'M02-Z4', 'Workshop', 'Workshop', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0037')
+VALUES ('W-20037', 'Om Pawar', 'MINE-02', 'Demo Mine Beta', 'M02-Z4', 'Workshop', 'Workshop', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0037')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20038', 'Ramesh Joshi', 'MINE-02', 'Demo Mine Beta', 'M02-Z4', 'Workshop', 'Workshop', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0038')
+VALUES ('W-20038', 'Ayaan Pawar', 'MINE-02', 'Demo Mine Beta', 'M02-Z4', 'Workshop', 'Workshop', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0038')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20039', 'Mahesh Joshi', 'MINE-02', 'Demo Mine Beta', 'M02-Z4', 'Workshop', 'Workshop', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0039')
+VALUES ('W-20039', 'Nikhil Pawar', 'MINE-02', 'Demo Mine Beta', 'M02-Z4', 'Workshop', 'Workshop', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0039')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20040', 'Ganesh Joshi', 'MINE-02', 'Demo Mine Beta', 'M02-Z4', 'Workshop', 'Workshop', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0040')
+VALUES ('W-20040', 'Dhruv Pawar', 'MINE-02', 'Demo Mine Beta', 'M02-Z4', 'Workshop', 'Workshop', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0040')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20041', 'Rahul Chavan', 'MINE-03', 'Demo Mine Gamma', 'M03-Z1', 'North Shaft', 'North Shaft', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0041')
+VALUES ('W-20041', 'Sameer Patil', 'MINE-03', 'Demo Mine Gamma', 'M03-Z1', 'North Shaft', 'North Shaft', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0041')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20042', 'Amit Chavan', 'MINE-03', 'Demo Mine Gamma', 'M03-Z1', 'North Shaft', 'North Shaft', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0042')
+VALUES ('W-20042', 'Pranav Patil', 'MINE-03', 'Demo Mine Gamma', 'M03-Z1', 'North Shaft', 'North Shaft', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0042')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20043', 'Suresh Chavan', 'MINE-03', 'Demo Mine Gamma', 'M03-Z1', 'North Shaft', 'North Shaft', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0043')
+VALUES ('W-20043', 'Varun Patil', 'MINE-03', 'Demo Mine Gamma', 'M03-Z1', 'North Shaft', 'North Shaft', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0043')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20044', 'Vikas Chavan', 'MINE-03', 'Demo Mine Gamma', 'M03-Z1', 'North Shaft', 'North Shaft', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0044')
+VALUES ('W-20044', 'Akshay Patil', 'MINE-03', 'Demo Mine Gamma', 'M03-Z1', 'North Shaft', 'North Shaft', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0044')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20045', 'Arjun Chavan', 'MINE-03', 'Demo Mine Gamma', 'M03-Z1', 'North Shaft', 'North Shaft', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0045')
+VALUES ('W-20045', 'Raghav Patil', 'MINE-03', 'Demo Mine Gamma', 'M03-Z1', 'North Shaft', 'North Shaft', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0045')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20046', 'Rohan Gaikwad', 'MINE-03', 'Demo Mine Gamma', 'M03-Z2', 'South Shaft', 'South Shaft', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0046')
+VALUES ('W-20046', 'Sameer Shinde', 'MINE-03', 'Demo Mine Gamma', 'M03-Z2', 'South Shaft', 'South Shaft', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0046')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20047', 'Manoj Gaikwad', 'MINE-03', 'Demo Mine Gamma', 'M03-Z2', 'South Shaft', 'South Shaft', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0047')
+VALUES ('W-20047', 'Pranav Shinde', 'MINE-03', 'Demo Mine Gamma', 'M03-Z2', 'South Shaft', 'South Shaft', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0047')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20048', 'Kiran Gaikwad', 'MINE-03', 'Demo Mine Gamma', 'M03-Z2', 'South Shaft', 'South Shaft', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0048')
+VALUES ('W-20048', 'Varun Shinde', 'MINE-03', 'Demo Mine Gamma', 'M03-Z2', 'South Shaft', 'South Shaft', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0048')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20049', 'Deepak Gaikwad', 'MINE-03', 'Demo Mine Gamma', 'M03-Z2', 'South Shaft', 'South Shaft', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0049')
+VALUES ('W-20049', 'Akshay Shinde', 'MINE-03', 'Demo Mine Gamma', 'M03-Z2', 'South Shaft', 'South Shaft', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0049')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20050', 'Nitin Gaikwad', 'MINE-03', 'Demo Mine Gamma', 'M03-Z2', 'South Shaft', 'South Shaft', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0050')
+VALUES ('W-20050', 'Raghav Shinde', 'MINE-03', 'Demo Mine Gamma', 'M03-Z2', 'South Shaft', 'South Shaft', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0050')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20051', 'Sanjay More', 'MINE-03', 'Demo Mine Gamma', 'M03-Z3', 'Processing Plant', 'Processing Plant', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0051')
+VALUES ('W-20051', 'Sameer Jadhav', 'MINE-03', 'Demo Mine Gamma', 'M03-Z3', 'Processing Plant', 'Processing Plant', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0051')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20052', 'Vijay More', 'MINE-03', 'Demo Mine Gamma', 'M03-Z3', 'Processing Plant', 'Processing Plant', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0052')
+VALUES ('W-20052', 'Pranav Jadhav', 'MINE-03', 'Demo Mine Gamma', 'M03-Z3', 'Processing Plant', 'Processing Plant', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0052')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20053', 'Prakash More', 'MINE-03', 'Demo Mine Gamma', 'M03-Z3', 'Processing Plant', 'Processing Plant', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0053')
+VALUES ('W-20053', 'Varun Jadhav', 'MINE-03', 'Demo Mine Gamma', 'M03-Z3', 'Processing Plant', 'Processing Plant', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0053')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20054', 'Sunil More', 'MINE-03', 'Demo Mine Gamma', 'M03-Z3', 'Processing Plant', 'Processing Plant', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0054')
+VALUES ('W-20054', 'Akshay Jadhav', 'MINE-03', 'Demo Mine Gamma', 'M03-Z3', 'Processing Plant', 'Processing Plant', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0054')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20055', 'Anil More', 'MINE-03', 'Demo Mine Gamma', 'M03-Z3', 'Processing Plant', 'Processing Plant', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0055')
+VALUES ('W-20055', 'Raghav Jadhav', 'MINE-03', 'Demo Mine Gamma', 'M03-Z3', 'Processing Plant', 'Processing Plant', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0055')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20056', 'Rajesh Kadam', 'MINE-03', 'Demo Mine Gamma', 'M03-Z4', 'Substation', 'Substation', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0056')
+VALUES ('W-20056', 'Sameer Pawar', 'MINE-03', 'Demo Mine Gamma', 'M03-Z4', 'Substation', 'Substation', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0056')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20057', 'Dinesh Kadam', 'MINE-03', 'Demo Mine Gamma', 'M03-Z4', 'Substation', 'Substation', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0057')
+VALUES ('W-20057', 'Pranav Pawar', 'MINE-03', 'Demo Mine Gamma', 'M03-Z4', 'Substation', 'Substation', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0057')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20058', 'Ramesh Kadam', 'MINE-03', 'Demo Mine Gamma', 'M03-Z4', 'Substation', 'Substation', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0058')
+VALUES ('W-20058', 'Varun Pawar', 'MINE-03', 'Demo Mine Gamma', 'M03-Z4', 'Substation', 'Substation', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0058')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20059', 'Mahesh Kadam', 'MINE-03', 'Demo Mine Gamma', 'M03-Z4', 'Substation', 'Substation', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0059')
+VALUES ('W-20059', 'Akshay Pawar', 'MINE-03', 'Demo Mine Gamma', 'M03-Z4', 'Substation', 'Substation', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0059')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20060', 'Ganesh Kadam', 'MINE-03', 'Demo Mine Gamma', 'M03-Z4', 'Substation', 'Substation', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0060')
+VALUES ('W-20060', 'Raghav Pawar', 'MINE-03', 'Demo Mine Gamma', 'M03-Z4', 'Substation', 'Substation', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0060')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20061', 'Rahul Raut', 'MINE-04', 'Demo Mine Delta', 'M04-Z1', 'North Shaft', 'North Shaft', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0061')
+VALUES ('W-20061', 'Aman Patil', 'MINE-04', 'Demo Mine Delta', 'M04-Z1', 'North Shaft', 'North Shaft', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0061')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20062', 'Amit Raut', 'MINE-04', 'Demo Mine Delta', 'M04-Z1', 'North Shaft', 'North Shaft', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0062')
+VALUES ('W-20062', 'Harsh Patil', 'MINE-04', 'Demo Mine Delta', 'M04-Z1', 'North Shaft', 'North Shaft', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0062')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20063', 'Suresh Raut', 'MINE-04', 'Demo Mine Delta', 'M04-Z1', 'North Shaft', 'North Shaft', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0063')
+VALUES ('W-20063', 'Tushar Patil', 'MINE-04', 'Demo Mine Delta', 'M04-Z1', 'North Shaft', 'North Shaft', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0063')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20064', 'Vikas Raut', 'MINE-04', 'Demo Mine Delta', 'M04-Z1', 'North Shaft', 'North Shaft', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0064')
+VALUES ('W-20064', 'Vivek Patil', 'MINE-04', 'Demo Mine Delta', 'M04-Z1', 'North Shaft', 'North Shaft', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0064')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20065', 'Arjun Raut', 'MINE-04', 'Demo Mine Delta', 'M04-Z1', 'North Shaft', 'North Shaft', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0065')
+VALUES ('W-20065', 'Naman Patil', 'MINE-04', 'Demo Mine Delta', 'M04-Z1', 'North Shaft', 'North Shaft', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0065')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20066', 'Rohan Bhosale', 'MINE-04', 'Demo Mine Delta', 'M04-Z2', 'South Shaft', 'South Shaft', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0066')
+VALUES ('W-20066', 'Aman Shinde', 'MINE-04', 'Demo Mine Delta', 'M04-Z2', 'South Shaft', 'South Shaft', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0066')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20067', 'Manoj Bhosale', 'MINE-04', 'Demo Mine Delta', 'M04-Z2', 'South Shaft', 'South Shaft', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0067')
+VALUES ('W-20067', 'Harsh Shinde', 'MINE-04', 'Demo Mine Delta', 'M04-Z2', 'South Shaft', 'South Shaft', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0067')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20068', 'Kiran Bhosale', 'MINE-04', 'Demo Mine Delta', 'M04-Z2', 'South Shaft', 'South Shaft', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0068')
+VALUES ('W-20068', 'Tushar Shinde', 'MINE-04', 'Demo Mine Delta', 'M04-Z2', 'South Shaft', 'South Shaft', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0068')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20069', 'Deepak Bhosale', 'MINE-04', 'Demo Mine Delta', 'M04-Z2', 'South Shaft', 'South Shaft', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0069')
+VALUES ('W-20069', 'Vivek Shinde', 'MINE-04', 'Demo Mine Delta', 'M04-Z2', 'South Shaft', 'South Shaft', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0069')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20070', 'Nitin Bhosale', 'MINE-04', 'Demo Mine Delta', 'M04-Z2', 'South Shaft', 'South Shaft', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0070')
+VALUES ('W-20070', 'Naman Shinde', 'MINE-04', 'Demo Mine Delta', 'M04-Z2', 'South Shaft', 'South Shaft', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0070')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20071', 'Sanjay Sawant', 'MINE-04', 'Demo Mine Delta', 'M04-Z3', 'Processing Plant', 'Processing Plant', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0071')
+VALUES ('W-20071', 'Aman Jadhav', 'MINE-04', 'Demo Mine Delta', 'M04-Z3', 'Processing Plant', 'Processing Plant', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0071')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20072', 'Vijay Sawant', 'MINE-04', 'Demo Mine Delta', 'M04-Z3', 'Processing Plant', 'Processing Plant', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0072')
+VALUES ('W-20072', 'Harsh Jadhav', 'MINE-04', 'Demo Mine Delta', 'M04-Z3', 'Processing Plant', 'Processing Plant', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0072')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20073', 'Prakash Sawant', 'MINE-04', 'Demo Mine Delta', 'M04-Z3', 'Processing Plant', 'Processing Plant', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0073')
+VALUES ('W-20073', 'Tushar Jadhav', 'MINE-04', 'Demo Mine Delta', 'M04-Z3', 'Processing Plant', 'Processing Plant', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0073')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20074', 'Sunil Sawant', 'MINE-04', 'Demo Mine Delta', 'M04-Z3', 'Processing Plant', 'Processing Plant', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0074')
+VALUES ('W-20074', 'Vivek Jadhav', 'MINE-04', 'Demo Mine Delta', 'M04-Z3', 'Processing Plant', 'Processing Plant', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0074')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20075', 'Anil Sawant', 'MINE-04', 'Demo Mine Delta', 'M04-Z3', 'Processing Plant', 'Processing Plant', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0075')
+VALUES ('W-20075', 'Naman Jadhav', 'MINE-04', 'Demo Mine Delta', 'M04-Z3', 'Processing Plant', 'Processing Plant', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0075')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20076', 'Rajesh Suryavanshi', 'MINE-04', 'Demo Mine Delta', 'M04-Z4', 'Workshop', 'Workshop', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0076')
+VALUES ('W-20076', 'Aman Pawar', 'MINE-04', 'Demo Mine Delta', 'M04-Z4', 'Workshop', 'Workshop', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0076')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20077', 'Dinesh Suryavanshi', 'MINE-04', 'Demo Mine Delta', 'M04-Z4', 'Workshop', 'Workshop', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0077')
+VALUES ('W-20077', 'Harsh Pawar', 'MINE-04', 'Demo Mine Delta', 'M04-Z4', 'Workshop', 'Workshop', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0077')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20078', 'Ramesh Suryavanshi', 'MINE-04', 'Demo Mine Delta', 'M04-Z4', 'Workshop', 'Workshop', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0078')
+VALUES ('W-20078', 'Tushar Pawar', 'MINE-04', 'Demo Mine Delta', 'M04-Z4', 'Workshop', 'Workshop', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0078')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20079', 'Mahesh Suryavanshi', 'MINE-04', 'Demo Mine Delta', 'M04-Z4', 'Workshop', 'Workshop', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0079')
+VALUES ('W-20079', 'Vivek Pawar', 'MINE-04', 'Demo Mine Delta', 'M04-Z4', 'Workshop', 'Workshop', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0079')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20080', 'Ganesh Suryavanshi', 'MINE-04', 'Demo Mine Delta', 'M04-Z4', 'Workshop', 'Workshop', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0080')
+VALUES ('W-20080', 'Naman Pawar', 'MINE-04', 'Demo Mine Delta', 'M04-Z4', 'Workshop', 'Workshop', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0080')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20081', 'Rahul Mohite', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z1', 'North Shaft', 'North Shaft', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0081')
+VALUES ('W-20081', 'Reyansh Patil', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z1', 'North Shaft', 'North Shaft', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0081')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20082', 'Amit Mohite', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z1', 'North Shaft', 'North Shaft', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0082')
+VALUES ('W-20082', 'Kartik Patil', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z1', 'North Shaft', 'North Shaft', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0082')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20083', 'Suresh Mohite', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z1', 'North Shaft', 'North Shaft', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0083')
+VALUES ('W-20083', 'Gaurav Patil', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z1', 'North Shaft', 'North Shaft', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0083')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20084', 'Vikas Mohite', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z1', 'North Shaft', 'North Shaft', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0084')
+VALUES ('W-20084', 'Mihir Patil', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z1', 'North Shaft', 'North Shaft', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0084')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20085', 'Arjun Mohite', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z1', 'North Shaft', 'North Shaft', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0085')
+VALUES ('W-20085', 'Ishan Patil', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z1', 'North Shaft', 'North Shaft', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0085')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20086', 'Rohan Jagtap', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z2', 'South Shaft', 'South Shaft', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0086')
+VALUES ('W-20086', 'Reyansh Shinde', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z2', 'South Shaft', 'South Shaft', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0086')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20087', 'Manoj Jagtap', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z2', 'South Shaft', 'South Shaft', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0087')
+VALUES ('W-20087', 'Kartik Shinde', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z2', 'South Shaft', 'South Shaft', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0087')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20088', 'Kiran Jagtap', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z2', 'South Shaft', 'South Shaft', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0088')
+VALUES ('W-20088', 'Gaurav Shinde', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z2', 'South Shaft', 'South Shaft', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0088')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20089', 'Deepak Jagtap', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z2', 'South Shaft', 'South Shaft', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0089')
+VALUES ('W-20089', 'Mihir Shinde', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z2', 'South Shaft', 'South Shaft', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0089')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20090', 'Nitin Jagtap', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z2', 'South Shaft', 'South Shaft', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0090')
+VALUES ('W-20090', 'Ishan Shinde', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z2', 'South Shaft', 'South Shaft', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0090')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20091', 'Sanjay Naik', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z3', 'Processing Plant', 'Processing Plant', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0091')
+VALUES ('W-20091', 'Reyansh Jadhav', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z3', 'Processing Plant', 'Processing Plant', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0091')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20092', 'Vijay Naik', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z3', 'Processing Plant', 'Processing Plant', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0092')
+VALUES ('W-20092', 'Kartik Jadhav', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z3', 'Processing Plant', 'Processing Plant', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0092')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20093', 'Prakash Naik', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z3', 'Processing Plant', 'Processing Plant', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0093')
+VALUES ('W-20093', 'Gaurav Jadhav', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z3', 'Processing Plant', 'Processing Plant', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0093')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20094', 'Sunil Naik', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z3', 'Processing Plant', 'Processing Plant', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0094')
+VALUES ('W-20094', 'Mihir Jadhav', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z3', 'Processing Plant', 'Processing Plant', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0094')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20095', 'Anil Naik', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z3', 'Processing Plant', 'Processing Plant', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0095')
+VALUES ('W-20095', 'Ishan Jadhav', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z3', 'Processing Plant', 'Processing Plant', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0095')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20096', 'Rajesh Shetty', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z4', 'Substation', 'Substation', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0096')
+VALUES ('W-20096', 'Reyansh Pawar', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z4', 'Substation', 'Substation', 'Electrician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0096')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20097', 'Dinesh Shetty', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z4', 'Substation', 'Substation', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0097')
+VALUES ('W-20097', 'Kartik Pawar', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z4', 'Substation', 'Substation', 'Fitter', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0097')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20098', 'Ramesh Shetty', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z4', 'Substation', 'Substation', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0098')
+VALUES ('W-20098', 'Gaurav Pawar', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z4', 'Substation', 'Substation', 'Operator', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0098')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20099', 'Mahesh Shetty', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z4', 'Substation', 'Substation', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0099')
+VALUES ('W-20099', 'Mihir Pawar', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z4', 'Substation', 'Substation', 'Blaster', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0099')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.workers (worker_id, name, mine_id, mine_name, zone_id, zone_name, area, role, status, joining_date, blood_group, contact)
-VALUES ('W-20100', 'Ganesh Shetty', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z4', 'Substation', 'Substation', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0100')
+VALUES ('W-20100', 'Ishan Pawar', 'MINE-05', 'Demo Mine Epsilon', 'M05-Z4', 'Substation', 'Substation', 'Technician', 'ACTIVE', '2023-01-15', 'O+', '+91 98765 0100')
 ON CONFLICT (worker_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 
 -- 4. SEED STAFF PROFILES
 INSERT INTO public.staff_profiles (profile_id, user_id, email, name, role, designation, mine_id, mine_name, badge, avatar)
-VALUES ('INS-001', 'INS-001', 'inspector.alpha@mineguard.demo', 'Anita Kulkarni', 'INSPECTOR', 'Govt. Statutory Mine Inspector - Alpha', 'MINE-01', 'Demo Mine Alpha', 'INS-001', '👷‍♂️')
+VALUES ('INS-M01', 'INS-M01', 'inspector.alpha@mineguard.demo', 'Aarav Deshmukh', 'INSPECTOR', 'Govt. Statutory Mine Inspector - Alpha', 'MINE-01', 'Demo Mine Alpha', 'INS-M01', '👷‍♂️')
 ON CONFLICT (profile_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.staff_profiles (profile_id, user_id, email, name, role, designation, mine_id, mine_name, badge, avatar)
-VALUES ('INS-002', 'INS-002', 'inspector.beta@mineguard.demo', 'Sunil Verma', 'INSPECTOR', 'Govt. Statutory Mine Inspector - Beta', 'MINE-02', 'Demo Mine Beta', 'INS-002', '👷‍♂️')
+VALUES ('INS-M02', 'INS-M02', 'inspector.beta@mineguard.demo', 'Meera Joshi', 'INSPECTOR', 'Govt. Statutory Mine Inspector - Beta', 'MINE-02', 'Demo Mine Beta', 'INS-M02', '👷‍♂️')
 ON CONFLICT (profile_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.staff_profiles (profile_id, user_id, email, name, role, designation, mine_id, mine_name, badge, avatar)
-VALUES ('INS-003', 'INS-003', 'inspector.gamma@mineguard.demo', 'Pooja Bannerjee', 'INSPECTOR', 'Govt. Statutory Mine Inspector - Gamma', 'MINE-03', 'Demo Mine Gamma', 'INS-003', '👷‍♂️')
+VALUES ('INS-M03', 'INS-M03', 'inspector.gamma@mineguard.demo', 'Kunal Verma', 'INSPECTOR', 'Govt. Statutory Mine Inspector - Gamma', 'MINE-03', 'Demo Mine Gamma', 'INS-M03', '👷‍♂️')
 ON CONFLICT (profile_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.staff_profiles (profile_id, user_id, email, name, role, designation, mine_id, mine_name, badge, avatar)
-VALUES ('INS-004', 'INS-004', 'inspector.delta@mineguard.demo', 'Ramesh Patnaik', 'INSPECTOR', 'Govt. Statutory Mine Inspector - Delta', 'MINE-04', 'Demo Mine Delta', 'INS-004', '👷‍♂️')
+VALUES ('INS-M04', 'INS-M04', 'inspector.delta@mineguard.demo', 'Ishita Kulkarni', 'INSPECTOR', 'Govt. Statutory Mine Inspector - Delta', 'MINE-04', 'Demo Mine Delta', 'INS-M04', '👷‍♂️')
 ON CONFLICT (profile_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.staff_profiles (profile_id, user_id, email, name, role, designation, mine_id, mine_name, badge, avatar)
-VALUES ('INS-005', 'INS-005', 'inspector.epsilon@mineguard.demo', 'Sanjay Roy', 'INSPECTOR', 'Govt. Statutory Mine Inspector - Epsilon', 'MINE-05', 'Demo Mine Epsilon', 'INS-005', '👷‍♂️')
+VALUES ('INS-M05', 'INS-M05', 'inspector.epsilon@mineguard.demo', 'Rohan Mehta', 'INSPECTOR', 'Govt. Statutory Mine Inspector - Epsilon', 'MINE-05', 'Demo Mine Epsilon', 'INS-M05', '👷‍♂️')
 ON CONFLICT (profile_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.staff_profiles (profile_id, user_id, email, name, role, designation, mine_id, mine_name, badge, avatar)
-VALUES ('MO-001', 'MO-001', 'officer.alpha@mineguard.demo', 'Rajesh Deshmukh', 'OFFICER', 'Mine Safety Officer - Alpha', 'MINE-01', 'Demo Mine Alpha', 'MO-001', '🧑‍💼')
+VALUES ('MO-M01', 'MO-M01', 'officer.alpha@mineguard.demo', 'Vikram Singh', 'OFFICER', 'Mine Safety Officer - Alpha', 'MINE-01', 'Demo Mine Alpha', 'MO-M01', '🧑‍💼')
 ON CONFLICT (profile_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.staff_profiles (profile_id, user_id, email, name, role, designation, mine_id, mine_name, badge, avatar)
-VALUES ('MO-002', 'MO-002', 'officer.beta@mineguard.demo', 'Anil Sengupta', 'OFFICER', 'Mine Safety Officer - Beta', 'MINE-02', 'Demo Mine Beta', 'MO-002', '🧑‍💼')
+VALUES ('MO-M02', 'MO-M02', 'officer.beta@mineguard.demo', 'Priya Nair', 'OFFICER', 'Mine Safety Officer - Beta', 'MINE-02', 'Demo Mine Beta', 'MO-M02', '🧑‍💼')
 ON CONFLICT (profile_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.staff_profiles (profile_id, user_id, email, name, role, designation, mine_id, mine_name, badge, avatar)
-VALUES ('MO-003', 'MO-003', 'officer.gamma@mineguard.demo', 'Rajesh Trivedi', 'OFFICER', 'Mine Safety Officer - Gamma', 'MINE-03', 'Demo Mine Gamma', 'MO-003', '🧑‍💼')
+VALUES ('MO-M03', 'MO-M03', 'officer.gamma@mineguard.demo', 'Aditya Rao', 'OFFICER', 'Mine Safety Officer - Gamma', 'MINE-03', 'Demo Mine Gamma', 'MO-M03', '🧑‍💼')
 ON CONFLICT (profile_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.staff_profiles (profile_id, user_id, email, name, role, designation, mine_id, mine_name, badge, avatar)
-VALUES ('MO-004', 'MO-004', 'officer.delta@mineguard.demo', 'Kavita Raman', 'OFFICER', 'Mine Safety Officer - Delta', 'MINE-04', 'Demo Mine Delta', 'MO-004', '🧑‍💼')
+VALUES ('MO-M04', 'MO-M04', 'officer.delta@mineguard.demo', 'Neha Kapoor', 'OFFICER', 'Mine Safety Officer - Delta', 'MINE-04', 'Demo Mine Delta', 'MO-M04', '🧑‍💼')
 ON CONFLICT (profile_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.staff_profiles (profile_id, user_id, email, name, role, designation, mine_id, mine_name, badge, avatar)
-VALUES ('MO-005', 'MO-005', 'officer.epsilon@mineguard.demo', 'Bikram Mohanty', 'OFFICER', 'Mine Safety Officer - Epsilon', 'MINE-05', 'Demo Mine Epsilon', 'MO-005', '🧑‍💼')
+VALUES ('MO-M05', 'MO-M05', 'officer.epsilon@mineguard.demo', 'Siddharth Patil', 'OFFICER', 'Mine Safety Officer - Epsilon', 'MINE-05', 'Demo Mine Epsilon', 'MO-M05', '🧑‍💼')
 ON CONFLICT (profile_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.staff_profiles (profile_id, user_id, email, name, role, designation, mine_id, mine_name, badge, avatar)
 VALUES ('MGMT-001', 'MGMT-001', 'management@mineguard.demo', 'Neha Sharma', 'MANAGEMENT', 'Executive Management Director', NULL, NULL, 'MGMT-001', '🏢')

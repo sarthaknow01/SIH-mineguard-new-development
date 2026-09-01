@@ -26,7 +26,7 @@ export default function InspectorDashboard({ onNavigate }) {
           <h2 className="text-xl font-bold text-white flex items-center gap-2">
             <span>Inspector Command Center</span>
             <span className="text-xs px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30 font-mono">
-              INS-001
+              {currentUser?.badge || currentUser?.userId || 'INS-M01'}
             </span>
           </h2>
           <p className="text-xs text-slate-400 mt-1">

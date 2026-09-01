@@ -7,7 +7,7 @@ import { Download, Printer, ShieldCheck, Flame } from 'lucide-react';
 export default function ExecutiveReportView() {
   const { mines, violations, correctiveActions, workers, staffProfiles = [] } = useData();
 
-  const inspectorProfile = staffProfiles.find(s => s.role === 'INSPECTOR') || { name: 'Anita Kulkarni', badge_id: 'INS-001' };
+  const inspectorProfile = staffProfiles.find(s => s.role === 'INSPECTOR') || { name: 'Aarav Deshmukh', badge_id: 'INS-M01' };
   const authorityProfile = staffProfiles.find(s => s.role === 'AUTHORITY' || s.role === 'MANAGEMENT') || { name: 'Dr. Arindam Sen', badge_id: 'AUTH-001' };
 
   return (
@@ -109,7 +109,7 @@ export default function ExecutiveReportView() {
         <div className="pt-6 border-t border-slate-800 grid grid-cols-2 gap-8 text-xs text-slate-400">
           <div>
             <p className="font-bold text-slate-200">Statutory Mine Inspector:</p>
-            <p className="mt-4 font-mono text-slate-300">{inspectorProfile.name} ({inspectorProfile.badge_id || inspectorProfile.userId || 'INS-001'})</p>
+            <p className="mt-4 font-mono text-slate-300">{inspectorProfile.name} ({inspectorProfile.badge_id || inspectorProfile.userId || 'INS-M01'})</p>
             <p className="text-[10px]">Regulatory Inspection Authority (Database Authenticated)</p>
           </div>
           <div className="text-right">

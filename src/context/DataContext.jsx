@@ -9,7 +9,8 @@ import {
   DEMO_ALERTS,
   DEMO_CORRECTIVE_ACTIONS,
   DEMO_AUDIT_TRAIL,
-  DEMO_SOS_ALERTS
+  DEMO_SOS_ALERTS,
+  DEMO_ACCOUNTS
 } from '../utils/seedData';
 import { calculateCertificateStatus, getTodayDateString } from '../utils/dateHelpers';
 import { evaluateRisk } from '../utils/aiRiskEngine';
@@ -18,7 +19,7 @@ import { savePendingInspection, savePendingViolation, savePendingEvidence } from
 
 const DataContext = createContext();
 
-const STORAGE_KEY_PREFIX = 'mineguard_state_v1_';
+const STORAGE_KEY_PREFIX = 'mineguard_state_v2_';
 
 function mapSupabaseToMine(row) {
   if (!row) return null;
@@ -1339,7 +1340,7 @@ export function DataProvider({ children }) {
     initSupabaseAuditTrail();
   }, []);
 
-  const [staffProfiles, setStaffProfiles] = useState([]);
+  const [staffProfiles, setStaffProfiles] = useState(DEMO_ACCOUNTS);
 
   // Fetch staff profiles from Supabase staff_profiles table on mount
   useEffect(() => {
@@ -1348,9 +1349,12 @@ export function DataProvider({ children }) {
         const { data, error } = await supabase.from('staff_profiles').select('*');
         if (!error && data && data.length > 0) {
           setStaffProfiles(data);
+        } else {
+          setStaffProfiles(DEMO_ACCOUNTS);
         }
       } catch (err) {
         console.warn('Exception fetching staff_profiles from Supabase:', err);
+        setStaffProfiles(DEMO_ACCOUNTS);
       }
     }
     fetchStaffProfiles();
@@ -1572,7 +1576,7 @@ export function DataProvider({ children }) {
       riskScore: aiRisk.score,
       riskLevel: aiRisk.level,
       aiExplanation: aiRisk.summary + ' — ' + aiRisk.reasons.join(' '),
-      reportedBy: actorName || 'Inspector INS-001',
+      reportedBy: actorName || 'Inspector INS-M01',
       syncStatus: navigator.onLine ? 'SYNCED' : 'PENDING',
     };
 
@@ -1902,7 +1906,7 @@ export function DataProvider({ children }) {
     const newSos = {
       alertId: `SOS-${Date.now().toString().slice(-6)}`,
       inspectorName: inspectorName || 'Inspector',
-      inspectorId: inspectorId || 'INS-001',
+      inspectorId: inspectorId || 'INS-M01',
       mineName: mineName || 'Demo Mine Alpha',
       mineId: mineId || 'MINE-01',
       timestamp: timestampStr,

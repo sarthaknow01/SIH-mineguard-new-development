@@ -19,8 +19,8 @@ export default function SOSButtonModal() {
     setIsSending(true);
     try {
       await sendSOSAlert({
-        inspectorName: currentUser.name || 'Anita Kulkarni',
-        inspectorId: currentUser.badge || 'INS-001',
+        inspectorName: currentUser.name || 'Aarav Deshmukh',
+        inspectorId: currentUser.badge || 'INS-M01',
         mineName: currentUser.mineName || 'Demo Mine Alpha',
         mineId: currentUser.mineId || 'MINE-01'
       });

@@ -206,7 +206,7 @@ export default function LoginPage() {
                     type="text"
                     value={userId}
                     onChange={(e) => setUserId(e.target.value)}
-                    placeholder="e.g. INS-001, MO-001"
+                    placeholder="e.g. INS-M01, MO-M01"
                     className="w-full pl-11 pr-4 py-3 bg-slate-50/70 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-[#0265dc] focus:ring-4 focus:ring-[#0265dc]/10 transition-all"
                     required
                   />
