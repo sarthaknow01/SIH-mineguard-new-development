@@ -42,13 +42,15 @@ export default function ViolationsListView() {
           </p>
         </div>
 
-        <button
-          onClick={() => setShowReportModal(true)}
-          className="px-4 py-2 bg-red-600 hover:bg-red-500 text-white font-bold text-xs rounded-lg shadow-lg shadow-red-600/20 flex items-center gap-1.5 self-start sm:self-auto"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Report New Violation</span>
-        </button>
+        {currentUser?.role === 'INSPECTOR' && (
+          <button
+            onClick={() => setShowReportModal(true)}
+            className="px-4 py-2 bg-red-600 hover:bg-red-500 text-white font-bold text-xs rounded-lg shadow-lg shadow-red-600/20 flex items-center gap-1.5 self-start sm:self-auto"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Report New Violation</span>
+          </button>
+        )}
       </div>
 
       {/* Filter Bar */}
