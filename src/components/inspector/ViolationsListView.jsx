@@ -62,7 +62,9 @@ export default function ViolationsListView() {
             className={`w-full px-2.5 py-1.5 bg-coal-950 border border-slate-700 rounded-lg text-white text-xs focus:outline-none ${currentUser?.role === 'OFFICER' ? 'opacity-80 cursor-not-allowed border-amber-500/40 text-amber-300 font-semibold' : ''}`}
           >
             {currentUser?.role === 'OFFICER' ? (
-              <option value={currentUser.mineId || 'MINE-01'}>Demo Mine Alpha (Assigned Unit)</option>
+              <option value={currentUser.mineId || 'MINE-01'}>
+                {(mines.find(m => m.mineId === currentUser?.mineId)?.mineName || currentUser?.mineName || 'Assigned Mine')} (Assigned Unit)
+              </option>
             ) : (
               <>
                 <option value="ALL">All Mines</option>

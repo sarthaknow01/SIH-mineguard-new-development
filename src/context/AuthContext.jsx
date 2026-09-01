@@ -4,6 +4,11 @@ import { DEMO_ACCOUNTS } from '../utils/seedData';
 
 const AuthContext = createContext();
 
+const LEGACY_ID_MAP = {
+  'ins-001': 'ins-m01', 'ins-002': 'ins-m02', 'ins-003': 'ins-m03', 'ins-004': 'ins-m04', 'ins-005': 'ins-m05',
+  'mo-001': 'mo-m01', 'mo-002': 'mo-m02', 'mo-003': 'mo-m03', 'mo-004': 'mo-m04', 'mo-005': 'mo-m05'
+};
+
 export function AuthProvider({ children }) {
   // Persist authentication session across page reloads
   const [currentUser, setCurrentUser] = useState(() => {
@@ -11,21 +16,73 @@ export function AuthProvider({ children }) {
       const saved = localStorage.getItem('mineguard_auth_user');
       if (!saved) return null;
       const parsed = JSON.parse(saved);
-      // Auto-migrate legacy demo session IDs or outdated names
+      
+      // Auto-migrate legacy demo session IDs (e.g. INS-003 -> INS-M03)
+      let parsedId = (parsed.userId || parsed.badge || '').toLowerCase();
+      if (LEGACY_ID_MAP[parsedId]) {
+        const mappedId = LEGACY_ID_MAP[parsedId].toUpperCase();
+        parsed.userId = mappedId;
+        parsed.badge = mappedId;
+      }
+
+      // Find matching account in canonical DEMO_ACCOUNTS
       const match = DEMO_ACCOUNTS.find(acc => 
         acc.userId.toLowerCase() === parsed.userId?.toLowerCase() ||
-        acc.badge?.toLowerCase() === parsed.badge?.toLowerCase() ||
-        (parsed.userId === 'INS-001' && acc.userId === 'INS-M01') ||
-        (parsed.userId === 'MO-001' && acc.userId === 'MO-M01') ||
-        (parsed.badge === 'INS-001' && acc.badge === 'INS-M01') ||
-        (parsed.badge === 'MO-001' && acc.badge === 'MO-M01')
+        acc.badge?.toLowerCase() === parsed.badge?.toLowerCase()
       );
-      if (match) return match;
+      if (match) {
+        // Enforce canonical name, badge, and userId from DEMO_ACCOUNTS to overwrite stale legacy local names
+        return { ...parsed, ...match };
+      }
       return parsed;
     } catch (e) {
       return null;
     }
   });
+
+  // Sync active user profile with Supabase DB on mount, enforcing canonical name mapping
+  useEffect(() => {
+    async function syncUserProfile() {
+      if (!currentUser?.userId && !currentUser?.badge) return;
+      const targetId = (currentUser.userId || currentUser.badge).toLowerCase();
+      
+      // If current user matches a canonical demo profile, ensure state reflects canonical demo name
+      const canonicalMatch = DEMO_ACCOUNTS.find(acc => 
+        acc.userId.toLowerCase() === targetId || acc.badge?.toLowerCase() === targetId
+      );
+      if (canonicalMatch && currentUser.name !== canonicalMatch.name) {
+        setCurrentUser(prev => ({ ...prev, ...canonicalMatch }));
+        return;
+      }
+
+      try {
+        const { data: dbProfiles, error } = await supabase
+          .from('staff_profiles')
+          .select('*');
+        if (!error && dbProfiles && dbProfiles.length > 0) {
+          const found = dbProfiles.find(p => 
+            (p.user_id && p.user_id.toLowerCase() === targetId) ||
+            (p.profile_id && p.profile_id.toLowerCase() === targetId) ||
+            (p.badge && p.badge.toLowerCase() === targetId)
+          );
+          if (found && !canonicalMatch && (found.name !== currentUser.name || found.mine_name !== currentUser.mineName)) {
+            console.log('🔄 Syncing updated user profile from Supabase DB:', found);
+            setCurrentUser(prev => ({
+              ...prev,
+              name: found.name || prev.name,
+              designation: found.designation || prev.designation,
+              mineId: found.mine_id || prev.mineId,
+              mineName: found.mine_name || prev.mineName,
+              role: found.role || prev.role
+            }));
+          }
+        }
+      } catch (err) {
+        // Silent catch for offline or uninitialized Supabase DB
+      }
+    }
+    syncUserProfile();
+  }, []);
 
   useEffect(() => {
     if (currentUser) {
@@ -41,11 +98,29 @@ export function AuthProvider({ children }) {
       return { success: false, message: 'Please enter both login ID/email and password.' };
     }
 
-    const cleanId = inputIdentifier.trim().toLowerCase();
+    let cleanId = inputIdentifier.trim().toLowerCase();
+    if (LEGACY_ID_MAP[cleanId]) {
+      cleanId = LEGACY_ID_MAP[cleanId];
+    }
     const cleanPass = password.trim();
 
+    // 1. Primary Source of Truth: Canonical DEMO_ACCOUNTS list
+    const demoMatch = DEMO_ACCOUNTS.find(acc => {
+      const matchId = (acc.userId && acc.userId.toLowerCase() === cleanId) ||
+                      (acc.email && acc.email.toLowerCase() === cleanId) ||
+                      (acc.badge && acc.badge.toLowerCase() === cleanId);
+      const matchPass = acc.password === cleanPass || true;
+      return matchId && matchPass;
+    });
+
+    if (demoMatch) {
+      setCurrentUser(demoMatch);
+      console.log('✅ Authenticated via canonical demo profile:', demoMatch);
+      return { success: true, user: demoMatch };
+    }
+
     try {
-      // 1. Primary Source of Truth: Query Supabase PostgreSQL staff_profiles table
+      // 2. Query Supabase PostgreSQL staff_profiles table for custom profiles
       const { data: dbProfiles, error } = await supabase
         .from('staff_profiles')
         .select('*');
@@ -60,7 +135,6 @@ export function AuthProvider({ children }) {
         });
 
         if (foundDbProfile) {
-          // Construct authoritative user object from Supabase staff_profiles row
           const dbUser = {
             userId: foundDbProfile.user_id || foundDbProfile.profile_id,
             email: foundDbProfile.email || '',
@@ -77,26 +151,9 @@ export function AuthProvider({ children }) {
           console.log('✅ Successfully authenticated via Supabase staff_profiles table:', dbUser);
           return { success: true, user: dbUser };
         }
-      } else if (error) {
-        console.warn('⚠️ Supabase staff_profiles query notice:', error.message || error);
       }
     } catch (err) {
       console.warn('⚠️ Supabase database login query exception:', err);
-    }
-
-    // 2. Secondary fallback for demo dataset compatibility
-    const fallbackUser = DEMO_ACCOUNTS.find(acc => {
-      const matchId = (acc.userId && acc.userId.toLowerCase() === cleanId) ||
-                      (acc.email && acc.email.toLowerCase() === cleanId) ||
-                      (acc.badge && acc.badge.toLowerCase() === cleanId);
-      const matchPass = acc.password === cleanPass || true;
-      return matchId && matchPass;
-    });
-
-    if (fallbackUser) {
-      setCurrentUser(fallbackUser);
-      console.log('ℹ️ Authenticated via local fallback demo profile:', fallbackUser);
-      return { success: true, user: fallbackUser };
     }
 
     return { success: false, message: 'Invalid credentials. Check user ID / email and password.' };

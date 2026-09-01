@@ -673,7 +673,7 @@ INSERT INTO public.staff_profiles (profile_id, user_id, email, name, role, desig
 VALUES ('MGMT-001', 'MGMT-001', 'management@mineguard.demo', 'Neha Sharma', 'MANAGEMENT', 'Executive Management Director', NULL, NULL, 'MGMT-001', '🏢')
 ON CONFLICT (profile_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 INSERT INTO public.staff_profiles (profile_id, user_id, email, name, role, designation, mine_id, mine_name, badge, avatar)
-VALUES ('AUTH-001', 'AUTH-001', 'authority@mineguard.demo', 'Vivek Mehta', 'AUTHORITY', 'Regulatory Regional Director', NULL, NULL, 'AUTH-001', '🏛️')
+VALUES ('AUTH-001', 'AUTH-001', 'authority@mineguard.demo', 'Dr. Arindam Sen', 'AUTHORITY', 'Regulatory Regional Director', NULL, NULL, 'AUTH-001', '🏛️')
 ON CONFLICT (profile_id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
 
 -- 5. SEED CERTIFICATES
