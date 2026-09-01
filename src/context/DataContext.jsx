@@ -910,7 +910,21 @@ export function DataProvider({ children }) {
           const mappedM = mData.map(mapSupabaseToMine).filter(Boolean);
           setMines(prev => {
             const map = new Map();
-            mappedM.forEach(item => map.set(item.mineId, item));
+            mappedM.forEach(item => {
+              const existing = prev.find(p => p.mineId === item.mineId);
+              if (existing && existing.complianceScore !== undefined) {
+                map.set(item.mineId, {
+                  ...item,
+                  complianceScore: existing.complianceScore,
+                  riskLevel: existing.riskLevel,
+                  activeViolations: existing.activeViolations ?? item.activeViolations,
+                  pendingActions: existing.pendingActions ?? item.pendingActions,
+                  overdueActions: existing.overdueActions ?? item.overdueActions
+                });
+              } else {
+                map.set(item.mineId, item);
+              }
+            });
             const merged = Array.from(map.values());
             localStorage.setItem(STORAGE_KEY_PREFIX + 'mines', JSON.stringify(merged));
             return merged;
