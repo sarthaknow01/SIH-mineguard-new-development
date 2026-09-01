@@ -3,7 +3,7 @@ import Modal from '../common/Modal';
 import { useData } from '../../context/DataContext';
 import { useAuth } from '../../context/AuthContext';
 import { evaluateRisk } from '../../utils/aiRiskEngine';
-import { AlertTriangle, Sparkles, UploadCloud, Camera, FileText, CheckCircle2, X, MapPin, RefreshCw } from 'lucide-react';
+import { AlertTriangle, Sparkles, UploadCloud, Camera, FileText, CheckCircle2, X, MapPin, RefreshCw, Lock } from 'lucide-react';
 
 export default function ReportViolationModal({ isOpen, onClose, initialData = {} }) {
   const { mines, workers, certificates, reportViolation, uploadFileReference } = useData();
@@ -13,12 +13,17 @@ export default function ReportViolationModal({ isOpen, onClose, initialData = {}
 
   const deviceFileInputRef = useRef(null);
   const cameraFileInputRef = useRef(null);
+  const videoRef = useRef(null);
+  const streamRef = useRef(null);
 
   const [mineId, setMineId] = useState(() => {
     if (isSingleMineRole && currentUser?.mineId) return currentUser.mineId;
     return initialData?.mineId || 'MINE-01';
   });
-  const [area, setArea] = useState('Substation Zone 3');
+
+  const selectedMine = mines.find(m => m.mineId === mineId) || mines[0];
+
+  const [area, setArea] = useState('North Shaft');
   const [category, setCategory] = useState('Statutory Certification Breach');
   const [severity, setSeverity] = useState('HIGH');
   const [workerId, setWorkerId] = useState('');
@@ -30,6 +35,10 @@ export default function ReportViolationModal({ isOpen, onClose, initialData = {}
   const [isCameraCapture, setIsCameraCapture] = useState(false);
   const [isImageFile, setIsImageFile] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Live Camera Viewfinder state
+  const [showCameraViewfinder, setShowCameraViewfinder] = useState(false);
+  const [cameraError, setCameraError] = useState('');
 
   // GPS Geolocation State
   const [gpsLocation, setGpsLocation] = useState(null);
@@ -70,11 +79,69 @@ export default function ReportViolationModal({ isOpen, onClose, initialData = {}
     );
   };
 
+  // Stop live camera stream
+  const stopLiveCamera = () => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop());
+      streamRef.current = null;
+    }
+    setShowCameraViewfinder(false);
+  };
+
+  // Start live WebRTC camera stream
+  const startLiveCamera = async () => {
+    setCameraError('');
+    setShowCameraViewfinder(true);
+    try {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        throw new Error('MediaDevices API not supported');
+      }
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } }
+      });
+      streamRef.current = stream;
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+    } catch (err) {
+      console.warn('Live camera access warning, launching native device camera input:', err);
+      setCameraError('Live video stream unavailable. Opening camera input fallback...');
+      setTimeout(() => {
+        stopLiveCamera();
+        cameraFileInputRef.current?.click();
+      }, 800);
+    }
+  };
+
+  // Capture frame from live video stream to Blob
+  const takePhotoFromStream = () => {
+    if (!videoRef.current) return;
+    const video = videoRef.current;
+    const canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth || 1280;
+    canvas.height = video.videoHeight || 720;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    canvas.toBlob((blob) => {
+      if (blob) {
+        const file = new File([blob], `site_camera_capture_${Date.now().toString().slice(-4)}.jpg`, { type: 'image/jpeg' });
+        const previewUrl = URL.createObjectURL(blob);
+        setSelectedFileObj(file);
+        setEvidenceName(file.name);
+        setIsCameraCapture(true);
+        setIsImageFile(true);
+        setEvidencePreviewUrl(previewUrl);
+        stopLiveCamera();
+      }
+    }, 'image/jpeg', 0.92);
+  };
+
   // Sync state ONLY when modal transitions to open (isOpen === true)
   useEffect(() => {
     if (isOpen) {
       setMineId(isSingleMineRole && currentUser?.mineId ? currentUser.mineId : (initialData?.mineId || 'MINE-01'));
-      setArea(initialData?.area || 'Substation Zone 3');
+      setArea(initialData?.area || 'North Shaft');
       setCategory(initialData?.category || 'Statutory Certification Breach');
       setSeverity(initialData?.severity || 'HIGH');
       setWorkerId(initialData?.workerId || '');
@@ -86,6 +153,8 @@ export default function ReportViolationModal({ isOpen, onClose, initialData = {}
       setIsCameraCapture(false);
       setIsImageFile(false);
       requestGpsLocation();
+    } else {
+      stopLiveCamera();
     }
   }, [isOpen]);
 
@@ -106,7 +175,7 @@ export default function ReportViolationModal({ isOpen, onClose, initialData = {}
     }
   };
 
-  // Handle camera photo capture
+  // Handle camera photo capture (fallback)
   const handleCameraCapture = (e) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -216,34 +285,47 @@ export default function ReportViolationModal({ isOpen, onClose, initialData = {}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label className="block text-xs font-semibold text-slate-300 mb-1">Target Mine</label>
-            <select
-              value={mineId}
-              disabled={isSingleMineRole}
-              onChange={(e) => setMineId(e.target.value)}
-              className={`w-full px-3 py-2 bg-coal-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500 ${isSingleMineRole ? 'opacity-80 cursor-not-allowed border-amber-500/40 text-amber-300 font-semibold' : ''}`}
-            >
-              {isSingleMineRole ? (
-                <option value={mineId}>
-                  {(mines.find(m => m.mineId === mineId)?.mineName || currentUser?.mineName || 'Assigned Mine')} ({mineId}) (Assigned Unit)
-                </option>
-              ) : (
-                mines.map(m => (
+            {isSingleMineRole ? (
+              <div className="w-full px-3 py-2 bg-coal-950/80 border border-amber-500/40 rounded-lg text-xs text-amber-300 font-semibold flex items-center justify-between cursor-not-allowed">
+                <span className="truncate">{(mines.find(m => m.mineId === mineId)?.mineName || currentUser?.mineName || 'Assigned Mine')} ({mineId})</span>
+                <span className="text-[10px] px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 font-mono shrink-0 flex items-center gap-1">
+                  <Lock className="w-2.5 h-2.5" />
+                  <span>Assigned Unit</span>
+                </span>
+              </div>
+            ) : (
+              <select
+                value={mineId}
+                onChange={(e) => setMineId(e.target.value)}
+                className="w-full px-3 py-2 bg-coal-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
+              >
+                {mines.map(m => (
                   <option key={m.mineId} value={m.mineId}>{m.mineName} ({m.location.split(',')[0]})</option>
-                ))
-              )}
-            </select>
+                ))}
+              </select>
+            )}
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-slate-300 mb-1">Operational Area / Sector</label>
-            <input
-              type="text"
+            <select
               value={area}
               onChange={(e) => setArea(e.target.value)}
-              className="w-full px-3 py-2 bg-coal-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
-              placeholder="e.g. Substation Zone 3"
-              required
-            />
+              className="w-full px-3 py-2 bg-coal-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500 font-medium"
+            >
+              {selectedMine?.zones && selectedMine.zones.length > 0 ? (
+                selectedMine.zones.map(z => (
+                  <option key={z.zoneId} value={z.zoneName}>{z.zoneId}: {z.zoneName}</option>
+                ))
+              ) : (
+                <>
+                  <option value="North Shaft">Z-01: North Shaft</option>
+                  <option value="South Shaft">Z-02: South Shaft</option>
+                  <option value="Processing Plant">Z-03: Processing Plant</option>
+                  <option value="Substation Zone 3">Z-04: Substation Zone 3</option>
+                </>
+              )}
+            </select>
           </div>
         </div>
 
@@ -361,14 +443,67 @@ export default function ReportViolationModal({ isOpen, onClose, initialData = {}
 
               <button 
                 type="button"
-                onClick={() => cameraFileInputRef.current?.click()}
-                className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-amber-300 hover:text-amber-200 rounded-lg text-xs font-semibold border border-amber-500/30 flex items-center gap-1.5 transition-colors"
+                onClick={startLiveCamera}
+                className="px-3 py-1.5 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white rounded-lg text-xs font-bold shadow-md flex items-center gap-1.5 transition-all"
               >
-                <Camera className="w-3.5 h-3.5 text-amber-400" />
+                <Camera className="w-3.5 h-3.5 text-white" />
                 <span>Capture Photo</span>
               </button>
             </div>
           </div>
+
+          {/* Live WebRTC Camera Viewfinder Overlay */}
+          {showCameraViewfinder && (
+            <div className="p-3 bg-coal-900 border border-amber-500/50 rounded-xl space-y-2 relative overflow-hidden animate-fadeIn">
+              <div className="flex items-center justify-between text-xs text-amber-300 font-bold mb-1">
+                <span className="flex items-center gap-1.5">
+                  <Camera className="w-4 h-4 text-amber-400 animate-pulse" />
+                  <span>Live Site Camera Viewfinder</span>
+                </span>
+                <button
+                  type="button"
+                  onClick={stopLiveCamera}
+                  className="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-[10px] font-bold"
+                >
+                  Close Camera
+                </button>
+              </div>
+
+              {cameraError ? (
+                <div className="p-3 bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs rounded-lg flex items-center justify-between">
+                  <span>{cameraError}</span>
+                </div>
+              ) : (
+                <div className="relative rounded-lg overflow-hidden bg-black border border-slate-700 flex items-center justify-center min-h-[220px]">
+                  <video
+                    ref={videoRef}
+                    autoPlay
+                    playsInline
+                    muted
+                    className="w-full h-56 object-cover rounded-lg"
+                  />
+                  {/* Camera Reticle Target Overlay */}
+                  <div className="absolute inset-0 border-2 border-dashed border-amber-400/40 rounded-lg pointer-events-none flex items-center justify-center">
+                    <div className="w-12 h-12 border border-amber-400/60 rounded-full flex items-center justify-center">
+                      <div className="w-2 h-2 bg-amber-400 rounded-full animate-ping" />
+                    </div>
+                  </div>
+
+                  {/* Shutter Capture Button */}
+                  <div className="absolute bottom-3 left-0 right-0 flex justify-center">
+                    <button
+                      type="button"
+                      onClick={takePhotoFromStream}
+                      className="px-5 py-2 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-black font-extrabold text-xs rounded-full shadow-xl border-2 border-white flex items-center gap-2 transform hover:scale-105 transition-all"
+                    >
+                      <Camera className="w-4 h-4 text-black" />
+                      <span>📸 SNAP & USE PHOTO</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Evidence Preview / Status Display */}
           {evidencePreviewUrl ? (
