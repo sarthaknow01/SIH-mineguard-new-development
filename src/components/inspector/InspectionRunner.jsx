@@ -92,15 +92,51 @@ export default function InspectionRunner({ onComplete }) {
     return certificates.some(c => c.workerId === w.workerId && new Date(c.expiryDate) < new Date());
   }) || activeWorkersPool[0];
 
-  // Pre-configured checklist items
-  const [checklist, setChecklist] = useState([
-    { id: 1, category: 'Safety & Signage', item: 'Danger High Voltage signage & isolation barriers in place', status: 'PASS', notes: 'Visible and illuminated' },
-    { id: 2, category: 'Safety & Signage', item: 'Emergency fire extinguishers inspected and charged (CO2/Dry Powder)', status: 'PASS', notes: 'Pressure gauges nominal' },
-    { id: 3, category: 'Equipment Safety', item: 'Transformer grounding & earth leakage circuit breakers tested', status: 'PASS', notes: 'Ground resistance nominal' },
-    { id: 4, category: 'Equipment Safety', item: 'Insulated rubber floor matting in front of power panels', status: 'PASS', notes: 'Tested and stamp verified' },
-    { id: 5, category: 'Worker Compliance', item: 'On-duty personnel possess valid mandatory competency certificate', status: 'FAIL', notes: 'Assigned personnel competency certificate expired' },
-    { id: 6, category: 'Worker Compliance', item: 'Mandatory PPE (Arc-flash shield / helmet / safety boots) worn', status: 'PASS', notes: 'PPE in proper use' },
-  ]);
+  // Dynamic SOP Checklist Templates per Audit Type
+  const SOP_CHECKLIST_TEMPLATES = {
+    'Electrical & Personnel Compliance Safety Inspection': [
+      { id: 1, category: 'Safety & Signage', item: 'Danger High Voltage signage & isolation barriers in place', status: 'PASS', notes: 'Visible and illuminated' },
+      { id: 2, category: 'Safety & Signage', item: 'Emergency fire extinguishers inspected and charged (CO2/Dry Powder)', status: 'PASS', notes: 'Pressure gauges nominal' },
+      { id: 3, category: 'Equipment Safety', item: 'Transformer grounding & earth leakage circuit breakers tested', status: 'PASS', notes: 'Ground resistance nominal' },
+      { id: 4, category: 'Equipment Safety', item: 'Insulated rubber floor matting in front of power panels', status: 'PASS', notes: 'Tested and stamp verified' },
+      { id: 5, category: 'Worker Compliance', item: 'On-duty personnel possess valid mandatory competency certificate', status: 'FAIL', notes: 'Assigned personnel competency certificate expired' },
+      { id: 6, category: 'Worker Compliance', item: 'Mandatory PPE (Arc-flash shield / helmet / safety boots) worn', status: 'PASS', notes: 'PPE in proper use' },
+    ],
+    'Ventilation & Gas Testing Audit': [
+      { id: 1, category: 'Gas Safety', item: 'Multi-gas detector calibrated and operational (CH4, CO, O2, H2S)', status: 'PASS', notes: 'Gas sensor bump test verified' },
+      { id: 2, category: 'Gas Safety', item: 'Flammable Methane gas concentration below statutory limit (<0.75%)', status: 'PASS', notes: 'CH4 reading: 0.12% (Safe)' },
+      { id: 3, category: 'Ventilation Flow', item: 'Anemometer airflow velocity at main return airway within norm (>1.5 m/s)', status: 'PASS', notes: 'Air speed measured at 2.1 m/s' },
+      { id: 4, category: 'Ventilation Flow', item: 'Auxiliary fan ducting continuous with zero leakage or tears', status: 'FAIL', notes: 'Minor tear detected in flexible ducting at joint 4' },
+      { id: 5, category: 'Dust Suppression', item: 'Water atomizing spray nozzles active at transfer points', status: 'PASS', notes: 'High-pressure mist sprays operational' },
+      { id: 6, category: 'Emergency Prep', item: 'Self-Contained Self-Rescuer (SCSR) packs inspected & ready', status: 'PASS', notes: 'Seals unbroken and valid expiry date' },
+    ],
+    'Roof Support & Strata Control Inspection': [
+      { id: 1, category: 'Strata Monitoring', item: 'Tell-tale convergence indicators checked for roof strata movement', status: 'PASS', notes: 'Displacement within safe 2mm limit' },
+      { id: 2, category: 'Roof Support', item: 'Hydraulic props and chocks pressurized to minimum setting load', status: 'PASS', notes: 'Setting pressure 150 bar verified' },
+      { id: 3, category: 'Roof Support', item: 'Resin-anchored roof bolts tension tested in active working face', status: 'FAIL', notes: 'Torque test failed on 2 bolts near face' },
+      { id: 4, category: 'Timbering & Mesh', item: 'W-strap steel mesh & wood lagging tightly installed without gaps', status: 'PASS', notes: 'Lagging secure' },
+      { id: 5, category: 'Hazard Assessment', item: 'Rib spalling and side pillar cracking inspected and rated', status: 'PASS', notes: 'Minor flaking, no structural threat' },
+      { id: 6, category: 'Geological Audit', item: 'Geological fault lines and water seepage logged in shift report', status: 'PASS', notes: 'Dry condition, no water ingress' },
+    ],
+    'HEMM Machinery & Transport Safety Audit': [
+      { id: 1, category: 'Heavy Machinery', item: 'Haul Truck & Loader dual braking system (Service & Emergency) tested', status: 'PASS', notes: 'Brake holding capacity verified' },
+      { id: 2, category: 'Transport Safety', item: 'Proximity Warning System & rear-view cameras functioning', status: 'PASS', notes: 'Sensor alert distance 15m active' },
+      { id: 3, category: 'Conveyor Safety', item: 'Pull-cord emergency stop switches tested along conveyor belt', status: 'PASS', notes: 'Immediate trip confirmed' },
+      { id: 4, category: 'Machine Maintenance', item: 'Automatic fire suppression system (AFSS) pressure gauge green', status: 'PASS', notes: 'Fire suppression active' },
+      { id: 5, category: 'Haul Road Safety', item: 'Haul road berm height maintained at minimum full-wheel diameter', status: 'FAIL', notes: 'Berm height degraded near junction B' },
+      { id: 6, category: 'Operator Licensing', item: 'HEMM Operator holds valid DGMS Heavy Operator Permit', status: 'PASS', notes: 'License verified valid till 2028' },
+    ]
+  };
+
+  const [shift, setShift] = useState('Shift A (06:00 - 14:00)');
+  const [checklist, setChecklist] = useState(SOP_CHECKLIST_TEMPLATES['Electrical & Personnel Compliance Safety Inspection']);
+
+  const handleAuditTypeChange = (newType) => {
+    setInspectionType(newType);
+    if (SOP_CHECKLIST_TEMPLATES[newType]) {
+      setChecklist(SOP_CHECKLIST_TEMPLATES[newType]);
+    }
+  };
 
   const updateItemStatus = (id, newStatus) => {
     setChecklist(prev => prev.map(item => item.id === id ? { ...item, status: newStatus } : item));
@@ -119,6 +155,7 @@ export default function InspectionRunner({ onComplete }) {
       mineId,
       mineName: selectedMine?.mineName || 'Demo Mine Alpha',
       area,
+      shift,
       inspectionType,
       checklistResults: checklist,
       overallResult,
@@ -197,8 +234,8 @@ export default function InspectionRunner({ onComplete }) {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Inspection Header Selector */}
-        <div className="bg-coal-900 border border-slate-800 p-4 rounded-xl grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Inspection Header Controls */}
+        <div className="bg-coal-900 border border-slate-800 p-4 rounded-xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
           <div>
             <label className="block text-xs font-semibold text-slate-300 mb-1.5">Assigned Coal Mine</label>
             <select
@@ -242,11 +279,24 @@ export default function InspectionRunner({ onComplete }) {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5">Audit Type</label>
+            <label className="block text-xs font-semibold text-slate-300 mb-1.5">Operational Shift</label>
+            <select
+              value={shift}
+              onChange={(e) => setShift(e.target.value)}
+              className="w-full px-3 py-2 bg-coal-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500 font-medium"
+            >
+              <option value="Shift A (06:00 - 14:00)">Shift A (06:00 - 14:00)</option>
+              <option value="Shift B (14:00 - 22:00)">Shift B (14:00 - 22:00)</option>
+              <option value="Night Shift (22:00 - 06:00)">Night Shift (22:00 - 06:00)</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold text-slate-300 mb-1.5">SOP Audit Type (Dynamic Checklist)</label>
             <select
               value={inspectionType}
-              onChange={(e) => setInspectionType(e.target.value)}
-              className="w-full px-3 py-2 bg-coal-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
+              onChange={(e) => handleAuditTypeChange(e.target.value)}
+              className="w-full px-3 py-2 bg-coal-950 border border-amber-500/60 text-amber-300 font-bold rounded-lg text-xs focus:outline-none focus:border-amber-400"
             >
               <option value="Electrical & Personnel Compliance Safety Inspection">Electrical & Personnel Compliance</option>
               <option value="Ventilation & Gas Testing Audit">Ventilation & Gas Testing Audit</option>
