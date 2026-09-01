@@ -13,6 +13,7 @@ export default function CertificateManager() {
   const isSingleMineRole = currentUser?.role === 'OFFICER' || currentUser?.role === 'INSPECTOR';
   const assignedMine = mines.find(m => m.mineId === currentUser?.mineId) || mines[0];
   const [selectedMine, setSelectedMine] = useState(isSingleMineRole ? (currentUser?.mineId || 'MINE-01') : 'ALL');
+  const [filterZone, setFilterZone] = useState('ALL');
   const [filterStatus, setFilterStatus] = useState('ALL');
   const [filterCategory, setFilterCategory] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
@@ -21,6 +22,11 @@ export default function CertificateManager() {
   const filteredCerts = certificates.filter(c => {
     const activeMineFilter = isSingleMineRole ? currentUser.mineId : selectedMine;
     if (activeMineFilter !== 'ALL' && c.mineId !== activeMineFilter) return false;
+    if (filterZone !== 'ALL') {
+      const w = workers.find(wrk => wrk.workerId === c.workerId);
+      const zoneStr = (w?.zoneName || w?.area || '').toLowerCase();
+      if (!zoneStr.includes(filterZone.toLowerCase())) return false;
+    }
     const st = calculateCertificateStatus(c.expiryDate).status;
     if (filterStatus !== 'ALL' && st !== filterStatus) return false;
     if (filterCategory !== 'ALL' && c.certificateType !== filterCategory) return false;
@@ -56,25 +62,37 @@ export default function CertificateManager() {
       </div>
 
       {/* Filter Bar */}
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 bg-coal-900 border border-slate-800 p-3.5 rounded-xl text-xs">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 bg-coal-900 border border-slate-800 p-3.5 rounded-xl text-xs">
         <div>
-          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Filter by Mine</label>
+          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Target Mine Unit</label>
+          {isSingleMineRole ? (
+            <div className="px-2.5 py-1.5 bg-coal-950 border border-amber-500/40 rounded-lg text-amber-300 text-xs font-semibold flex items-center gap-1.5">
+              <span>🔒 {assignedMine.mineName || 'Demo Mine Alpha'} ({assignedMine.mineId || 'MINE-01'})</span>
+            </div>
+          ) : (
+            <select
+              value={selectedMine}
+              onChange={(e) => setSelectedMine(e.target.value)}
+              className="w-full px-2.5 py-1.5 bg-coal-950 border border-slate-700 rounded-lg text-white text-xs focus:outline-none"
+            >
+              <option value="ALL">All Mines ({certificates.length} Records)</option>
+              {mines.map(m => <option key={m.mineId} value={m.mineId}>{m.mineName}</option>)}
+            </select>
+          )}
+        </div>
+
+        <div>
+          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Filter Operational Zone</label>
           <select
-            value={isSingleMineRole ? currentUser.mineId : selectedMine}
-            disabled={isSingleMineRole}
-            onChange={(e) => {
-              if (!isSingleMineRole) setSelectedMine(e.target.value);
-            }}
-            className={`w-full px-2.5 py-1.5 bg-coal-950 border border-slate-700 rounded-lg text-white text-xs focus:outline-none ${isSingleMineRole ? 'opacity-90 cursor-not-allowed border-amber-500/40 text-amber-300 font-semibold' : ''}`}
+            value={filterZone}
+            onChange={(e) => setFilterZone(e.target.value)}
+            className="w-full px-2.5 py-1.5 bg-coal-950 border border-slate-700 rounded-lg text-white text-xs focus:outline-none"
           >
-            {isSingleMineRole ? (
-              <option value={currentUser.mineId}>{assignedMine.mineName || 'Assigned Unit'} (Assigned Unit)</option>
-            ) : (
-              <>
-                <option value="ALL">All Mines ({certificates.length} Records)</option>
-                {mines.map(m => <option key={m.mineId} value={m.mineId}>{m.mineName}</option>)}
-              </>
-            )}
+            <option value="ALL">All Operational Zones</option>
+            <option value="North Shaft">Z-01: North Shaft</option>
+            <option value="South Shaft">Z-02: South Shaft</option>
+            <option value="Processing Plant">Z-03: Processing Plant</option>
+            <option value="Substation Zone 3">Z-04: Substation Zone 3</option>
           </select>
         </div>
         <div>

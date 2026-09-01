@@ -31,7 +31,11 @@ export default function CorrectiveActionManager() {
   const [cameraError, setCameraError] = useState('');
 
   // Filters
-  const [selectedMine, setSelectedMine] = useState(currentUser?.role === 'OFFICER' ? (currentUser.mineId || 'MINE-01') : 'ALL');
+  const isSingleMineUser = currentUser?.role === 'INSPECTOR' || currentUser?.role === 'OFFICER';
+  const assignedMineId = currentUser?.mineId || 'MINE-01';
+
+  const [selectedMine, setSelectedMine] = useState(isSingleMineUser ? assignedMineId : 'ALL');
+  const [filterZone, setFilterZone] = useState('ALL');
   const [filterStatus, setFilterStatus] = useState('ALL');
   const [filterPriority, setFilterPriority] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
@@ -40,6 +44,11 @@ export default function CorrectiveActionManager() {
     if (selectedMine !== 'ALL' && ca.mineId !== selectedMine) return false;
     if (filterStatus !== 'ALL' && ca.status !== filterStatus) return false;
     if (filterPriority !== 'ALL' && ca.priority !== filterPriority) return false;
+    if (filterZone !== 'ALL') {
+      const linkedV = violations.find(v => v.violationId === ca.violationId);
+      const areaStr = (linkedV?.area || ca.description || '').toLowerCase();
+      if (!areaStr.includes(filterZone.toLowerCase())) return false;
+    }
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
       return ca.actionId.toLowerCase().includes(q) ||
@@ -183,26 +192,38 @@ export default function CorrectiveActionManager() {
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 bg-coal-900 border border-slate-800 p-3.5 rounded-xl text-xs">
+      {/* Filters Bar */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 bg-coal-900 border border-slate-800 p-3.5 rounded-xl text-xs">
         <div>
-          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Filter by Mine</label>
+          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Target Mine Unit</label>
+          {isSingleMineUser ? (
+            <div className="px-2.5 py-1.5 bg-coal-950 border border-amber-500/40 rounded-lg text-amber-300 text-xs font-semibold flex items-center gap-1.5">
+              <span>🔒 {(mines.find(m => m.mineId === assignedMineId)?.mineName || currentUser?.mineName || 'Demo Mine Alpha')} ({assignedMineId})</span>
+            </div>
+          ) : (
+            <select
+              value={selectedMine}
+              onChange={(e) => setSelectedMine(e.target.value)}
+              className="w-full px-2.5 py-1.5 bg-coal-950 border border-slate-700 rounded-lg text-white text-xs focus:outline-none"
+            >
+              <option value="ALL">All Mines ({correctiveActions.length} Actions)</option>
+              {mines.map(m => <option key={m.mineId} value={m.mineId}>{m.mineName}</option>)}
+            </select>
+          )}
+        </div>
+
+        <div>
+          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Filter Operational Zone</label>
           <select
-            value={selectedMine}
-            disabled={currentUser?.role === 'OFFICER'}
-            onChange={(e) => setSelectedMine(e.target.value)}
-            className={`w-full px-2.5 py-1.5 bg-coal-950 border border-slate-700 rounded-lg text-white text-xs focus:outline-none ${currentUser?.role === 'OFFICER' ? 'opacity-80 cursor-not-allowed border-amber-500/40 text-amber-300 font-semibold' : ''}`}
+            value={filterZone}
+            onChange={(e) => setFilterZone(e.target.value)}
+            className="w-full px-2.5 py-1.5 bg-coal-950 border border-slate-700 rounded-lg text-white text-xs focus:outline-none"
           >
-            {currentUser?.role === 'OFFICER' ? (
-              <option value={currentUser.mineId || 'MINE-01'}>
-                {(mines.find(m => m.mineId === currentUser?.mineId)?.mineName || currentUser?.mineName || 'Assigned Mine')} (Assigned Unit)
-              </option>
-            ) : (
-              <>
-                <option value="ALL">All Mines ({correctiveActions.length} Actions)</option>
-                {mines.map(m => <option key={m.mineId} value={m.mineId}>{m.mineName}</option>)}
-              </>
-            )}
+            <option value="ALL">All Operational Zones</option>
+            <option value="North Shaft">Z-01: North Shaft</option>
+            <option value="South Shaft">Z-02: South Shaft</option>
+            <option value="Processing Plant">Z-03: Processing Plant</option>
+            <option value="Substation Zone 3">Z-04: Substation Zone 3</option>
           </select>
         </div>
         <div>

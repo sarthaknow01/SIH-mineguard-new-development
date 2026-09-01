@@ -63,27 +63,24 @@ export default function WorkerRegistry() {
       {/* Filter / Search bar */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 bg-coal-900 border border-slate-800 p-3.5 rounded-xl text-xs">
         <div>
-          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Filter by Mine</label>
-          <select
-            value={isSingleMineRole ? currentUser.mineId : selectedMine}
-            disabled={isSingleMineRole}
-            onChange={(e) => {
-              if (!isSingleMineRole) {
+          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Target Mine Unit</label>
+          {isSingleMineRole ? (
+            <div className="px-2.5 py-1.5 bg-coal-950 border border-amber-500/40 rounded-lg text-amber-300 text-xs font-semibold flex items-center gap-1.5">
+              <span>🔒 {assignedMine.mineName || 'Demo Mine Alpha'} ({currentUser.mineId || 'MINE-01'})</span>
+            </div>
+          ) : (
+            <select
+              value={selectedMine}
+              onChange={(e) => {
                 setSelectedMine(e.target.value);
                 setSelectedZone('ALL');
-              }
-            }}
-            className={`w-full px-2.5 py-1.5 bg-coal-950 border border-slate-700 rounded-lg text-white text-xs focus:outline-none ${isSingleMineRole ? 'opacity-90 cursor-not-allowed border-amber-500/40 text-amber-300 font-semibold' : ''}`}
-          >
-            {isSingleMineRole ? (
-              <option value={currentUser.mineId}>{assignedMine.mineName || 'Assigned Unit'} (Assigned Unit)</option>
-            ) : (
-              <>
-                <option value="ALL">All Mines ({workers.length} Personnel)</option>
-                {mines.map(m => <option key={m.mineId} value={m.mineId}>{m.mineName}</option>)}
-              </>
-            )}
-          </select>
+              }}
+              className="w-full px-2.5 py-1.5 bg-coal-950 border border-slate-700 rounded-lg text-white text-xs focus:outline-none"
+            >
+              <option value="ALL">All Mines ({workers.length} Personnel)</option>
+              {mines.map(m => <option key={m.mineId} value={m.mineId}>{m.mineName}</option>)}
+            </select>
+          )}
         </div>
 
         <div>
