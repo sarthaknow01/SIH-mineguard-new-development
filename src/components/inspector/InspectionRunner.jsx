@@ -128,7 +128,6 @@ export default function InspectionRunner({ onComplete }) {
     ]
   };
 
-  const [shift, setShift] = useState('Shift A (06:00 - 14:00)');
   const [checklist, setChecklist] = useState(SOP_CHECKLIST_TEMPLATES['Electrical & Personnel Compliance Safety Inspection']);
 
   const handleAuditTypeChange = (newType) => {
@@ -155,7 +154,6 @@ export default function InspectionRunner({ onComplete }) {
       mineId,
       mineName: selectedMine?.mineName || 'Demo Mine Alpha',
       area,
-      shift,
       inspectionType,
       checklistResults: checklist,
       overallResult,
@@ -235,7 +233,7 @@ export default function InspectionRunner({ onComplete }) {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Inspection Header Controls */}
-        <div className="bg-coal-900 border border-slate-800 p-4 rounded-xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="bg-coal-900 border border-slate-800 p-4 rounded-xl grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="block text-xs font-semibold text-slate-300 mb-1.5">Assigned Coal Mine</label>
             <select
@@ -275,19 +273,6 @@ export default function InspectionRunner({ onComplete }) {
                   <option value="Substation">Substation</option>
                 </>
               )}
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5">Operational Shift</label>
-            <select
-              value={shift}
-              onChange={(e) => setShift(e.target.value)}
-              className="w-full px-3 py-2 bg-coal-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500 font-medium"
-            >
-              <option value="Shift A (06:00 - 14:00)">Shift A (06:00 - 14:00)</option>
-              <option value="Shift B (14:00 - 22:00)">Shift B (14:00 - 22:00)</option>
-              <option value="Night Shift (22:00 - 06:00)">Night Shift (22:00 - 06:00)</option>
             </select>
           </div>
 
