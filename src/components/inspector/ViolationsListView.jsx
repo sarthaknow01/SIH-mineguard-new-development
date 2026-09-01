@@ -117,52 +117,64 @@ export default function ViolationsListView() {
       </div>
 
       {/* Violations List Cards */}
-      <div className="space-y-3">
+      <div className="space-y-3.5">
         {filteredViolations.length === 0 ? (
-          <p className="p-8 text-center text-slate-400 bg-coal-900 border border-slate-800 rounded-xl text-xs">
-            No violations match the selected filters.
-          </p>
+          <div className="p-10 text-center text-slate-400 bg-coal-900 border border-slate-800 rounded-xl text-xs space-y-2">
+            <AlertTriangle className="w-8 h-8 text-amber-400 mx-auto opacity-70" />
+            <p className="font-bold text-white text-sm">No Violations Found</p>
+            <p className="text-slate-400">No reported compliance violations match the selected mine or severity filter.</p>
+          </div>
         ) : (
           filteredViolations.map((v) => (
-            <div key={v.violationId} className="bg-coal-900 border border-slate-800 hover:border-slate-700 p-4 rounded-xl transition-all shadow-md">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-800/60">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-mono font-bold text-white">{v.violationId}</span>
-                  <span className="text-xs text-slate-400 font-semibold">{v.mineName} — {v.area}</span>
+            <div 
+              key={v.violationId} 
+              className={`bg-coal-900 border border-slate-800 hover:border-slate-700 p-4 rounded-xl transition-all shadow-lg space-y-3 ${
+                v.severity === 'CRITICAL' ? 'border-l-4 border-l-red-500' : v.severity === 'HIGH' ? 'border-l-4 border-l-amber-500' : 'border-l-4 border-l-blue-500'
+              }`}
+            >
+              {/* Header Bar */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2.5 border-b border-slate-800">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-xs font-mono font-bold text-white bg-coal-950 px-2.5 py-1 rounded border border-slate-800">{v.violationId}</span>
+                  <span className="text-xs text-slate-300 font-semibold">{v.mineName} — {v.area}</span>
                   <Badge size="sm">{v.severity}</Badge>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 font-mono text-xs">
                   <Badge size="sm">{v.status}</Badge>
-                  <span className="text-[11px] text-slate-400 font-mono">{formatDate(v.date)}</span>
+                  <span className="text-[11px] text-slate-400">{formatDate(v.date)}</span>
                 </div>
               </div>
 
-              <div className="mt-3 grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Body & Content */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
                 <div className="md:col-span-2 space-y-2">
-                  <p className="text-xs font-bold text-amber-400">{v.category}</p>
-                  <p className="text-xs text-slate-200 leading-relaxed">{v.description}</p>
+                  <p className="text-xs font-bold text-amber-400 uppercase tracking-wide">{v.category}</p>
+                  <p className="text-xs text-slate-200 leading-relaxed font-medium">{v.description}</p>
                   
-                  {v.workerName && (
-                    <p className="text-[11px] text-slate-400">
-                      <strong>Linked Personnel:</strong> {v.workerName} ({v.workerId})
-                    </p>
-                  )}
-
-                  <p className="text-[10px] text-slate-400">
-                    Reported by: <span className="text-slate-300 font-semibold">{v.reportedBy}</span>
-                  </p>
+                  <div className="flex flex-wrap items-center gap-3 pt-1 text-[11px] text-slate-400">
+                    {v.workerName && (
+                      <span className="bg-coal-950 px-2 py-0.5 rounded border border-slate-800 text-slate-300">
+                        👤 Linked Worker: <strong className="text-white">{v.workerName} ({v.workerId})</strong>
+                      </span>
+                    )}
+                    <span>
+                      Reported by: <strong className="text-slate-300">{v.reportedBy}</strong>
+                    </span>
+                  </div>
                 </div>
 
-                {/* AI Risk Card Column */}
-                <div className="p-3 bg-coal-950 rounded-lg border border-slate-800/80 space-y-1.5">
+                {/* AI Risk Meter Column */}
+                <div className="p-3 bg-coal-950 rounded-xl border border-slate-800/80 flex flex-col justify-between space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-bold text-white flex items-center gap-1">
-                      <Sparkles className="w-3 h-3 text-amber-400" /> AI Risk:
+                    <span className="text-xs font-bold text-white flex items-center gap-1">
+                      <Sparkles className="w-3.5 h-3.5 text-amber-400" /> AI Risk Score:
                     </span>
-                    <span className="text-xs font-mono font-bold text-red-400">{v.riskScore || 75}/100</span>
+                    <span className="text-xs font-mono font-bold text-red-400 bg-red-500/10 px-2 py-0.5 rounded border border-red-500/20">
+                      {v.riskScore || 85}/100 ({v.riskLevel || v.severity})
+                    </span>
                   </div>
-                  <p className="text-[10px] text-slate-400 leading-relaxed">
-                    {v.aiExplanation || 'High risk statutory certification deficiency.'}
+                  <p className="text-[10px] text-slate-400 leading-relaxed line-clamp-3">
+                    {v.aiExplanation || 'High risk statutory compliance defect requiring priority remediation.'}
                   </p>
                 </div>
               </div>

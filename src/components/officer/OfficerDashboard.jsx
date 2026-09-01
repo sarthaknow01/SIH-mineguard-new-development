@@ -129,32 +129,69 @@ export default function OfficerDashboard({ onNavigate }) {
               </button>
             </div>
 
-            <div className="divide-y divide-slate-800 mt-2">
+            <div className="space-y-3 mt-3">
               {myViolations.length === 0 ? (
-                <p className="py-6 text-center text-xs text-slate-400">No open compliance violations for this mine.</p>
+                <div className="py-8 text-center text-xs text-slate-400 bg-coal-950/50 rounded-lg border border-slate-800/80">
+                  <CheckCircle2 className="w-8 h-8 text-emerald-400 mx-auto mb-2 opacity-80" />
+                  <p className="font-semibold text-slate-300">No Active Violations Pending Action</p>
+                  <p className="text-[11px] text-slate-500 mt-0.5">All statutory safety parameters for {myMine.mineName} are fully verified.</p>
+                </div>
               ) : (
-                myViolations.map((v) => (
-                  <div key={v.violationId} className="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <span className="font-mono text-xs font-bold text-white">{v.violationId}</span>
-                        <span className="text-xs text-slate-400 font-semibold">{v.area}</span>
+                myViolations.slice(0, 4).map((v) => (
+                  <div 
+                    key={v.violationId} 
+                    className={`p-3.5 bg-coal-950 rounded-xl border border-slate-800/90 hover:border-slate-700 transition-all space-y-2 relative overflow-hidden ${
+                      v.severity === 'CRITICAL' ? 'border-l-4 border-l-red-500' : v.severity === 'HIGH' ? 'border-l-4 border-l-amber-500' : 'border-l-4 border-l-blue-500'
+                    }`}
+                  >
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/60 pb-2">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="font-mono text-xs font-bold text-white bg-slate-800 px-2 py-0.5 rounded border border-slate-700">{v.violationId}</span>
+                        <span className="text-xs text-slate-300 font-semibold">{v.area}</span>
                         <Badge size="sm">{v.severity}</Badge>
                       </div>
-                      <p className="text-xs text-slate-200 font-medium">{v.description}</p>
-                      <p className="text-[10px] text-amber-400 font-mono">AI Risk Score: {v.riskScore}/100</p>
+                      <div className="flex items-center gap-1.5 font-mono text-[10px]">
+                        <span className="text-amber-400 font-bold bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+                          ⚡ AI Risk: {v.riskScore || 85}/100
+                        </span>
+                      </div>
                     </div>
 
-                    <div className="shrink-0 flex items-center gap-2">
-                      <button
-                        onClick={() => setSelectedViolationForAction(v)}
-                        className="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-lg transition-colors"
-                      >
-                        Assign Action
-                      </button>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-0.5">
+                      <div className="space-y-1">
+                        <p className="text-xs font-bold text-amber-400/90">{v.category}</p>
+                        <p className="text-xs text-slate-200 line-clamp-2 leading-relaxed">{v.description}</p>
+                        {v.workerName && (
+                          <p className="text-[10px] text-slate-400 font-mono">
+                            👤 Personnel: <span className="text-slate-300 font-semibold">{v.workerName} ({v.workerId})</span>
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="shrink-0 self-end sm:self-center">
+                        <button
+                          onClick={() => setSelectedViolationForAction(v)}
+                          className="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-lg shadow-md shadow-blue-600/20 transition-all flex items-center gap-1"
+                        >
+                          <span>Assign Action</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))
+              )}
+
+              {myViolations.length > 4 && (
+                <div className="text-center pt-2">
+                  <button
+                    onClick={() => onNavigate('violations')}
+                    className="text-xs text-blue-400 hover:text-blue-300 font-bold flex items-center justify-center gap-1 mx-auto"
+                  >
+                    <span>+ {myViolations.length - 4} More Violations in Inbox</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               )}
             </div>
           </div>

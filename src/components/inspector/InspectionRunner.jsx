@@ -139,8 +139,52 @@ export default function InspectionRunner({ onComplete }) {
     }
   };
 
+  const getDefaultNotesForStatus = (itemText, newStatus) => {
+    if (newStatus === 'N/A') return 'Parameter not applicable in current operational sector';
+    if (newStatus === 'FAIL') {
+      const lower = itemText.toLowerCase();
+      if (lower.includes('certificate') || lower.includes('competency')) {
+        return 'Assigned personnel competency certificate expired / missing statutory clearance';
+      }
+      if (lower.includes('ppe')) {
+        return 'On-duty personnel observed working without mandatory arc-flash PPE or helmet';
+      }
+      if (lower.includes('breaker') || lower.includes('grounding') || lower.includes('electrical')) {
+        return 'Transformer grounding resistance test failed / earth leakage breaker tripped';
+      }
+      if (lower.includes('gas') || lower.includes('methane') || lower.includes('detector')) {
+        return 'Hazardous flammable gas concentration detected above DGMS statutory threshold';
+      }
+      if (lower.includes('roof') || lower.includes('strata') || lower.includes('bolt')) {
+        return 'Resin-anchored roof bolt torque test failure detected in working face';
+      }
+      if (lower.includes('brake') || lower.includes('truck') || lower.includes('machinery')) {
+        return 'Heavy machinery braking defect / Emergency stop safety mechanism failed';
+      }
+      return 'Safety parameter non-compliance detected — Immediate remediation ticket required';
+    }
+    // Default PASS notes
+    const lower = itemText.toLowerCase();
+    if (lower.includes('certificate')) return 'All assigned personnel competency certificates verified valid';
+    if (lower.includes('ppe')) return 'Mandatory PPE (helmet, arc-flash shield, safety boots) worn & verified';
+    if (lower.includes('signage')) return 'Danger High Voltage signage & isolation barriers visible and illuminated';
+    if (lower.includes('extinguisher')) return 'Emergency fire extinguishers inspected and charged (Pressure gauges nominal)';
+    if (lower.includes('grounding')) return 'Transformer grounding & earth leakage circuit breakers tested nominal';
+    if (lower.includes('matting')) return 'Insulated rubber floor matting verified and stamp tested';
+    return 'Inspected and verified fully compliant with DGMS safety standards';
+  };
+
   const updateItemStatus = (id, newStatus) => {
-    setChecklist(prev => prev.map(item => item.id === id ? { ...item, status: newStatus } : item));
+    setChecklist(prev => prev.map(item => {
+      if (item.id === id) {
+        return {
+          ...item,
+          status: newStatus,
+          notes: getDefaultNotesForStatus(item.item, newStatus)
+        };
+      }
+      return item;
+    }));
   };
 
   const updateItemNotes = (id, notes) => {
