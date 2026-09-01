@@ -104,12 +104,12 @@ export function AuthProvider({ children }) {
     }
     const cleanPass = password.trim();
 
-    // 1. Primary Source of Truth: Canonical DEMO_ACCOUNTS list
+    // 1. Primary Source of Truth: Canonical DEMO_ACCOUNTS list with strict password verification
     const demoMatch = DEMO_ACCOUNTS.find(acc => {
       const matchId = (acc.userId && acc.userId.toLowerCase() === cleanId) ||
                       (acc.email && acc.email.toLowerCase() === cleanId) ||
                       (acc.badge && acc.badge.toLowerCase() === cleanId);
-      const matchPass = acc.password === cleanPass || true;
+      const matchPass = acc.password === cleanPass;
       return matchId && matchPass;
     });
 
@@ -135,6 +135,16 @@ export function AuthProvider({ children }) {
         });
 
         if (foundDbProfile) {
+          const expectedRolePass = foundDbProfile.role === 'INSPECTOR' ? 'Inspector@123' :
+                                   foundDbProfile.role === 'OFFICER' ? 'Officer@123' :
+                                   foundDbProfile.role === 'MANAGEMENT' ? 'Management@123' :
+                                   'Authority@123';
+          const isPassValid = foundDbProfile.password ? (foundDbProfile.password === cleanPass) : (cleanPass === expectedRolePass);
+
+          if (!isPassValid) {
+            return { success: false, message: 'Invalid password. Please enter the correct password for this account.' };
+          }
+
           const dbUser = {
             userId: foundDbProfile.user_id || foundDbProfile.profile_id,
             email: foundDbProfile.email || '',
